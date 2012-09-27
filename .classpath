@@ -32,7 +32,6 @@
 	<classpathentry kind="lib" path="lib/jfreechart-1.0.12.jar"/>
 	<classpathentry kind="lib" path="lib/poi-3.2-FINAL-20081019.jar"/>
 	<classpathentry kind="lib" path="lib/swingx-0.9.5.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/JavaPOS"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/pos-device-simulator"/>
+	<classpathentry kind="lib" path="/OpenBravoPOS/lib/jpos1121.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
