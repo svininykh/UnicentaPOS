@@ -1,8 +1,8 @@
 ----------------------------------------------------------------
-2012-07-05 22:28:08.922 GMT:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.6.2.1 - (999685): instance a816c00e-0138-5941-eb6f-0000030b4318 
-on database directory /home/emiliano/unicentaopos-database  with class loader java.net.URLClassLoader@22b6d6ab 
-Loaded from file:/home/opt/Eclipse-Workdir/UnicentaPOS/./lib/derby.jar
+2012-11-07 23:51:34.743 GMT:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.6.2.1 - (999685): instance a816c00e-013a-dd49-3968-000002bd8548 
+on database directory /home/max/unicentaopos-database  with class loader java.net.URLClassLoader@63d87b85 
+Loaded from file:/home/max/workSpace/UnicentaPOS/./lib/derby.jar
 java.vendor=Sun Microsystems Inc.
-java.runtime.version=1.6.0_24-b24
+java.runtime.version=1.6.0_35-b10
 Database Class Loader started - derby.database.classpath=''
