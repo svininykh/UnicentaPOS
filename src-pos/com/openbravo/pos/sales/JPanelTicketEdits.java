@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -19,13 +19,13 @@
 
 package com.openbravo.pos.sales;
 
+import com.openbravo.basic.BasicException;
+import com.openbravo.pos.ticket.ProductInfoExt;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
-import com.openbravo.basic.BasicException;
-import com.openbravo.pos.ticket.ProductInfoExt;
-import java.awt.Dimension;
 
 public class JPanelTicketEdits extends JPanelTicket {
     
@@ -35,6 +35,7 @@ public class JPanelTicketEdits extends JPanelTicket {
     public JPanelTicketEdits() {
     }
     
+    @Override
     public String getTitle() {
         return null;
     }
@@ -57,10 +58,12 @@ public class JPanelTicketEdits extends JPanelTicket {
         m_catandlines.showRefundLines(aRefundLines);
     }
     
+    @Override
     protected JTicketsBag getJTicketsBag() {
         return new JTicketsBagTicket(m_App, this);
     }
 
+    @Override
     protected Component getSouthComponent() {
 
         m_catandlines = new JTicketCatalogLines(m_App, this,                
@@ -75,10 +78,12 @@ public class JPanelTicketEdits extends JPanelTicket {
         return m_catandlines;
     } 
 
+    @Override
     protected void resetSouthComponent() {
     }
     
     private class CatalogListener implements ActionListener {
+        @Override
         public void actionPerformed(ActionEvent e) {
             buttonTransition((ProductInfoExt) e.getSource());
         }  

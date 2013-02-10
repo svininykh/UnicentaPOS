@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -19,14 +19,16 @@
 
 package com.openbravo.pos.panels;
 
-import java.util.*;
-import javax.swing.table.AbstractTableModel;
 import com.openbravo.basic.BasicException;
 import com.openbravo.data.loader.*;
 import com.openbravo.format.Formats;
 import com.openbravo.pos.forms.AppLocal;
 import com.openbravo.pos.forms.AppView;
 import com.openbravo.pos.util.StringUtils;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import javax.swing.table.AbstractTableModel;
 
 /**
  *
@@ -61,12 +63,14 @@ public class PaymentsModel {
         
         p.m_iPayments = new Integer(0);
         p.m_dPaymentsTotal = new Double(0.0);
-        p.m_lpayments = new ArrayList<PaymentsLine>();
+// JG 16 May 2012 use diamond inference
+        p.m_lpayments = new ArrayList<>();
         
         p.m_iSales = null;
         p.m_dSalesBase = null;
         p.m_dSalesTaxes = null;
-        p.m_lsales = new ArrayList<SalesLine>();
+// JG 16 May 2012 use diamond inference
+        p.m_lsales = new ArrayList<>();
         
         return p;
     }
@@ -151,7 +155,8 @@ public class PaymentsModel {
                 , new SerializerReadClass(PaymentsModel.SalesLine.class))
                 .list(app.getActiveCashIndex());
         if (asales == null) {
-            p.m_lsales = new ArrayList<SalesLine>();
+// JG 16 May 2012 use diamond inference
+            p.m_lsales = new ArrayList<>();
         } else {
             p.m_lsales = asales;
         }
@@ -230,15 +235,19 @@ public class PaymentsModel {
     
     public AbstractTableModel getPaymentsModel() {
         return new AbstractTableModel() {
+            @Override
             public String getColumnName(int column) {
                 return AppLocal.getIntString(PAYMENTHEADERS[column]);
             }
+            @Override
             public int getRowCount() {
                 return m_lpayments.size();
             }
+            @Override
             public int getColumnCount() {
                 return PAYMENTHEADERS.length;
             }
+            @Override
             public Object getValueAt(int row, int column) {
                 PaymentsLine l = m_lpayments.get(row);
                 switch (column) {
@@ -255,6 +264,7 @@ public class PaymentsModel {
         private String m_SalesTaxName;
         private Double m_SalesTaxes;
         
+        @Override
         public void readValues(DataRead dr) throws BasicException {
             m_SalesTaxName = dr.getString(1);
             m_SalesTaxes = dr.getDouble(2);
@@ -275,15 +285,19 @@ public class PaymentsModel {
 
     public AbstractTableModel getSalesModel() {
         return new AbstractTableModel() {
+            @Override
             public String getColumnName(int column) {
                 return AppLocal.getIntString(SALEHEADERS[column]);
             }
+            @Override
             public int getRowCount() {
                 return m_lsales.size();
             }
+            @Override
             public int getColumnCount() {
                 return SALEHEADERS.length;
             }
+            @Override
             public Object getValueAt(int row, int column) {
                 SalesLine l = m_lsales.get(row);
                 switch (column) {
@@ -300,6 +314,7 @@ public class PaymentsModel {
         private String m_PaymentType;
         private Double m_PaymentValue;
         
+        @Override
         public void readValues(DataRead dr) throws BasicException {
             m_PaymentType = dr.getString(1);
             m_PaymentValue = dr.getDouble(2);

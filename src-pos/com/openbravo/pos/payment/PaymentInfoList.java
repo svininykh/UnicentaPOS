@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -28,7 +28,8 @@ public class PaymentInfoList {
     
     /** Creates a new instance of PaymentInfoComposed */
     public PaymentInfoList() {
-        m_apayment = new LinkedList<PaymentInfo>();
+// JG 16 May 12 use diamond inference
+        m_apayment = new LinkedList<>();
     }
         
     public double getTotal() {

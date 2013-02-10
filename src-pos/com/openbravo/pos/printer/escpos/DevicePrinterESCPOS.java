@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -19,11 +19,11 @@
 
 package com.openbravo.pos.printer.escpos;
 
+import com.openbravo.pos.forms.AppLocal;
+import com.openbravo.pos.printer.DevicePrinter;
+import com.openbravo.pos.printer.TicketPrinterException;
 import java.awt.image.BufferedImage;
 import javax.swing.JComponent;
-
-import com.openbravo.pos.printer.*;
-import com.openbravo.pos.forms.AppLocal;
 
 public class DevicePrinterESCPOS implements DevicePrinter  {
       
@@ -52,33 +52,41 @@ public class DevicePrinterESCPOS implements DevicePrinter  {
         m_CommOutputPrinter.flush();  
     }
    
+    @Override
     public String getPrinterName() {
         return m_sName;
     }
+    @Override
     public String getPrinterDescription() {
         return null;
     }   
+    @Override
     public JComponent getPrinterComponent() {
         return null;
     }
+    @Override
     public void reset() {
     }
     
+    @Override
     public void beginReceipt() {
     }
     
+    @Override
     public void printImage(BufferedImage image) {
         
         m_CommOutputPrinter.write(ESCPOS.SELECT_PRINTER);        
         m_CommOutputPrinter.write(m_codes.transImage(image));
     }
     
+    @Override
     public void printBarCode(String type, String position, String code) {
         
         m_CommOutputPrinter.write(ESCPOS.SELECT_PRINTER);        
         m_codes.printBarcode(m_CommOutputPrinter, type, position, code);
     }
     
+    @Override
     public void beginLine(int iTextSize) {
 
         m_CommOutputPrinter.write(ESCPOS.SELECT_PRINTER);        
@@ -96,6 +104,7 @@ public class DevicePrinterESCPOS implements DevicePrinter  {
         }
     }
     
+    @Override
     public void printText(int iStyle, String sText) {
 
         m_CommOutputPrinter.write(ESCPOS.SELECT_PRINTER);   
@@ -114,11 +123,13 @@ public class DevicePrinterESCPOS implements DevicePrinter  {
             m_CommOutputPrinter.write(m_codes.getBoldReset());
         }     
     }
+    @Override
     public void endLine() {
         m_CommOutputPrinter.write(ESCPOS.SELECT_PRINTER);   
         m_CommOutputPrinter.write(m_codes.getNewLine());
     }
     
+    @Override
     public void endReceipt() {
         m_CommOutputPrinter.write(ESCPOS.SELECT_PRINTER);   
         
@@ -132,6 +143,7 @@ public class DevicePrinterESCPOS implements DevicePrinter  {
         m_CommOutputPrinter.flush();
     }
     
+    @Override
     public void openDrawer() {
 
         m_CommOutputPrinter.write(ESCPOS.SELECT_PRINTER);   

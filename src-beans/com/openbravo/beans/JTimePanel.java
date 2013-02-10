@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -73,7 +73,7 @@ public class JTimePanel extends javax.swing.JPanel {
         
         if ((iButtons & BUTTONS_HOUR) > 0) {
             c = new GregorianCalendar(1900, 0, 0, 1, 0);
-            m_jbtnplushour = new JButtonDate(f.format(c.getTime()), new ImageIcon(getClass().getResource("/com/openbravo/images/1uparrow.png")), dateclick);
+            m_jbtnplushour = new JButtonDate(f.format(c.getTime()), new ImageIcon(getClass().getResource("/com/openbravo/images/2uparrow.png")), dateclick);
             m_jactions.add(m_jbtnplushour);
         }
         
@@ -106,7 +106,7 @@ public class JTimePanel extends javax.swing.JPanel {
         
         if ((iButtons & BUTTONS_HOUR) > 0) {
             c = new GregorianCalendar(1900, 0, 0, 1, 0);
-            m_jbtnminushour = new JButtonDate(f.format(c.getTime()), new ImageIcon(getClass().getResource("/com/openbravo/images/1downarrow.png")), dateclick);
+            m_jbtnminushour = new JButtonDate(f.format(c.getTime()), new ImageIcon(getClass().getResource("/com/openbravo/images/2downarrow.png")), dateclick);
             m_jactions.add(m_jbtnminushour);
         }
         
@@ -147,6 +147,7 @@ public class JTimePanel extends javax.swing.JPanel {
         renderTime(); // este quiza sobra.
     }
         
+    @Override
     public void setEnabled(boolean bValue) {
            
         super.setEnabled(bValue);        
@@ -162,12 +163,24 @@ public class JTimePanel extends javax.swing.JPanel {
         
         Date dDate = m_jclock.getTime();
         if (dDate == null) {
-            if (m_jbtnplushour != null) m_jbtnplushour.setEnabled(false);
-            if (m_jbtnminushour != null) m_jbtnminushour.setEnabled(false);
-            if (m_jbtnplusfifteen != null) m_jbtnplusfifteen.setEnabled(false);
-            if (m_jbtnminusfifteen != null) m_jbtnminusfifteen.setEnabled(false);
-            if (m_jbtnplusminute != null) m_jbtnplusminute.setEnabled(false);
-            if (m_jbtnminusminute != null) m_jbtnminusminute.setEnabled(false);            
+            if (m_jbtnplushour != null) {
+                m_jbtnplushour.setEnabled(false);
+            }
+            if (m_jbtnminushour != null) {
+                m_jbtnminushour.setEnabled(false);
+            }
+            if (m_jbtnplusfifteen != null) {
+                m_jbtnplusfifteen.setEnabled(false);
+            }
+            if (m_jbtnminusfifteen != null) {
+                m_jbtnminusfifteen.setEnabled(false);
+            }
+            if (m_jbtnplusminute != null) {
+                m_jbtnplusminute.setEnabled(false);
+            }
+            if (m_jbtnminusminute != null) {
+                m_jbtnminusminute.setEnabled(false);
+            }            
             m_jlblTime.setText("  ");
             m_jlblSeparator.setVisible(false);
             m_jlblTime2.setVisible(false);
@@ -234,6 +247,7 @@ public class JTimePanel extends javax.swing.JPanel {
     
     private class DateClick implements ActionListener {
 
+        @Override
         public void actionPerformed(ActionEvent e) {
             JButtonDate oLbl = (JButtonDate)e.getSource();
             if(oLbl.DateInf != null) {
@@ -299,6 +313,7 @@ public class JTimePanel extends javax.swing.JPanel {
         add(jPanel1, java.awt.BorderLayout.LINE_END);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jPanel2.setLayout(new java.awt.BorderLayout());
 
         m_jtime.add(m_jlblTime);

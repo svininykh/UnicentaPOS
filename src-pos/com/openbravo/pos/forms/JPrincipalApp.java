@@ -1,5 +1,5 @@
 //    uniCenta oPOS Touch Friendly Point of Sale
-//    Copyright (C) 2009-2011 uniCenta
+//    Copyright (C) 2009-2012 uniCenta
 //    http://www.unicenta.net/product
 //
 //    This file is part of uniCenta oPOS.
@@ -20,25 +20,23 @@
 package com.openbravo.pos.forms;
 
 import com.openbravo.basic.BasicException;
-
-import java.awt.*;
-import java.awt.event.*;
-import java.io.IOException;
-import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.*;
 import com.openbravo.beans.RoundedBorder;
-import com.openbravo.data.gui.MessageInf;
 import com.openbravo.data.gui.JMessageDialog;
+import com.openbravo.data.gui.MessageInf;
 import com.openbravo.pos.scripting.ScriptEngine;
 import com.openbravo.pos.scripting.ScriptException;
 import com.openbravo.pos.scripting.ScriptFactory;
 import com.openbravo.pos.util.Hashcypher;
-
-//import com.l2fprod.common.swing.JTaskPane;
-//import com.l2fprod.common.swing.JTaskPaneGroup;
 import com.openbravo.pos.util.StringUtils;
+import java.awt.CardLayout;
+import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.*;
 import org.jdesktop.swingx.JXTaskPane;
 import org.jdesktop.swingx.JXTaskPaneContainer;
 
@@ -74,13 +72,14 @@ public class JPrincipalApp extends javax.swing.JPanel implements AppUserView {
                    
         m_dlSystem = (DataLogicSystem) m_appview.getBean("com.openbravo.pos.forms.DataLogicSystem");
         
-        // Cargamos los permisos del usuario
         m_appuser.fillPermissions(m_dlSystem);
                
         m_actionfirst = null;
         m_jLastView = null;
-        m_aPreparedViews = new HashMap<String, JPanelView>();
-        m_aCreatedViews = new HashMap<String, JPanelView>();
+
+// JG 6 May 2012 use diamond inference        
+        m_aPreparedViews = new HashMap<>();
+        m_aCreatedViews = new HashMap<>();
                 
         initComponents();
         
@@ -107,21 +106,19 @@ public class JPrincipalApp extends javax.swing.JPanel implements AppUserView {
         m_jPanelTitle.setBorder(RoundedBorder.createGradientBorder());
         m_jPanelTitle.setVisible(false);
         
-        // Anado el panel nulo
         m_jPanelContainer.add(new JPanel(), "<NULL>");
-        showView("<NULL>");     
+        showView("<NULL>");
         
         try {
 
-            m_jPanelLeft.setViewportView(getScriptMenu(m_dlSystem.getResourceAsText("Menu.Root")));
+         m_jPanelLeft.setViewportView(getScriptMenu(m_dlSystem.getResourceAsText("Menu.Root")));       
         } catch (ScriptException e) {
-            logger.log(Level.SEVERE, "Cannot read Menu.Root resource. Trying defaut menu.", e);
+            logger.log(Level.SEVERE, "Cannot read Menu.Root resource. Trying default menu.", e);
             try {
                 m_jPanelLeft.setViewportView(getScriptMenu(StringUtils.readResource("/com/openbravo/pos/templates/Menu.Root.txt")));
-            } catch (IOException ex) {
+// JG 6 May 2012 use multicatch
+            } catch (    IOException | ScriptException ex) {
                 logger.log(Level.SEVERE, "Cannot read default menu", ex);
-            } catch (ScriptException es) {
-                logger.log(Level.SEVERE, "Cannot read default menu", es);
             }
         }               
     }
@@ -296,13 +293,12 @@ public class JPrincipalApp extends javax.swing.JPanel implements AppUserView {
             putValue(Action.NAME, AppLocal.getIntString(keytext));
             putValue(AppUserView.ACTION_TASKNAME, keytext);
         }
+        @Override
         public void actionPerformed(ActionEvent evt) {
             m_appview.closeAppView();
         }
     }
     
-    
-    // La accion de cambio de password..
     private class ChangePasswordAction extends AbstractAction {
         public ChangePasswordAction(String icon, String keytext) {
             putValue(Action.SMALL_ICON, new ImageIcon(JPrincipalApp.class.getResource(icon)));
@@ -310,6 +306,7 @@ public class JPrincipalApp extends javax.swing.JPanel implements AppUserView {
             putValue(AppUserView.ACTION_TASKNAME, keytext);
 
         }
+        @Override
         public void actionPerformed(ActionEvent evt) {
                        
             String sNewPassword = Hashcypher.changePassword(JPrincipalApp.this, m_appuser.getPassword());
@@ -330,10 +327,12 @@ public class JPrincipalApp extends javax.swing.JPanel implements AppUserView {
         cl.show(m_jPanelContainer, sView);       
     }
     
+    @Override
     public AppUser getUser() {
         return m_appuser;
     }
     
+    @Override
     public void showTask(String sTaskClass) {
          
         m_appview.waitCursorBegin();       
@@ -342,7 +341,6 @@ public class JPrincipalApp extends javax.swing.JPanel implements AppUserView {
             
             JPanelView m_jMyView = (JPanelView) m_aCreatedViews.get(sTaskClass);
 
-            // cierro la antigua
             if (m_jLastView == null || (m_jMyView != m_jLastView && m_jLastView.deactivate())) {
 
                 // Construct the new view
@@ -364,31 +362,29 @@ public class JPrincipalApp extends javax.swing.JPanel implements AppUserView {
                     m_aCreatedViews.put(sTaskClass, m_jMyView);
                 }
                 
-                // ejecuto la tarea
                 try {
                     m_jMyView.activate();
                 } catch (BasicException e) {
                     JMessageDialog.showMessage(this, new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.notactive"), e));            
                 }
 
-                // se tiene que mostrar el panel                
                 m_jLastView = m_jMyView;
 
                 setMenuVisible(getBounds().width > 800);
 
                 showView(sTaskClass);   
-                // Y ahora que he cerrado la antigua me abro yo            
                 String sTitle = m_jMyView.getTitle();
                 m_jPanelTitle.setVisible(sTitle != null);
                 m_jTitle.setText(sTitle);       
             }
         } else  {
-            // No hay permisos para ejecutar la accion...
+
             JMessageDialog.showMessage(this, new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.notpermissions")));            
         }
         m_appview.waitCursorEnd();       
     }
     
+    @Override
     public void executeTask(String sTaskClass) {
         
         m_appview.waitCursorBegin();       
@@ -397,22 +393,18 @@ public class JPrincipalApp extends javax.swing.JPanel implements AppUserView {
             try {
                 ProcessAction myProcess = (ProcessAction) m_appview.getBean(sTaskClass);
 
-                // execute the proces
                 try {
                     MessageInf m = myProcess.execute();    
                     if (m != null) {
-                        // si devuelve un mensaje, lo muestro
                         JMessageDialog.showMessage(JPrincipalApp.this, m);
                     }
                 } catch (BasicException eb) {
-                    // Si se produce un error lo muestro.
                     JMessageDialog.showMessage(JPrincipalApp.this, new MessageInf(eb));            
                 }
             } catch (BeanFactoryException e) {
                 JMessageDialog.showMessage(JPrincipalApp.this, new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("Label.LoadError"), e));            
             }                    
         } else  {
-            // No hay permisos para ejecutar la accion...
             JMessageDialog.showMessage(JPrincipalApp.this, new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.notpermissions")));            
         }
         m_appview.waitCursorEnd();    
@@ -441,12 +433,15 @@ public class JPrincipalApp extends javax.swing.JPanel implements AppUserView {
 
         jPanel2.setLayout(new javax.swing.BoxLayout(jPanel2, javax.swing.BoxLayout.Y_AXIS));
 
+        jButton1.setToolTipText("Open/Close Menu");
         jButton1.setFocusPainted(false);
         jButton1.setFocusable(false);
+        jButton1.setIconTextGap(0);
         jButton1.setMargin(new java.awt.Insets(14, 2, 14, 2));
-        jButton1.setMaximumSize(new java.awt.Dimension(32, 48));
-        jButton1.setMinimumSize(new java.awt.Dimension(32, 48));
-        jButton1.setPreferredSize(new java.awt.Dimension(32, 48));
+        jButton1.setMaximumSize(new java.awt.Dimension(32, 32));
+        jButton1.setMinimumSize(new java.awt.Dimension(32, 32));
+        jButton1.setPreferredSize(new java.awt.Dimension(32, 32));
+        jButton1.setRequestFocusEnabled(false);
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -463,7 +458,7 @@ public class JPrincipalApp extends javax.swing.JPanel implements AppUserView {
 
         m_jPanelTitle.setLayout(new java.awt.BorderLayout());
 
-        m_jTitle.setFont(new java.awt.Font("SansSerif", 1, 18));
+        m_jTitle.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
         m_jTitle.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, java.awt.Color.darkGray), javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10)));
         m_jPanelTitle.add(m_jTitle, java.awt.BorderLayout.NORTH);
 

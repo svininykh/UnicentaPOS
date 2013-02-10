@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -24,18 +24,19 @@ report.setReport("/com/openbravo/reports/cashregisterlog");
 report.setResourceBundle("com/openbravo/reports/cashregisterlog_messages");
 
 report.setSentence("SELECT " +
-				"RECEIPTS.DATENEW, " +
-				"PAYMENTS.PAYMENT, " +
-				"SUM( PAYMENTS.TOTAL ) AS PAYMENT_TOTAL " +
-				"FROM RECEIPTS " +
-				"LEFT JOIN PAYMENTS ON RECEIPTS.ID = PAYMENTS.RECEIPT " +
-				"WHERE ?(QBF_FILTER) " +
-                "GROUP BY RECEIPTS.DATENEW, PAYMENTS.PAYMENT");
+			"RECEIPTS.DATENEW, " +
+			"PAYMENTS.PAYMENT, " +
+			"SUM( PAYMENTS.TOTAL ) AS PAYMENT_TOTAL " +
+                    "FROM RECEIPTS " +
+			"LEFT JOIN PAYMENTS ON RECEIPTS.ID = PAYMENTS.RECEIPT " +
+                    "WHERE ?(QBF_FILTER) " +
+                    "GROUP BY RECEIPTS.DATENEW, PAYMENTS.PAYMENT");
 
 report.addParameter("RECEIPTS.DATENEW");
 report.addParameter("RECEIPTS.DATENEW");
+
 paramdates = new com.openbravo.pos.reports.JParamsDatesInterval();
-paramdates.setStartDate(com.openbravo.beans.DateUtils.getToday());
+paramdates.setEndDate(com.openbravo.beans.DateUtils.getToday());
 report.addQBFFilter(paramdates);
 
 report.addField("DATENEW", com.openbravo.data.loader.Datas.TIMESTAMP);

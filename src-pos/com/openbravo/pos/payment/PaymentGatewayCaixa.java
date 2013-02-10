@@ -22,28 +22,14 @@ package com.openbravo.pos.payment;
 import com.openbravo.data.loader.LocalRes;
 import com.openbravo.pos.forms.AppLocal;
 import com.openbravo.pos.forms.AppProperties;
-import com.openbravo.pos.util.StringUtils;
 import com.openbravo.pos.util.AltEncrypter;
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
+import com.openbravo.pos.util.StringUtils;
+import java.io.*;
+import java.net.*;
 import java.security.MessageDigest;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.util.Currency;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
@@ -102,18 +88,24 @@ public class PaymentGatewayCaixa implements PaymentGateway {
         return nf.format( Math.abs(r.nextInt()) + (Math.abs(System.currentTimeMillis()) % 1000000) );
     }
     
+    @Override
     public void execute(PaymentInfoMagcard payinfo) {
         //merchantCode = "999008881";
         //terminal = "1";
         //sign = "qwertyasdf0123456789";
         
-        StringBuffer sb = new StringBuffer();
+// JG 16 May 12 use StringBuilder in place of StringBuilder
+        StringBuilder sb = new StringBuilder();
         String currency = "978"; //default euros
         String xml="";
-        if (m_sCurrency.equals("USD")) {
-            currency = "840"; //dollars
-        } else if (m_sCurrency.equals("GPD")) {
-            currency = "826"; 
+// JG 16 May 12 use switch
+        switch (m_sCurrency) {
+            case "USD":
+                currency = "840"; //dollars
+                break;
+            case "GPD":
+                currency = "826";
+                break;
         }
         
         NumberFormat nf = new DecimalFormat("00");
@@ -157,7 +149,8 @@ public class PaymentGatewayCaixa implements PaymentGateway {
             "</DATOSENTRADA>";
         }
         
-        sb.append("entrada=" + URLEncoder.encode(xml, "UTF-8"));
+// JG 16 May 12 use chain
+        sb.append("entrada=").append(URLEncoder.encode(xml, "UTF-8"));
 
         // open secure connection
         URL url = new URL(ENDPOINTADDRESS);
@@ -166,19 +159,17 @@ public class PaymentGatewayCaixa implements PaymentGateway {
         connection.setUseCaches(false);
 
         // not necessarily required but fixes a bug with some servers
+// JG 16 May 12 use try-with-resources
         connection.setRequestProperty("Content-Type","application/x-www-form-urlencoded");
-
-        // POST the data in the string buffer
-        DataOutputStream out = new DataOutputStream(connection.getOutputStream());
-        out.write(sb.toString().getBytes());
-        out.flush();
-        out.close();
-
-        // process and read the gateway response
-        BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-        String sReturned = in.readLine();
-
-        in.close();
+            try (DataOutputStream out = new DataOutputStream(connection.getOutputStream())) {
+                out.write(sb.toString().getBytes());
+                out.flush();
+            }
+            String sReturned;
+// JG 16 May 12 use try-with-resources            
+            try (BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
+                sReturned = in.readLine();
+            }
         
         if (sReturned == null) {
             payinfo.paymentError(AppLocal.getIntString("message.paymenterror"), "Response empty.");
@@ -195,56 +186,78 @@ public class PaymentGatewayCaixa implements PaymentGateway {
                 } else {
                    
                     String sCode = (String) props.get("Ds_Response");
-                    if ("0101".equals(sCode)) {
-                        payinfo.paymentError(AppLocal.getIntString("message.paymentnotauthorised"), "Card date expired");
-                    } else if ("0102".equals(sCode)) {
-                        payinfo.paymentError(AppLocal.getIntString("message.paymenterror"), "Tarjeta en excepción transitoria o bajo sospecha de fraude.");
-                    } else if ("0104".equals(sCode)) {
-                        payinfo.paymentError(AppLocal.getIntString("message.paymenterror"), "Operación no permitida para esa tarjeta o terminal.");
-                    } else if ("0116".equals(sCode)) {
-                        payinfo.paymentError(AppLocal.getIntString("message.paymenterror"), "Disponible insuficiente.");
-                    } else if ("0118".equals(sCode)) {
-                        payinfo.paymentError(AppLocal.getIntString("message.paymenterror"), "Tarjeta no registrada.");
-                    } else if ("0129".equals(sCode)) {
-                         payinfo.paymentError(AppLocal.getIntString("message.paymenterror"), "CVV2 security code invalid. Amount not supplied or invalid.");
-                    } else if ("0180".equals(sCode)) {
-                         payinfo.paymentError(AppLocal.getIntString("message.paymenterror"), "Tarjeta ajena al servicio.");
-                    } else if ("0184".equals(sCode)) {
-                         payinfo.paymentError(AppLocal.getIntString("message.paymenterror"), "Cardholder authentication error.");
-                    } else if ("0190".equals(sCode)) {
-                         payinfo.paymentError(AppLocal.getIntString("message.paymenterror"), "Denegation of service without reason.");
-                    } else if ("0191".equals(sCode)) {
-                         payinfo.paymentError(AppLocal.getIntString("message.paymenterror"), "Expiry date invalid.");
-                    } else if ("0202".equals(sCode)) {
-                         payinfo.paymentError(AppLocal.getIntString("message.paymenterror"), "Tarjeta en excepción transitoria o bajo sospecha de fraude con retirada de tarjeta.");
-                    } else if ("0904".equals(sCode)) {
-                         payinfo.paymentError(AppLocal.getIntString("message.paymenterror"), "Comercio no registrado en FUC.");
-                    } else if ( ("9912".equals(sCode)) || ("912".equals(sCode)) ) {
-                         payinfo.paymentError(AppLocal.getIntString("message.paymenterror"), "Emisor no disponible.");
-                    } else {
-                         payinfo.paymentError(AppLocal.getIntString("message.paymenterrorunknown"), "");
-                    }
+// JG 16 May 12 use switch
+                    switch (sCode) {
+                            case "0101":
+                                payinfo.paymentError(AppLocal.getIntString("message.paymentnotauthorised"), "Card date expired");
+                                break;
+                            case "0102":
+                                payinfo.paymentError(AppLocal.getIntString("message.paymenterror"), "Tarjeta en excepción transitoria o bajo sospecha de fraude.");
+                                break;
+                            case "0104":
+                                payinfo.paymentError(AppLocal.getIntString("message.paymenterror"), "Operación no permitida para esa tarjeta o terminal.");
+                                break;
+                            case "0116":
+                                payinfo.paymentError(AppLocal.getIntString("message.paymenterror"), "Disponible insuficiente.");
+                                break;
+                            case "0118":
+                                payinfo.paymentError(AppLocal.getIntString("message.paymenterror"), "Tarjeta no registrada.");
+                                break;
+                            case "0129":
+                                payinfo.paymentError(AppLocal.getIntString("message.paymenterror"), "CVV2 security code invalid. Amount not supplied or invalid.");
+                                break;
+                            case "0180":
+                                payinfo.paymentError(AppLocal.getIntString("message.paymenterror"), "Tarjeta ajena al servicio.");
+                                break;
+                            case "0184":
+                                payinfo.paymentError(AppLocal.getIntString("message.paymenterror"), "Cardholder authentication error.");
+                                break;
+                            case "0190":
+                                payinfo.paymentError(AppLocal.getIntString("message.paymenterror"), "Denegation of service without reason.");
+                                break;
+                            case "0191":
+                                payinfo.paymentError(AppLocal.getIntString("message.paymenterror"), "Expiry date invalid.");
+                                break;
+                            case "0202":
+                                payinfo.paymentError(AppLocal.getIntString("message.paymenterror"), "Tarjeta en excepción transitoria o bajo sospecha de fraude con retirada de tarjeta.");
+                                break;
+                            case "0904":
+                                payinfo.paymentError(AppLocal.getIntString("message.paymenterror"), "Comercio no registrado en FUC.");
+                                break;
+                            case "9912":
+                            case "912":
+                                payinfo.paymentError(AppLocal.getIntString("message.paymenterror"), "Emisor no disponible.");
+                                break;
+                            default:
+                                payinfo.paymentError(AppLocal.getIntString("message.paymenterrorunknown"), "");
+                                break;
+                        }
                     
                     sCode = (String)props.get("CODIGO");
-                    if ("SIS0054".equals(sCode)) {
-                    payinfo.paymentError(AppLocal.getIntString("message.paymentnotauthorised"), "Pedido repetido.");
-                    } else if ("SIS0078".equals(sCode)) {
-                        payinfo.paymentError(AppLocal.getIntString("message.paymenterror"), "Método de pago no disponible para su tarjeta.");
-                    } else if ("SIS0093".equals(sCode)) {
-                         payinfo.paymentError(AppLocal.getIntString("message.paymenterror"), "Tarjeta no válida.");
-                    } else if ("SIS0094".equals(sCode)) {
-                         payinfo.paymentError(AppLocal.getIntString("message.paymenterror"), "Error en la llamada al MPI sin controlar.");
-                    }
+// JG 16 May 12 use switch
+                    switch (sCode) {
+                            case "SIS0054":
+                                payinfo.paymentError(AppLocal.getIntString("message.paymentnotauthorised"), "Pedido repetido.");
+                                break;
+                            case "SIS0078":
+                                payinfo.paymentError(AppLocal.getIntString("message.paymenterror"), "Método de pago no disponible para su tarjeta.");
+                                break;
+                            case "SIS0093":
+                                payinfo.paymentError(AppLocal.getIntString("message.paymenterror"), "Tarjeta no válida.");
+                                break;
+                            case "SIS0094":
+                                payinfo.paymentError(AppLocal.getIntString("message.paymenterror"), "Error en la llamada al MPI sin controlar.");
+                                break;
+                        }
                 }
             }
             else {
                 payinfo.paymentError(lpp.getResult(), "");
             }
         } 
-    } catch (UnsupportedEncodingException eUE) {
+// JG 16 May 12 use multicatch
+        } catch (UnsupportedEncodingException | MalformedURLException eUE) {
             payinfo.paymentError(AppLocal.getIntString("message.paymentexceptionservice"), eUE.getMessage());
-        } catch (MalformedURLException eMURL) {
-            payinfo.paymentError(AppLocal.getIntString("message.paymentexceptionservice"), eMURL.getMessage());
         } catch(IOException e){
             payinfo.paymentError(AppLocal.getIntString("message.paymenterror"), e.getMessage());
     }
@@ -296,49 +309,65 @@ public class PaymentGatewayCaixa implements PaymentGateway {
     @Override
     public void endElement(String uri, String localName, String qName) throws SAXException {
         try {
-            if (qName.equals("CODIGO")) {
-                props.put("CODIGO", URLDecoder.decode(text, "UTF-8"));
-                text="";
-            } else if (qName.equals("Ds_Version")){
-                props.put("Ds_Version", URLDecoder.decode(text, "UTF-8"));
-                text="";
-            } else if (qName.equals("Ds_Amount")) {
-                props.put("Ds_Amount", URLDecoder.decode(text, "UTF-8"));
-                text="";
-            } else if (qName.equals("Ds_Currency")) {
-                props.put("Ds_Currency", URLDecoder.decode(text, "UTF-8"));
-                text="";
-            } else if (qName.equals("Ds_Order")) {
-                props.put("Ds_Order", URLDecoder.decode(text, "UTF-8"));
-                text="";
-            } else if (qName.equals("Ds_Signature")) {
-                props.put("Ds_Signature", URLDecoder.decode(text, "UTF-8"));
-                text="";
-            } else if (qName.equals("Ds_Terminal")) {
-                props.put("Ds_Terminal", URLDecoder.decode(text, "UTF-8"));
-                text="";
-            } else if (qName.equals("Ds_Response")) {
-                props.put("Ds_Response", URLDecoder.decode(text, "UTF-8"));
-                text="";
-            } else if (qName.equals("Ds_AuthorisationCode")) {
-                props.put("Ds_AuthorisationCode", URLDecoder.decode(text, "UTF-8"));
-                text="";
-            } else if (qName.equals("Ds_TransactionType")) {
-                props.put("Ds_TransactionType", URLDecoder.decode(text, "UTF-8"));
-                text="";
-            } else if (qName.equals("Ds_SecurePayment")) {
-                props.put("Ds_SecurePayment", URLDecoder.decode(text, "UTF-8"));
-                text="";
-            } else if (qName.equals("Ds_Language")) {
-                props.put("Ds_Language", URLDecoder.decode(text, "UTF-8"));
-                text="";
-            } else if (qName.equals("Ds_MerchantData")) {
-                props.put("Ds_MerchantData", URLDecoder.decode(text, "UTF-8"));
-                text="";
-            } else if (qName.equals("Ds_Card_Country")) {
-                props.put("Ds_Card_Country", URLDecoder.decode(text, "UTF-8"));
-                text="";
-            }
+// JG 16 May 12 use switch                
+            switch (qName) {
+                    case "CODIGO":
+                        props.put("CODIGO", URLDecoder.decode(text, "UTF-8"));
+                        text="";
+                        break;
+                    case "Ds_Version":
+                        props.put("Ds_Version", URLDecoder.decode(text, "UTF-8"));
+                        text="";
+                        break;
+                    case "Ds_Amount":
+                        props.put("Ds_Amount", URLDecoder.decode(text, "UTF-8"));
+                        text="";
+                        break;
+                    case "Ds_Currency":
+                        props.put("Ds_Currency", URLDecoder.decode(text, "UTF-8"));
+                        text="";
+                        break;
+                    case "Ds_Order":
+                        props.put("Ds_Order", URLDecoder.decode(text, "UTF-8"));
+                        text="";
+                        break;
+                    case "Ds_Signature":
+                        props.put("Ds_Signature", URLDecoder.decode(text, "UTF-8"));
+                        text="";
+                        break;
+                    case "Ds_Terminal":
+                        props.put("Ds_Terminal", URLDecoder.decode(text, "UTF-8"));
+                        text="";
+                        break;
+                    case "Ds_Response":
+                        props.put("Ds_Response", URLDecoder.decode(text, "UTF-8"));
+                        text="";
+                        break;
+                    case "Ds_AuthorisationCode":
+                        props.put("Ds_AuthorisationCode", URLDecoder.decode(text, "UTF-8"));
+                        text="";
+                        break;
+                    case "Ds_TransactionType":
+                        props.put("Ds_TransactionType", URLDecoder.decode(text, "UTF-8"));
+                        text="";
+                        break;
+                    case "Ds_SecurePayment":
+                        props.put("Ds_SecurePayment", URLDecoder.decode(text, "UTF-8"));
+                        text="";
+                        break;
+                    case "Ds_Language":
+                        props.put("Ds_Language", URLDecoder.decode(text, "UTF-8"));
+                        text="";
+                        break;
+                    case "Ds_MerchantData":
+                        props.put("Ds_MerchantData", URLDecoder.decode(text, "UTF-8"));
+                        text="";
+                        break;
+                    case "Ds_Card_Country":
+                        props.put("Ds_Card_Country", URLDecoder.decode(text, "UTF-8"));
+                        text="";
+                        break;
+                }
         }
         catch(UnsupportedEncodingException eUE){
             result = eUE.getMessage();

@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -32,6 +32,7 @@ public class MenuTitleDefinition implements MenuElement {
     
     public String KeyText;
     
+    @Override
     public void addComponent(JPanelMenu menu) {
        
 //        if (p.x > 20) {

@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -40,7 +40,7 @@ public class JEditorPassword extends JEditorText {
     
     protected String getTextEdit() {
         
-        StringBuffer s = new StringBuffer();
+        StringBuilder s = new StringBuilder();
         s.append("<html>");
         s.append(getEcho(m_svalue));
         if (m_cLastChar != '\u0000') {

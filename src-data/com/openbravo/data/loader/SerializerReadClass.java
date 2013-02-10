@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -30,16 +30,14 @@ public class SerializerReadClass implements SerializerRead {
         m_clazz = clazz;
     }
     
+    @Override
     public Object readValues(DataRead dr) throws BasicException {
         try {
             SerializableRead sr = (SerializableRead) m_clazz.newInstance();
             sr.readValues(dr);
             return sr;
-        } catch (java.lang.InstantiationException eIns) {
-            return null;
-        } catch (IllegalAccessException eIA) {
-            return null;
-        } catch (ClassCastException eCC) {
+// JG 16 May 12 use multicatch
+        } catch (java.lang.InstantiationException | IllegalAccessException | ClassCastException eIns) {
             return null;
         }
     }

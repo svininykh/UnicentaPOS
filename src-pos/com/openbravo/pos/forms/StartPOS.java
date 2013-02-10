@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (C) 2008-2009 Openbravo, S.L.
+//    Copyright (C) 2008-2012 Openbravo, S.L.
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -19,15 +19,22 @@
 
 package com.openbravo.pos.forms;
 
-import java.util.Locale;
-import javax.swing.UIManager;
 import com.openbravo.format.Formats;
 import com.openbravo.pos.instance.InstanceQuery;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.LookAndFeel;
-import org.jvnet.substance.SubstanceLookAndFeel;
-import org.jvnet.substance.api.SubstanceSkin;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import org.pushingpixels.substance.api.SubstanceLookAndFeel;
+import org.pushingpixels.substance.api.SubstanceSkin;
+
+// JG 16 May 2012 deprecated for pushingpixels
+// import org.jvnet.substance.SubstanceLookAndFeel;
+// import org.jvnet.substance.api.SubstanceSkin;
 
 /**
  *
@@ -50,7 +57,8 @@ public class StartPOS {
             i = new InstanceQuery();
             i.getAppMessage().restoreWindow();
             return false;
-        } catch (Exception e) {
+// JG 6 May 2012 to Multicatch
+        } catch (RemoteException | NotBoundException e) {
             return true;
         }  
     }
@@ -58,6 +66,7 @@ public class StartPOS {
     public static void main (final String args[]) {
         
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 
                 if (!registerApp()) {
@@ -87,14 +96,14 @@ public class StartPOS {
                 // Set the look and feel.
                 try {             
                     
-                    Object laf = Class.forName(config.getProperty("swing.defaultlaf")).newInstance();
-                    
+                    Object laf = Class.forName(config.getProperty("swing.defaultlaf")).newInstance();                    
                     if (laf instanceof LookAndFeel){
                         UIManager.setLookAndFeel((LookAndFeel) laf);
                     } else if (laf instanceof SubstanceSkin) {                      
                         SubstanceLookAndFeel.setSkin((SubstanceSkin) laf);                   
                     }
-                } catch (Exception e) {
+// JG 6 May 2012 to multicatch
+                } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
                     logger.log(Level.WARNING, "Cannot set Look and Feel", e);
                 }
                 

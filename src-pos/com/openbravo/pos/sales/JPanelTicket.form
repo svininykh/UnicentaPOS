@@ -1,4 +1,4 @@
-<?xml version="1.1" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 
 <Form version="1.2" maxVersion="1.2" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
   <Properties>
@@ -73,6 +73,23 @@
                     </Property>
                     <Property name="requestFocusEnabled" type="boolean" value="false"/>
                   </Properties>
+                </Component>
+                <Component class="javax.swing.JButton" name="jButton1">
+                  <Properties>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/com/openbravo/images/customer_add_sml.png"/>
+                    </Property>
+                    <Property name="toolTipText" type="java.lang.String" value="Add New Customer"/>
+                    <Property name="focusPainted" type="boolean" value="false"/>
+                    <Property name="focusable" type="boolean" value="false"/>
+                    <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+                      <Insets value="[8, 14, 8, 14]"/>
+                    </Property>
+                    <Property name="requestFocusEnabled" type="boolean" value="false"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="btnCustomer">
                   <Properties>
@@ -296,7 +313,7 @@
                     <Component class="javax.swing.JButton" name="m_jList">
                       <Properties>
                         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                          <Image iconType="3" name="/com/openbravo/images/search24.png"/>
+                          <Image iconType="3" name="/com/openbravo/images/search32.png"/>
                         </Property>
                         <Property name="toolTipText" type="java.lang.String" value="Product Search"/>
                         <Property name="focusPainted" type="boolean" value="false"/>
@@ -377,6 +394,9 @@
             </Container>
             <Container class="javax.swing.JPanel" name="m_jPanelCentral">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="12" style="0"/>
+                </Property>
                 <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[450, 240]"/>
                 </Property>
@@ -460,7 +480,7 @@
                         <Component class="javax.swing.JLabel" name="m_jSubtotalEuros">
                           <Properties>
                             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                              <Font name="Tahoma" size="14" style="0"/>
+                              <Font name="Tahoma" size="18" style="0"/>
                             </Property>
                             <Property name="horizontalAlignment" type="int" value="0"/>
                             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -479,7 +499,7 @@
                         <Component class="javax.swing.JLabel" name="m_jTaxesEuros">
                           <Properties>
                             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                              <Font name="Tahoma" size="14" style="0"/>
+                              <Font name="Tahoma" size="18" style="0"/>
                             </Property>
                             <Property name="horizontalAlignment" type="int" value="0"/>
                             <Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
@@ -501,7 +521,10 @@
                         <Component class="javax.swing.JLabel" name="m_jTotalEuros">
                           <Properties>
                             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                              <Font name="Tahoma" size="14" style="1"/>
+                              <Font name="Tahoma" size="18" style="1"/>
+                            </Property>
+                            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                              <Color blue="f3" green="bc" red="0" type="rgb"/>
                             </Property>
                             <Property name="horizontalAlignment" type="int" value="0"/>
                             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -546,9 +569,20 @@
               </Layout>
               <SubComponents>
                 <Component class="com.openbravo.beans.JNumberKeys" name="m_jNumberKeys">
+                  <Properties>
+                    <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                      <Dimension value="[200, 200]"/>
+                    </Property>
+                    <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                      <Dimension value="[250, 250]"/>
+                    </Property>
+                  </Properties>
                   <Events>
                     <EventHandler event="keyPerformed" listener="com.openbravo.beans.JNumberEventListener" parameters="com.openbravo.beans.JNumberEvent" handler="m_jNumberKeysKeyPerformed"/>
                   </Events>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="JPanelTicket_m_jNumberKeys"/>
+                  </AuxValues>
                 </Component>
                 <Container class="javax.swing.JPanel" name="jPanel9">
                   <Properties>
@@ -583,7 +617,7 @@
                         </Property>
                         <Property name="opaque" type="boolean" value="true"/>
                         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[100, 22]"/>
+                          <Dimension value="[100, 25]"/>
                         </Property>
                         <Property name="requestFocusEnabled" type="boolean" value="false"/>
                       </Properties>
@@ -615,7 +649,7 @@
                         </Property>
                         <Property name="opaque" type="boolean" value="true"/>
                         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[22, 22]"/>
+                          <Dimension value="[22, 25]"/>
                         </Property>
                         <Property name="requestFocusEnabled" type="boolean" value="false"/>
                       </Properties>
@@ -646,7 +680,13 @@
                     </Component>
                     <Component class="javax.swing.JComboBox" name="m_jTax">
                       <Properties>
+                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                          <Font name="Tahoma" size="14" style="0"/>
+                        </Property>
                         <Property name="focusable" type="boolean" value="false"/>
+                        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                          <Dimension value="[28, 25]"/>
+                        </Property>
                         <Property name="requestFocusEnabled" type="boolean" value="false"/>
                       </Properties>
                       <Constraints>
@@ -660,6 +700,9 @@
                         <Property name="text" type="java.lang.String" value="+"/>
                         <Property name="focusPainted" type="boolean" value="false"/>
                         <Property name="focusable" type="boolean" value="false"/>
+                        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                          <Dimension value="[40, 25]"/>
+                        </Property>
                         <Property name="requestFocusEnabled" type="boolean" value="false"/>
                       </Properties>
                       <Constraints>

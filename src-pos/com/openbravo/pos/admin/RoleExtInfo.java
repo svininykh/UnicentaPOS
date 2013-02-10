@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -38,6 +38,7 @@ public class RoleExtInfo extends RoleInfo {
         m_aPermissions = null;
     }
     
+    @Override
     public void readValues(DataRead dr) throws BasicException {
         m_sName = dr.getString(1);
         m_aPermissions = dr.getBytes(2);

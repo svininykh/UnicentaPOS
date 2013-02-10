@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -19,14 +19,14 @@
 
 package com.openbravo.pos.panels;
 
-import java.sql.Types;
-import java.util.ArrayList;
-import java.util.List;
-import javax.swing.table.AbstractTableModel;
 import com.openbravo.basic.BasicException;
 import com.openbravo.data.loader.DataField;
 import com.openbravo.data.loader.DataRead;
 import com.openbravo.data.loader.Datas;
+import java.sql.Types;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.table.AbstractTableModel;
 
 /**
  *
@@ -106,7 +106,8 @@ public class SQLTableModel extends AbstractTableModel {
     }     
     public String getColumnString(int row) {
         Object [] rowvalues = (Object[]) m_aRows.get(row);
-        StringBuffer s = new StringBuffer();
+// JG 16 May 2012 use StringBuilder instead of StringBuilder
+        StringBuilder s = new StringBuilder();
         for(int i = 0; i < rowvalues.length; i++) {
             if (i > 0) {
                 s.append(", ");
@@ -116,18 +117,23 @@ public class SQLTableModel extends AbstractTableModel {
         return s.toString();
     }
     
+    @Override
     public Class getColumnClass(int columnIndex) {
         return m_classes[columnIndex].getClassValue();
     }
+    @Override
     public String getColumnName(int columnIndex) {
         return m_df[columnIndex].Name;
     }    
+    @Override
     public int getRowCount() {
         return m_aRows.size();
     }
+    @Override
     public int getColumnCount() {
         return m_df.length;
     }
+    @Override
     public Object getValueAt(int row, int column) {
         Object [] rowvalues = (Object[]) m_aRows.get(row);
         return rowvalues[column];

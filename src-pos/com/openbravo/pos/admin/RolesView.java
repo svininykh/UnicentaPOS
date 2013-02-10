@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -19,19 +19,19 @@
 
 package com.openbravo.pos.admin;
 
-import java.awt.Component;
-import java.util.UUID;
 import com.openbravo.basic.BasicException;
 import com.openbravo.data.user.DirtyManager;
 import com.openbravo.data.user.EditorRecord;
 import com.openbravo.format.Formats;
 import com.openbravo.pos.forms.AppLocal;
+import java.awt.Component;
+import java.util.UUID;
 
 /**
  *
  * @author adrianromero
  */
-public class RolesView extends javax.swing.JPanel implements EditorRecord {
+public final class RolesView extends javax.swing.JPanel implements EditorRecord {
     
     private Object m_oId;
     
@@ -45,6 +45,7 @@ public class RolesView extends javax.swing.JPanel implements EditorRecord {
         writeValueEOF();
     }
     
+    @Override
     public void writeValueEOF() {
         m_oId = null;
         m_jName.setText(null);
@@ -53,6 +54,7 @@ public class RolesView extends javax.swing.JPanel implements EditorRecord {
         m_jText.setEnabled(false);
     }
     
+    @Override
     public void writeValueInsert() {
         m_oId = null;
         m_jName.setText(null);
@@ -61,6 +63,7 @@ public class RolesView extends javax.swing.JPanel implements EditorRecord {
         m_jText.setEnabled(true);
     }
     
+    @Override
     public void writeValueDelete(Object value) {
 
         Object[] role = (Object[]) value;
@@ -72,6 +75,7 @@ public class RolesView extends javax.swing.JPanel implements EditorRecord {
         m_jText.setEnabled(false);
     }   
     
+    @Override
     public void writeValueEdit(Object value) {
 
         Object[] role = (Object[]) value;
@@ -83,6 +87,7 @@ public class RolesView extends javax.swing.JPanel implements EditorRecord {
         m_jText.setEnabled(true);
     }    
     
+    @Override
     public Object createValue() throws BasicException {
 
         Object[] role = new Object[3];
@@ -92,10 +97,12 @@ public class RolesView extends javax.swing.JPanel implements EditorRecord {
         return role;
     }
     
+    @Override
     public Component getComponent() {
         return this;
     }
     
+    @Override
     public void refresh() {
     }
     
@@ -112,10 +119,13 @@ public class RolesView extends javax.swing.JPanel implements EditorRecord {
         jLabel2 = new javax.swing.JLabel();
         m_jName = new javax.swing.JTextField();
 
-        m_jText.setFont(new java.awt.Font("DialogInput", 0, 12));
+        m_jText.setFont(new java.awt.Font("DialogInput", 0, 14)); // NOI18N
         jScrollPane1.setViewportView(m_jText);
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel2.setText(AppLocal.getIntString("Label.Name")); // NOI18N
+
+        m_jName.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -136,10 +146,10 @@ public class RolesView extends javax.swing.JPanel implements EditorRecord {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(m_jName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(m_jName, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 312, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 311, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents

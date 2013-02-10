@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -19,8 +19,8 @@
 
 package com.openbravo.data.loader;
 
-import java.sql.*;
 import com.openbravo.basic.BasicException;
+import java.sql.*;
 
 public abstract class JDBCSentence extends BaseSentence {
     
@@ -115,9 +115,11 @@ public abstract class JDBCSentence extends BaseSentence {
             }
         }
         
+        @Override
         public Object getCurrent() throws BasicException {
             return m_serread.readValues(this);
         }    
+        @Override
         public boolean next() throws BasicException {
             try {
                 return m_rs.next();
@@ -125,6 +127,7 @@ public abstract class JDBCSentence extends BaseSentence {
                 throw new BasicException(eSQL);
             }
         }
+        @Override
         public void close() throws BasicException {
             try {
                 m_rs.close();
@@ -132,6 +135,7 @@ public abstract class JDBCSentence extends BaseSentence {
                 throw new BasicException(eSQL);
             }
         }
+        @Override
         public int updateCount() throws BasicException {
             return -1; // es decir somos datos.
         }        

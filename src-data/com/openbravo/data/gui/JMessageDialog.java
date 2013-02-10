@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -19,9 +19,9 @@
 
 package com.openbravo.data.gui;
 
+import com.openbravo.data.loader.LocalRes;
 import java.awt.*;
 import javax.swing.*;
-import com.openbravo.data.loader.LocalRes;
 /**
  *
  * @author  adrian
@@ -71,7 +71,7 @@ public class JMessageDialog extends javax.swing.JDialog {
         if (inf.getCause() == null) {
             myMsg.jtxtException.setText(null);
         } else {            
-            StringBuffer sb = new StringBuffer(); 
+            StringBuilder sb = new StringBuilder(); 
             
             if (inf.getCause() instanceof Throwable) {
                 Throwable t = (Throwable) inf.getCause();
@@ -145,6 +145,7 @@ public class JMessageDialog extends javax.swing.JDialog {
         jlblErrorCode.setText("jlblErrorCode");
         jPanel4.add(jlblErrorCode);
 
+        jlblMessage.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jlblMessage.setText("jlblMessage");
         jlblMessage.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         jlblMessage.setMinimumSize(new java.awt.Dimension(200, 100));
@@ -167,6 +168,9 @@ public class JMessageDialog extends javax.swing.JDialog {
         jPanel3.setLayout(new java.awt.BorderLayout());
 
         jcmdOK.setText(LocalRes.getIntString("button.ok")); // NOI18N
+        jcmdOK.setMaximumSize(new java.awt.Dimension(65, 33));
+        jcmdOK.setMinimumSize(new java.awt.Dimension(65, 33));
+        jcmdOK.setPreferredSize(new java.awt.Dimension(65, 33));
         jcmdOK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jcmdOKActionPerformed(evt);
@@ -175,6 +179,9 @@ public class JMessageDialog extends javax.swing.JDialog {
         jPanel2.add(jcmdOK);
 
         jcmdMore.setText(LocalRes.getIntString("button.information")); // NOI18N
+        jcmdMore.setMaximumSize(new java.awt.Dimension(65, 33));
+        jcmdMore.setMinimumSize(new java.awt.Dimension(65, 33));
+        jcmdMore.setPreferredSize(new java.awt.Dimension(65, 33));
         jcmdMore.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jcmdMoreActionPerformed(evt);
@@ -196,7 +203,9 @@ public class JMessageDialog extends javax.swing.JDialog {
         jcmdMore.setEnabled(false);
         jscrException.setVisible(true);
         setSize(getWidth(), 310);
-        validateTree();
+// JG 25 May 2012 change for JDK 7
+        validate();
+//        validateTree();
         
     }//GEN-LAST:event_jcmdMoreActionPerformed
 

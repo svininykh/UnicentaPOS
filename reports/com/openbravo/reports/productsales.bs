@@ -1,5 +1,5 @@
-//    uniCenta oPOS - touch friendly EPoS
-//    Copyright (c) 2009 uniCenta
+//    uniCenta oPOS - Touch Friendly Point Of Sale
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net
 //
 //    This file is part of uniCenta oPOS
@@ -33,9 +33,14 @@ report.setSentence(
             "WHERE RECEIPTS.ID = TICKETS.ID AND TICKETS.ID = TICKETLINES.TICKET AND TICKETLINES.PRODUCT = PRODUCTS.ID AND ?(QBF_FILTER) " +
             "GROUP BY PRODUCTS.REFERENCE, PRODUCTS.NAME " +
             "ORDER BY PRODUCTS.NAME");
+
 report.addParameter("RECEIPTS.DATENEW");
 report.addParameter("RECEIPTS.DATENEW");
-report.addQBFFilter(new com.openbravo.pos.reports.JParamsDatesInterval());
+
+paramdates = new com.openbravo.pos.reports.JParamsDatesInterval();
+paramdates.setEndDate(com.openbravo.beans.DateUtils.getToday());
+
+report.addQBFFilter(paramdates);
 report.addParameter("PRODUCTS.NAME");
 report.addParameter("PRODUCTS.PRICEBUY");
 report.addParameter("PRODUCTS.PRICESELL");

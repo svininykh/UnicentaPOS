@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -19,12 +19,7 @@
 
 package com.openbravo.pos.admin;
 
-import com.openbravo.data.loader.Datas;
-import com.openbravo.data.loader.SentenceList;
-import com.openbravo.data.loader.SerializerReadClass;
-import com.openbravo.data.loader.Session;
-import com.openbravo.data.loader.StaticSentence;
-import com.openbravo.data.loader.TableDefinition;
+import com.openbravo.data.loader.*;
 import com.openbravo.format.Formats;
 import com.openbravo.pos.forms.AppLocal;
 import com.openbravo.pos.forms.BeanFactoryDataSingle;
@@ -44,6 +39,7 @@ public class DataLogicAdmin extends BeanFactoryDataSingle {
     public DataLogicAdmin() {
     }
     
+    @Override
     public void init(Session s){
         this.s = s;
         

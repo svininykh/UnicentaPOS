@@ -51,9 +51,11 @@ public class AttributeValuesEditor extends javax.swing.JPanel implements EditorR
         this.insertid = insertid;
     }
 
+    @Override
     public void refresh() {
     }
 
+    @Override
     public void writeValueEOF() {
 
         id = null;
@@ -63,6 +65,7 @@ public class AttributeValuesEditor extends javax.swing.JPanel implements EditorR
         jValue.setEnabled(false);
     }
 
+    @Override
     public void writeValueInsert() {
 
         id = UUID.randomUUID().toString();
@@ -72,6 +75,7 @@ public class AttributeValuesEditor extends javax.swing.JPanel implements EditorR
         jValue.setEnabled(true);
     }
 
+    @Override
     public void writeValueEdit(Object value) {
 
         Object[] obj = (Object[]) value;
@@ -83,6 +87,7 @@ public class AttributeValuesEditor extends javax.swing.JPanel implements EditorR
         jValue.setEnabled(true);
     }
 
+    @Override
     public void writeValueDelete(Object value) {
 
         Object[] obj = (Object[]) value;
@@ -94,10 +99,12 @@ public class AttributeValuesEditor extends javax.swing.JPanel implements EditorR
         jValue.setEnabled(false);
     }
 
+    @Override
     public Component getComponent() {
         return this;
     }
 
+    @Override
     public Object createValue() throws BasicException {
         return new Object[] {
             id,
@@ -118,13 +125,15 @@ public class AttributeValuesEditor extends javax.swing.JPanel implements EditorR
         jLabel2 = new javax.swing.JLabel();
         jValue = new javax.swing.JTextField();
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel2.setText(AppLocal.getIntString("label.value")); // NOI18N
+
+        jValue.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 316, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -134,13 +143,12 @@ public class AttributeValuesEditor extends javax.swing.JPanel implements EditorR
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 43, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jValue, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jValue, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 

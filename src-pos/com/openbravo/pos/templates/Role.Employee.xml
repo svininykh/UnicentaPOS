@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- 
     uniCenta oPOS - Touch friendly Point Of Sale
-    Copyright (c) 2009-2011 uniCenta.
+    Copyright (c) 2009-2012 uniCenta.
     http://sourceforge.net/projects/unicentaopos
 
     This file is part of uniCenta oPOS.
@@ -23,6 +23,7 @@
     <class name="com.openbravo.pos.sales.JPanelTicketSales"/>
     <class name="com.openbravo.pos.sales.JPanelTicketEdits"/>
     <class name="com.openbravo.pos.panels.JPanelPayments"/>
+    <class name="com.openbravo.pos.promotion.JPanelPromo"/>
     <class name="sales.EditLines"/>
     <class name="sales.RefundTicket"/>
     <class name="sales.PrintTicket"/>
@@ -38,13 +39,17 @@
     <class name="refund.paper"/>
     <class name="refund.magcard"/>
     <class name="Menu.ChangePassword"/>
+    
+<!-- EPM -->
+  <class name="com.openbravo.pos.epm.JPanelEmployeePresence" />    
+
+  <!-- Section for Additional button scripts -->    
+    <class name="button.refundit"/>
+    <class name="button.sendorder"/>
     <class name="button.print"/>
-<!-- Line Discount -->
+    <class name="button.opendrawer"/>
     <class name="button.linediscount"/>
-<!-- Total Discount -->
-    <!-- <class name="button.totaldiscount"/> -->
-<!-- Refund Line -->
-<!--<class name="button.refundit"/> -->
-<!-- Set Person (Waiter) -->
-    <class name="button.setperson"/>     
+<!--    <class name="button.totaldiscount"/> -->
+<!--    <class name="button.scharge"/> -->
+
 </permissions>

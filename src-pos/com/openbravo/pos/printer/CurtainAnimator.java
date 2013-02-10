@@ -31,6 +31,7 @@ public class CurtainAnimator extends BaseAnimator {
         baseLine2 = DeviceTicket.alignLeft(line2, 20);
     }
     
+    @Override
     public void setTiming(int i) {
         
         int j = i / 2;

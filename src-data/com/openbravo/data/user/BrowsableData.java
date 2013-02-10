@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -19,13 +19,13 @@
 
 package com.openbravo.data.user;
 
+import com.openbravo.basic.BasicException;
+import com.openbravo.data.loader.LocalRes;
 import java.util.*;
 import javax.swing.ListModel;
 import javax.swing.event.EventListenerList;
 import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
-import com.openbravo.basic.BasicException;
-import com.openbravo.data.loader.LocalRes;
 
 public class BrowsableData implements ListModel {
     

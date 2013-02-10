@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -33,13 +33,16 @@ public class NullAnimator implements DisplayAnimator {
         currentLine2 = DeviceTicket.alignLeft(line2, 20);
     }
 
+    @Override
     public void setTiming(int i) {
     }
 
+    @Override
     public String getLine1() {
         return currentLine1;
     }
 
+    @Override
     public String getLine2() {
         return currentLine2;
     }

@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -19,30 +19,26 @@
 
 package com.openbravo.pos.panels;
 
-import com.openbravo.pos.forms.JPanelView;
-import com.openbravo.pos.forms.AppView;
-import com.openbravo.pos.forms.AppLocal;
-import java.awt.*;
-import java.text.ParseException;
-import javax.swing.*;
-import java.util.Date;
-import java.util.UUID;
-import javax.swing.table.*;
-import com.openbravo.data.loader.StaticSentence;
-import com.openbravo.data.loader.SerializerWriteBasic;
-import com.openbravo.format.Formats;
 import com.openbravo.basic.BasicException;
-import com.openbravo.data.loader.Datas;
 import com.openbravo.data.gui.MessageInf;
 import com.openbravo.data.gui.TableRendererBasic;
-import com.openbravo.pos.forms.BeanFactoryApp;
-import com.openbravo.pos.forms.BeanFactoryException;
+import com.openbravo.data.loader.Datas;
+import com.openbravo.data.loader.SerializerWriteBasic;
+import com.openbravo.data.loader.StaticSentence;
+import com.openbravo.format.Formats;
+import com.openbravo.pos.forms.*;
+import com.openbravo.pos.printer.TicketParser;
+import com.openbravo.pos.printer.TicketPrinterException;
 import com.openbravo.pos.scripting.ScriptEngine;
 import com.openbravo.pos.scripting.ScriptException;
 import com.openbravo.pos.scripting.ScriptFactory;
-import com.openbravo.pos.forms.DataLogicSystem;
-import com.openbravo.pos.printer.TicketParser;
-import com.openbravo.pos.printer.TicketPrinterException;
+import java.awt.Dimension;
+import java.text.ParseException;
+import java.util.Date;
+import java.util.UUID;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 
 /**
  *
@@ -63,6 +59,7 @@ public class JPanelCloseMoney extends JPanel implements JPanelView, BeanFactoryA
         initComponents();                   
     }
     
+    @Override
     public void init(AppView app) throws BeanFactoryException {
         
         m_App = app;        
@@ -86,22 +83,27 @@ public class JPanelCloseMoney extends JPanel implements JPanelView, BeanFactoryA
         m_jsalestable.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION); 
     }
     
+    @Override
     public Object getBean() {
         return this;
     }
     
+    @Override
     public JComponent getComponent() {
         return this;
     }
 
+    @Override
     public String getTitle() {
         return AppLocal.getIntString("Menu.CloseTPV");
     }    
     
+    @Override
     public void activate() throws BasicException {
         loadData();
     }   
     
+    @Override
     public boolean deactivate() {
         // se me debe permitir cancelar el deactivate   
         return true;
@@ -176,10 +178,8 @@ public class JPanelCloseMoney extends JPanel implements JPanelView, BeanFactoryA
                 ScriptEngine script = ScriptFactory.getScriptEngine(ScriptFactory.VELOCITY);
                 script.put("payments", m_PaymentsToClose);
                 m_TTP.printTicket(script.eval(sresource).toString());
-            } catch (ScriptException e) {
-                MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotprintticket"), e);
-                msg.show(this);
-            } catch (TicketPrinterException e) {
+// JG 16 May 2012 use multicatch
+            } catch (    ScriptException | TicketPrinterException e) {
                 MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotprintticket"), e);
                 msg.show(this);
             }
@@ -187,12 +187,15 @@ public class JPanelCloseMoney extends JPanel implements JPanelView, BeanFactoryA
     }
 
     private class FormatsPayment extends Formats {
+        @Override
         protected String formatValueInt(Object value) {
             return AppLocal.getIntString("transpayment." + (String) value);
         }   
+        @Override
         protected Object parseValueInt(String value) throws ParseException {
             return value;
         }
+        @Override
         public int getAlignment() {
             return javax.swing.SwingConstants.LEFT;
         }         
@@ -241,19 +244,25 @@ public class JPanelCloseMoney extends JPanel implements JPanelView, BeanFactoryA
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(AppLocal.getIntString("label.datestitle"))); // NOI18N
 
+        jLabel11.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel11.setText(AppLocal.getIntString("label.sequence")); // NOI18N
 
         m_jSequence.setEditable(false);
+        m_jSequence.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         m_jSequence.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel2.setText(AppLocal.getIntString("Label.StartDate")); // NOI18N
 
         m_jMinDate.setEditable(false);
+        m_jMinDate.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         m_jMinDate.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
 
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel3.setText(AppLocal.getIntString("Label.EndDate")); // NOI18N
 
         m_jMaxDate.setEditable(false);
+        m_jMaxDate.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         m_jMaxDate.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -281,14 +290,14 @@ public class JPanelCloseMoney extends JPanel implements JPanelView, BeanFactoryA
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel11)
-                    .addComponent(m_jSequence, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(m_jSequence, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(m_jMinDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3)
-                    .addComponent(m_jMaxDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(m_jMinDate, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(m_jMaxDate, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -303,14 +312,18 @@ public class JPanelCloseMoney extends JPanel implements JPanelView, BeanFactoryA
         m_jTicketTable.setShowVerticalLines(false);
         m_jScrollTableTicket.setViewportView(m_jTicketTable);
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel1.setText(AppLocal.getIntString("Label.Tickets")); // NOI18N
 
         m_jCount.setEditable(false);
+        m_jCount.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         m_jCount.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
 
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel4.setText(AppLocal.getIntString("Label.Cash")); // NOI18N
 
         m_jCash.setEditable(false);
+        m_jCash.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         m_jCash.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
@@ -338,12 +351,12 @@ public class JPanelCloseMoney extends JPanel implements JPanelView, BeanFactoryA
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
-                            .addComponent(m_jCount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(m_jCount, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(m_jCash, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(m_jCash, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(m_jScrollTableTicket, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -351,6 +364,7 @@ public class JPanelCloseMoney extends JPanel implements JPanelView, BeanFactoryA
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(AppLocal.getIntString("label.salestitle"))); // NOI18N
 
         m_jSalesTotal.setEditable(false);
+        m_jSalesTotal.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         m_jSalesTotal.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
 
         m_jsalestable.setFocusable(false);
@@ -360,20 +374,27 @@ public class JPanelCloseMoney extends JPanel implements JPanelView, BeanFactoryA
         m_jScrollSales.setViewportView(m_jsalestable);
 
         m_jSalesTaxes.setEditable(false);
+        m_jSalesTaxes.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         m_jSalesTaxes.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
 
         m_jSalesSubtotal.setEditable(false);
+        m_jSalesSubtotal.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         m_jSalesSubtotal.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
 
         m_jSales.setEditable(false);
+        m_jSales.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         m_jSales.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
 
+        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel5.setText(AppLocal.getIntString("label.sales")); // NOI18N
 
+        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel6.setText(AppLocal.getIntString("label.subtotalcash")); // NOI18N
 
+        jLabel12.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel12.setText(AppLocal.getIntString("label.taxcash")); // NOI18N
 
+        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel7.setText(AppLocal.getIntString("label.totalcash")); // NOI18N
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
@@ -410,24 +431,24 @@ public class JPanelCloseMoney extends JPanel implements JPanelView, BeanFactoryA
                     .addComponent(m_jScrollSales, javax.swing.GroupLayout.Alignment.LEADING, 0, 0, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel6Layout.createSequentialGroup()
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5)
-                            .addComponent(m_jSales, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(m_jSales, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel6)
-                            .addComponent(m_jSalesSubtotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(m_jSalesSubtotal, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel12)
-                            .addComponent(m_jSalesTaxes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(m_jSalesTaxes, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel7)
-                            .addComponent(m_jSalesTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(m_jSalesTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(44, Short.MAX_VALUE))
         );
 
-        m_jCloseCash.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/closecash.png"))); // NOI18N
+        m_jCloseCash.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/calculator.png"))); // NOI18N
         m_jCloseCash.setText(AppLocal.getIntString("Button.CloseCash")); // NOI18N
         m_jCloseCash.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         m_jCloseCash.setIconTextGap(2);
@@ -483,7 +504,7 @@ public class JPanelCloseMoney extends JPanel implements JPanelView, BeanFactoryA
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(m_jCloseCash, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(m_jPrintCash, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(61, Short.MAX_VALUE))
+                .addContainerGap(79, Short.MAX_VALUE))
         );
 
         add(jPanel1, java.awt.BorderLayout.CENTER);

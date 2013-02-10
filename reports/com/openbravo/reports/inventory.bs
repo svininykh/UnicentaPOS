@@ -1,5 +1,5 @@
-//    uniCenta oPOS - touch friendly EPoS
-//    Copyright (c) 2009 uniCenta
+//    uniCenta oPOS - Touch Friendly Point Of Sale
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net
 //
 //    This file is part of uniCenta oPOS
@@ -45,12 +45,14 @@ report.setSentence("SELECT " +
                 "WHERE ?(QBF_FILTER) " +
                 "GROUP BY STOCKCURRENT.LOCATION, LOCATIONS.NAME, PRODUCTS.REFERENCE, PRODUCTS.NAME, PRODUCTS.CATEGORY, CATEGORIES.NAME, PRODUCTS.PRICEBUY, PRODUCTS.PRICESELL, PRODUCTS.STOCKVOLUME, PRODUCTS.STOCKCOST, STOCKLEVEL.STOCKSECURITY, STOCKLEVEL.STOCKMAXIMUM " +
                 "ORDER BY STOCKCURRENT.LOCATION, CATEGORIES.NAME, PRODUCTS.NAME");
+
 report.addParameter("PRODUCTS.NAME");
 report.addParameter("PRODUCTS.PRICEBUY");
 report.addParameter("PRODUCTS.PRICESELL");
 report.addParameter("PRODUCTS.CATEGORY");
 report.addParameter("PRODUCTS.CODE");
 report.addQBFFilter(new com.openbravo.pos.ticket.ProductFilter());
+
 report.addParameter("STOCKCURRENT.LOCATION");
 report.addQBFFilter(new com.openbravo.pos.reports.JParamsLocationWithFirst());
 

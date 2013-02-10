@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -36,14 +36,17 @@ public class CompoundIcon implements Icon {
         m_icon2 = icon2;
     }
     
+    @Override
     public int getIconHeight() {
         return Math.max(m_icon1.getIconHeight(), m_icon2.getIconHeight());
     }
     
+    @Override
     public int getIconWidth() {
         return m_icon1.getIconWidth() + m_icon2.getIconWidth();
     }
     
+    @Override
     public void paintIcon(java.awt.Component c, java.awt.Graphics g, int x, int y) {
         m_icon1.paintIcon(c, g, x, y);
         m_icon2.paintIcon(c, g, x + m_icon1.getIconWidth(), y);

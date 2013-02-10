@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -38,8 +38,9 @@ report.setSentence("SELECT " +
 
 report.addParameter("RECEIPTS.DATENEW");
 report.addParameter("RECEIPTS.DATENEW");
+
 paramdates = new com.openbravo.pos.reports.JParamsDatesInterval();
-paramdates.setStartDate(com.openbravo.beans.DateUtils.getToday());
+paramdates.setEndDate(com.openbravo.beans.DateUtils.getToday());
 report.addQBFFilter(paramdates);
 
 report.addField("TICKET_NO", com.openbravo.data.loader.Datas.STRING);

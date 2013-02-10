@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -19,15 +19,13 @@
 
 package com.openbravo.pos.reports;
 
-import com.openbravo.pos.forms.AppLocal;
-
-import net.sf.jasperreports.engine.JRDataSource;
-import net.sf.jasperreports.engine.JRField;
-import net.sf.jasperreports.engine.JRException;
-
-import com.openbravo.data.loader.BaseSentence;
 import com.openbravo.basic.BasicException;
+import com.openbravo.data.loader.BaseSentence;
 import com.openbravo.data.loader.DataResultSet;
+import com.openbravo.pos.forms.AppLocal;
+import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JRField;
 
 public class JRDataSourceBasic implements JRDataSource {
     
@@ -45,6 +43,7 @@ public class JRDataSourceBasic implements JRDataSource {
         m_fields = fields;
     }
     
+    @Override
     public Object getFieldValue(JRField jrField) throws JRException {
         
         try {
@@ -54,6 +53,7 @@ public class JRDataSourceBasic implements JRDataSource {
         }
     }
     
+    @Override
     public boolean next() throws JRException {
         
         if (SRS == null) {

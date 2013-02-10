@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -19,31 +19,30 @@
 
 package com.openbravo.pos.inventory;
 
-import java.awt.Component;
-import javax.swing.*;
-
-import com.openbravo.pos.forms.AppLocal;
-import java.awt.image.BufferedImage;
-import java.util.List;
-import java.util.UUID;
-import com.openbravo.format.Formats;
 import com.openbravo.basic.BasicException;
 import com.openbravo.data.gui.ComboBoxValModel;
 import com.openbravo.data.gui.JMessageDialog;
 import com.openbravo.data.gui.MessageInf;
 import com.openbravo.data.loader.SentenceExec;
 import com.openbravo.data.loader.SentenceList;
-import com.openbravo.data.user.EditorRecord;
 import com.openbravo.data.user.DirtyManager;
+import com.openbravo.data.user.EditorRecord;
+import com.openbravo.format.Formats;
+import com.openbravo.pos.forms.AppLocal;
 import com.openbravo.pos.forms.AppView;
 import com.openbravo.pos.forms.DataLogicSales;
+import java.awt.Component;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+import javax.swing.JPanel;
 
 /**
  *
  * @author adrianromero
  */
-public class CategoriesEditor extends JPanel implements EditorRecord {
+public final class CategoriesEditor extends JPanel implements EditorRecord {
        
     private SentenceList m_sentcat;
     private ComboBoxValModel m_CategoryModel;
@@ -74,6 +73,7 @@ public class CategoriesEditor extends JPanel implements EditorRecord {
         writeValueEOF();
     }
     
+    @Override
     public void refresh() {
         
         List a;
@@ -91,6 +91,7 @@ public class CategoriesEditor extends JPanel implements EditorRecord {
         m_jCategory.setModel(m_CategoryModel);
     }
     
+    @Override
     public void writeValueEOF() {
         m_id = null;
         m_jName.setText(null);
@@ -102,6 +103,7 @@ public class CategoriesEditor extends JPanel implements EditorRecord {
         m_jCatalogDelete.setEnabled(false);
         m_jCatalogAdd.setEnabled(false);
     }
+    @Override
     public void writeValueInsert() {
         m_id = UUID.randomUUID().toString();
         m_jName.setText(null);
@@ -113,6 +115,7 @@ public class CategoriesEditor extends JPanel implements EditorRecord {
         m_jCatalogDelete.setEnabled(false);
         m_jCatalogAdd.setEnabled(false);
     }
+    @Override
     public void writeValueDelete(Object value) {
         Object[] cat = (Object[]) value;
         m_id = cat[0];
@@ -125,6 +128,7 @@ public class CategoriesEditor extends JPanel implements EditorRecord {
         m_jCatalogDelete.setEnabled(false);
         m_jCatalogAdd.setEnabled(false);
     }    
+    @Override
     public void writeValueEdit(Object value) {
         Object[] cat = (Object[]) value;
         m_id = cat[0];
@@ -138,6 +142,7 @@ public class CategoriesEditor extends JPanel implements EditorRecord {
         m_jCatalogAdd.setEnabled(true);
     }
 
+    @Override
     public Object createValue() throws BasicException {
         
         Object[] cat = new Object[4];
@@ -149,6 +154,7 @@ public class CategoriesEditor extends JPanel implements EditorRecord {
         return cat;
     }    
     
+    @Override
     public Component getComponent() {
         return this;
     }
@@ -174,50 +180,59 @@ public class CategoriesEditor extends JPanel implements EditorRecord {
 
         setLayout(null);
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel2.setText(AppLocal.getIntString("Label.Name")); // NOI18N
         add(jLabel2);
-        jLabel2.setBounds(20, 30, 80, 20);
-        add(m_jName);
-        m_jName.setBounds(100, 30, 180, 20);
+        jLabel2.setBounds(20, 30, 80, 25);
 
+        m_jName.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        add(m_jName);
+        m_jName.setBounds(100, 30, 180, 25);
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel3.setText(AppLocal.getIntString("label.image")); // NOI18N
         add(jLabel3);
-        jLabel3.setBounds(20, 100, 80, 14);
+        jLabel3.setBounds(20, 100, 80, 15);
         add(m_jImage);
-        m_jImage.setBounds(100, 100, 240, 190);
+        m_jImage.setBounds(100, 100, 250, 190);
 
         m_jCatalogAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/editnew.png"))); // NOI18N
         m_jCatalogAdd.setText(AppLocal.getIntString("button.catalogadd")); // NOI18N
         m_jCatalogAdd.setToolTipText("Add Category to Catalogue");
+        m_jCatalogAdd.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         m_jCatalogAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 m_jCatalogAddActionPerformed(evt);
             }
         });
         add(m_jCatalogAdd);
-        m_jCatalogAdd.setBounds(410, 5, 50, 30);
+        m_jCatalogAdd.setBounds(410, 5, 100, 30);
 
-        m_jCatalogDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/sale_delete.png"))); // NOI18N
+        m_jCatalogDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/editdelete.png"))); // NOI18N
         m_jCatalogDelete.setText(AppLocal.getIntString("button.catalogdel")); // NOI18N
         m_jCatalogDelete.setToolTipText("Remove from Catalogue");
+        m_jCatalogDelete.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         m_jCatalogDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 m_jCatalogDeleteActionPerformed(evt);
             }
         });
         add(m_jCatalogDelete);
-        m_jCatalogDelete.setBounds(410, 42, 50, 33);
+        m_jCatalogDelete.setBounds(410, 42, 100, 33);
 
+        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel5.setText(AppLocal.getIntString("label.prodcategory")); // NOI18N
         add(jLabel5);
-        jLabel5.setBounds(20, 60, 70, 14);
-        add(m_jCategory);
-        m_jCategory.setBounds(100, 60, 180, 20);
+        jLabel5.setBounds(20, 60, 80, 25);
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        m_jCategory.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        add(m_jCategory);
+        m_jCategory.setBounds(100, 60, 180, 25);
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel1.setText("In Catalogue?");
         add(jLabel1);
-        jLabel1.setBounds(290, 30, 90, 20);
+        jLabel1.setBounds(290, 30, 100, 20);
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 204, 204));

@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -33,7 +33,7 @@ import java.awt.Component;
  *
  * @author  adrianromero
  */
-public class JParamsText extends javax.swing.JPanel implements ReportEditorCreator {
+public final class JParamsText extends javax.swing.JPanel implements ReportEditorCreator {
     
     private Datas datasvalue;
     private Formats formatsvalue;
@@ -114,21 +114,26 @@ public class JParamsText extends javax.swing.JPanel implements ReportEditorCreat
         }
     }
     
+    @Override
     public void init(AppView app) {
     }
 
+    @Override
     public void activate() throws BasicException {
         txtField.setText(null);
     }
     
+    @Override
     public SerializerWrite getSerializerWrite() {
         return new SerializerWriteBasic(new Datas[] {Datas.OBJECT, datasvalue});
     }
 
+    @Override
     public Component getComponent() {
         return this;
     }
     
+    @Override
     public Object createValue() throws BasicException {
         
         Object value = formatsvalue.parseValue(txtField.getText());
@@ -155,11 +160,14 @@ public class JParamsText extends javax.swing.JPanel implements ReportEditorCreat
         setPreferredSize(new java.awt.Dimension(0, 30));
         setLayout(null);
 
+        lblField.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblField.setText("***");
         add(lblField);
-        lblField.setBounds(20, 10, 120, 14);
+        lblField.setBounds(20, 10, 120, 25);
+
+        txtField.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         add(txtField);
-        txtField.setBounds(140, 10, 200, 18);
+        txtField.setBounds(140, 10, 200, 25);
     }// </editor-fold>//GEN-END:initComponents
     
     

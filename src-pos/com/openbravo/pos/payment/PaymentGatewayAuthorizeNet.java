@@ -18,13 +18,13 @@
 package com.openbravo.pos.payment;
 
 import com.openbravo.data.loader.LocalRes;
+import com.openbravo.pos.forms.AppLocal;
+import com.openbravo.pos.forms.AppProperties;
+import com.openbravo.pos.util.AltEncrypter;
 import java.io.*;
 import java.net.*;
-import java.text.NumberFormat;
 import java.text.DecimalFormat;
-
-import com.openbravo.pos.forms.*;
-import com.openbravo.pos.util.AltEncrypter;
+import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.Map;
 import javax.xml.parsers.ParserConfigurationException;
@@ -66,7 +66,8 @@ public class PaymentGatewayAuthorizeNet implements PaymentGateway {
     @Override
     public void execute(PaymentInfoMagcard payinfo) {
 
-        StringBuffer sb = new StringBuffer();
+// JG 16 May 12 use StringBuilder in place of StringBuilder
+        StringBuilder sb = new StringBuilder();
         try {
             //test -> login:44CWBFp7wh9 / pass:43P7s8qb84CVT9Jx
             sb.append("x_cpversion=1.0");
@@ -142,19 +143,16 @@ public class PaymentGatewayAuthorizeNet implements PaymentGateway {
             connection.setUseCaches(false);
 
             // not necessarily required but fixes a bug with some servers
+            // JG May 12 added try-with-resources
             connection.setRequestProperty("Content-Type","application/x-www-form-urlencoded");
-
-            // POST the data in the string buffer
-            DataOutputStream out = new DataOutputStream(connection.getOutputStream());
-            out.write(sb.toString().getBytes());
-            out.flush();
-            out.close();
-
-            // process and read the gateway response
-            BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-            String returned = in.readLine();
-            
-            in.close(); // fin
+            try (DataOutputStream out = new DataOutputStream(connection.getOutputStream())) {
+                out.write(sb.toString().getBytes());
+                out.flush();
+            }
+            String returned;
+            try (BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
+                returned = in.readLine();
+            }
             
             AuthorizeNetParser anp = new AuthorizeNetParser(returned);
             Map props = anp.splitXML();
@@ -182,10 +180,9 @@ public class PaymentGatewayAuthorizeNet implements PaymentGateway {
                 payinfo.paymentError(anp.getResult(), "");
             }
            
-        } catch (UnsupportedEncodingException eUE) {
+// JG 16 May 12 use multicatch
+        } catch (UnsupportedEncodingException | MalformedURLException eUE) {
             payinfo.paymentError(AppLocal.getIntString("message.paymentexceptionservice"), eUE.getMessage());
-        } catch (MalformedURLException eMURL) {  
-            payinfo.paymentError(AppLocal.getIntString("message.paymentexceptionservice"), eMURL.getMessage());
         } catch(IOException e){
             payinfo.paymentError(AppLocal.getIntString("message.paymenterror"), e.getMessage());
         }
@@ -227,48 +224,63 @@ public class PaymentGatewayAuthorizeNet implements PaymentGateway {
     @Override
     public void endElement(String uri, String localName, String qName) throws SAXException {
         try {
-            if (qName.equals("ResponseCode")) {
-                props.put("ResponseCode", URLDecoder.decode(text, "UTF-8"));
-                text="";
-            } else if (qName.equals("ErrorCode")){
-                numErrors++;
-                props.put("ErrorCode"+Integer.toString(numErrors), URLDecoder.decode(text, "UTF-8"));
-                text = "";
-            } else if (qName.equals("ErrorText")) {
-                props.put("ErrorText"+Integer.toString(numErrors), URLDecoder.decode(text, "UTF-8"));
-                text="";
-            } else if (qName.equals("Code")) {
-                numMessages++;
-                props.put("Code"+Integer.toString(numMessages), URLDecoder.decode(text, "UTF-8"));
-                text = "";
-            } else if (qName.equals("Description")) {
-                props.put("Description"+Integer.toString(numMessages), URLDecoder.decode(text, "UTF-8"));
-                text="";
-            } else if (qName.equals("AuthCode")) {
-                props.put("AuthCode", URLDecoder.decode(text, "UTF-8"));
-                text="";
-            } else if (qName.equals("AVSResultCode")) {
-                props.put("AVSResultCode", URLDecoder.decode(text, "UTF-8"));
-                text="";
-            } else if (qName.equals("CVVResultCode")) {
-                props.put("CVVResultCode", URLDecoder.decode(text, "UTF-8"));
-                text="";
-            } else if (qName.equals("TransID")) {
-                props.put("TransID", URLDecoder.decode(text, "UTF-8"));
-                text="";
-            } else if (qName.equals("RefTransID")) {
-                props.put("RefTransID", URLDecoder.decode(text, "UTF-8"));
-                text="";
-            } else if (qName.equals("TransHash")) {
-                props.put("TransHash", URLDecoder.decode(text, "UTF-8"));
-                text="";
-            } else if (qName.equals("TestMode")) {
-                props.put("TestMode", URLDecoder.decode(text, "UTF-8"));
-                text="";
-            } else if (qName.equals("UserRef")) {
-                props.put("UserRef", URLDecoder.decode(text, "UTF-8"));
-                text="";
-            }
+// JG 16 May 12 use switch
+            switch (qName) {
+                    case "ResponseCode":
+                        props.put("ResponseCode", URLDecoder.decode(text, "UTF-8"));
+                        text="";
+                        break;
+                    case "ErrorCode":
+                        numErrors++;
+                        props.put("ErrorCode"+Integer.toString(numErrors), URLDecoder.decode(text, "UTF-8"));
+                        text = "";
+                        break;
+                    case "ErrorText":
+                        props.put("ErrorText"+Integer.toString(numErrors), URLDecoder.decode(text, "UTF-8"));
+                        text="";
+                        break;
+                    case "Code":
+                        numMessages++;
+                        props.put("Code"+Integer.toString(numMessages), URLDecoder.decode(text, "UTF-8"));
+                        text = "";
+                        break;
+                    case "Description":
+                        props.put("Description"+Integer.toString(numMessages), URLDecoder.decode(text, "UTF-8"));
+                        text="";
+                        break;
+                    case "AuthCode":
+                        props.put("AuthCode", URLDecoder.decode(text, "UTF-8"));
+                        text="";
+                        break;
+                    case "AVSResultCode":
+                        props.put("AVSResultCode", URLDecoder.decode(text, "UTF-8"));
+                        text="";
+                        break;
+                    case "CVVResultCode":
+                        props.put("CVVResultCode", URLDecoder.decode(text, "UTF-8"));
+                        text="";
+                        break;
+                    case "TransID":
+                        props.put("TransID", URLDecoder.decode(text, "UTF-8"));
+                        text="";
+                        break;
+                    case "RefTransID":
+                        props.put("RefTransID", URLDecoder.decode(text, "UTF-8"));
+                        text="";
+                        break;
+                    case "TransHash":
+                        props.put("TransHash", URLDecoder.decode(text, "UTF-8"));
+                        text="";
+                        break;
+                    case "TestMode":
+                        props.put("TestMode", URLDecoder.decode(text, "UTF-8"));
+                        text="";
+                        break;
+                    case "UserRef":
+                        props.put("UserRef", URLDecoder.decode(text, "UTF-8"));
+                        text="";
+                        break;
+                }
         }
         catch(UnsupportedEncodingException eUE){
             result = eUE.getMessage();

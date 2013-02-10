@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -19,11 +19,15 @@
 
 package com.openbravo.data.loader;
 
-import java.io.*;
-import java.util.*;
+import com.openbravo.basic.BasicException;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.Reader;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import com.openbravo.basic.BasicException;
 
 public abstract class BatchSentence extends BaseSentence {
     
@@ -33,7 +37,7 @@ public abstract class BatchSentence extends BaseSentence {
     /** Creates a new instance of BatchSentence */
     public BatchSentence(Session s) {
         m_s = s;
-        m_parameters = new HashMap<String, String>();
+        m_parameters = new HashMap<>();
     }
     
     public void putParameter(String name, String replacement) {
@@ -52,36 +56,45 @@ public abstract class BatchSentence extends BaseSentence {
             m_iIndex = -1;
         }
         
+        @Override
         public Integer getInt(int columnIndex) throws BasicException {
             throw new BasicException(LocalRes.getIntString("exception.nodataset"));
         }
+        @Override
         public String getString(int columnIndex) throws BasicException {
             throw new BasicException(LocalRes.getIntString("exception.nodataset"));
         }
+        @Override
         public Double getDouble(int columnIndex) throws BasicException {
             throw new BasicException(LocalRes.getIntString("exception.nodataset"));
         }
+        @Override
         public Boolean getBoolean(int columnIndex) throws BasicException {
             throw new BasicException(LocalRes.getIntString("exception.nodataset"));
         }
+        @Override
         public java.util.Date getTimestamp(int columnIndex) throws BasicException {
             throw new BasicException(LocalRes.getIntString("exception.nodataset"));
         }
 
         //public java.io.InputStream getBinaryStream(int columnIndex) throws DataException;
+        @Override
         public byte[] getBytes(int columnIndex) throws BasicException {
             throw new BasicException(LocalRes.getIntString("exception.nodataset"));
         }
+        @Override
         public Object getObject(int columnIndex) throws BasicException  {
             throw new BasicException(LocalRes.getIntString("exception.nodataset"));
         }
 
     //    public int getColumnCount() throws DataException;
+        @Override
         public DataField[] getDataField() throws BasicException {
             throw new BasicException(LocalRes.getIntString("exception.nodataset"));
         }        
         
         
+        @Override
         public Object getCurrent() throws BasicException {
             if (m_iIndex < 0 || m_iIndex >= l.size()) {
                 throw new BasicException(LocalRes.getIntString("exception.outofbounds"));
@@ -90,23 +103,29 @@ public abstract class BatchSentence extends BaseSentence {
             }
         }
         
+        @Override
         public boolean next() throws BasicException {
             return ++m_iIndex < l.size();
         }
+        @Override
         public void close() throws BasicException {
         }
+        @Override
         public int updateCount() {
             return 0;
         }
     }
     
+    @Override
     public final void closeExec() throws BasicException {
     }
     
+    @Override
     public final DataResultSet moreResults() throws BasicException {
         return null;
     }
     
+    @Override
     public DataResultSet openExec(Object params) throws BasicException {
 
         BufferedReader br = new BufferedReader(getReader());
@@ -150,7 +169,7 @@ public abstract class BatchSentence extends BaseSentence {
                         // La disparo
                         try {
                             BaseSentence sent;
-                            if (paramlist.size() == 0) {
+                            if (paramlist.isEmpty()) {
                                 sent = new StaticSentence(m_s, buf.toString());
                                 sent.exec();
                             } else {
@@ -191,6 +210,7 @@ public abstract class BatchSentence extends BaseSentence {
             this.l = l;
         }
         
+        @Override
         public void writeValues(DataWrite dp) throws BasicException {
             for (int i = 0; i < l.size(); i++) {
                 Object v = l.get(i);

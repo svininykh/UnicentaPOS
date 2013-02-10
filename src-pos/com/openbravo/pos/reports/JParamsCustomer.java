@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -24,10 +24,10 @@ import com.openbravo.data.loader.Datas;
 import com.openbravo.data.loader.QBFCompareEnum;
 import com.openbravo.data.loader.SerializerWrite;
 import com.openbravo.data.loader.SerializerWriteBasic;
+import com.openbravo.pos.customers.CustomerInfo;
 import com.openbravo.pos.customers.DataLogicCustomers;
 import com.openbravo.pos.customers.JCustomerFinder;
 import com.openbravo.pos.forms.AppLocal;
-import com.openbravo.pos.customers.CustomerInfo;
 import com.openbravo.pos.forms.AppView;
 import java.awt.Component;
 import javax.swing.event.DocumentEvent;
@@ -48,36 +48,44 @@ public class JParamsCustomer extends javax.swing.JPanel implements ReportEditorC
         initComponents();
         
         jTextField1.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
             public void insertUpdate(DocumentEvent e) {
                 currentcustomer = null;
             }
+            @Override
             public void removeUpdate(DocumentEvent e) {
                 currentcustomer = null;
             }
+            @Override
             public void changedUpdate(DocumentEvent e) {
                 currentcustomer = null;
             }
         });
     }
 
+    @Override
     public void init(AppView app) {
         dlCustomers = (DataLogicCustomers) app.getBean("com.openbravo.pos.customers.DataLogicCustomers");
     }
     
+    @Override
     public void activate() throws BasicException {
         
         currentcustomer = null;
         jTextField1.setText(null);        
     }
             
+    @Override
     public SerializerWrite getSerializerWrite() {
         return new SerializerWriteBasic(new Datas[] {Datas.OBJECT, Datas.STRING, Datas.OBJECT, Datas.STRING});
     }
 
+    @Override
     public Component getComponent() {
         return this;
     }
     
+    @Override
     public Object createValue() throws BasicException {
         
         if (currentcustomer == null) {
@@ -107,11 +115,14 @@ public class JParamsCustomer extends javax.swing.JPanel implements ReportEditorC
         setPreferredSize(new java.awt.Dimension(400, 60));
         setLayout(null);
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel1.setText(AppLocal.getIntString("label.customer")); // NOI18N
         add(jLabel1);
-        jLabel1.setBounds(20, 20, 120, 14);
+        jLabel1.setBounds(20, 20, 120, 25);
+
+        jTextField1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         add(jTextField1);
-        jTextField1.setBounds(140, 20, 200, 20);
+        jTextField1.setBounds(140, 20, 200, 25);
 
         btnCustomer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/customer_sml.png"))); // NOI18N
         btnCustomer.setToolTipText("Get Customers");

@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -120,7 +120,7 @@ public class TableDefinition {
     
     public String getListSQL() {
         
-        StringBuffer sent = new StringBuffer();
+        StringBuilder sent = new StringBuilder();
         sent.append("select ");
 
         for (int i = 0; i < fieldname.length; i ++) {
@@ -146,7 +146,7 @@ public class TableDefinition {
     
     public String getDeleteSQL() {
         
-        StringBuffer sent = new StringBuffer();
+        StringBuilder sent = new StringBuilder();
         sent.append("delete from ");
         sent.append(tablename);
         
@@ -169,8 +169,8 @@ public class TableDefinition {
     
     private String getInsertSQL(int[] fieldindx) {
         
-        StringBuffer sent = new StringBuffer();
-        StringBuffer values = new StringBuffer();
+        StringBuilder sent = new StringBuilder();
+        StringBuilder values = new StringBuilder();
         
         sent.append("insert into ");
         sent.append(tablename);
@@ -211,7 +211,7 @@ public class TableDefinition {
     
     private String getUpdateSQL(int[] fieldindx) {
         
-        StringBuffer sent = new StringBuffer();
+        StringBuilder sent = new StringBuilder();
         
         sent.append("update ");
         sent.append(tablename);

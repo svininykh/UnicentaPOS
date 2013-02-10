@@ -1,5 +1,5 @@
-//    uniCenta oPOS - touch friendly EPoS
-//    Copyright (c) 2009 uniCenta
+//    uniCenta oPOS - Touch Friendly Point Of Sale
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net
 //
 //    This file is part of uniCenta oPOS
@@ -26,6 +26,7 @@ report.setResourceBundle("com/openbravo/reports/customers_messages");
 report.setSentence("SELECT ID, TAXID, NAME, ADDRESS, NOTES, CARD, MAXDEBT, CURDATE, CURDEBT " +
                    "FROM CUSTOMERS " +
                    "WHERE VISIBLE = " + app.getSession().DB.TRUE() + " AND ?(QBF_FILTER)");
+
 report.addParameter("ID");
 report.addParameter("NAME");
 report.addQBFFilter(new com.openbravo.pos.reports.JParamsCustomer());

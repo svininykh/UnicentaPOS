@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -36,14 +36,17 @@ public class NullIcon implements Icon {
         m_iHeight = height;
     }
     
+    @Override
     public int getIconHeight() {
         return m_iHeight;
     }
     
+    @Override
     public int getIconWidth() {
         return m_iWidth;
     }
     
+    @Override
     public void paintIcon(java.awt.Component c, java.awt.Graphics g, int x, int y) {
     }
     

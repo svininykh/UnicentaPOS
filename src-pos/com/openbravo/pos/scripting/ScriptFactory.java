@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -36,16 +36,18 @@ public class ScriptFactory {
     }
     
     public static ScriptEngine getScriptEngine(String name) throws ScriptException {
-        if (VELOCITY.equals(name)) {
-            return new ScriptEngineVelocity();
-        } else if (BEANSHELL.equals(name)) {
-            return new ScriptEngineBeanshell();
-//        } else if (RHINO.equals(name)) {
-//            return new ScriptEngineRhino();
-//        } else if (name.startsWith("generic:")) {
-//            return new ScriptEngineGeneric(name.substring(8));            
-        } else {
-            throw new ScriptException("Script engine not found: " + name);
+// JG 16 May use switch
+        switch (name) {
+            case VELOCITY:
+                return new ScriptEngineVelocity();
+            case BEANSHELL:
+                return new ScriptEngineBeanshell();
+    //        } else if (RHINO.equals(name)) {
+    //            return new ScriptEngineRhino();
+    //        } else if (name.startsWith("generic:")) {
+    //            return new ScriptEngineGeneric(name.substring(8));
+            default:
+                throw new ScriptException("Script engine not found: " + name);
         }
     }    
 }

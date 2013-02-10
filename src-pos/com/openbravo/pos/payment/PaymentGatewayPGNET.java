@@ -21,16 +21,8 @@ package com.openbravo.pos.payment;
 import com.openbravo.pos.forms.AppLocal;
 import com.openbravo.pos.forms.AppProperties;
 import com.openbravo.pos.util.AltEncrypter;
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
+import java.io.*;
+import java.net.*;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.HashMap;
@@ -70,9 +62,11 @@ public class PaymentGatewayPGNET implements PaymentGateway {
         
     }
     
+    @Override
     public void execute(PaymentInfoMagcard payinfo) {
 
-        StringBuffer sb = new StringBuffer();
+// JG 16 May 12 use StringBuilder in place of StringBuilder
+        StringBuilder sb = new StringBuilder();
         try {
             
             sb.append("pg_merchant_id=");
@@ -140,13 +134,12 @@ public class PaymentGatewayPGNET implements PaymentGateway {
             connection.setUseCaches(false);
 
             // not necessarily required but fixes a bug with some servers
+// JG 16 May 12 use try-with-resources
             connection.setRequestProperty("Content-Type","application/x-www-form-urlencoded");
-
-            // POST the data in the string buffer
-            DataOutputStream out = new DataOutputStream(connection.getOutputStream());
-            out.write(sb.toString().getBytes());
-            out.flush();
-            out.close();
+            try (DataOutputStream out = new DataOutputStream(connection.getOutputStream())) {
+                out.write(sb.toString().getBytes());
+                out.flush();
+            }
 
             // process and read the gateway response
             BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
@@ -186,10 +179,9 @@ public class PaymentGatewayPGNET implements PaymentGateway {
                 payinfo.paymentError(AppLocal.getIntString("message.paymenterror"), sCode);
             }
             
-        } catch (UnsupportedEncodingException eUE) {
+// JG 16 May 12 use multicatch
+        } catch (UnsupportedEncodingException | MalformedURLException eUE) {
             payinfo.paymentError(AppLocal.getIntString("message.paymentexceptionservice"), eUE.getMessage());
-        } catch (MalformedURLException eMURL) {
-            payinfo.paymentError(AppLocal.getIntString("message.paymentexceptionservice"), eMURL.getMessage());
         } catch(IOException e){
             payinfo.paymentError(AppLocal.getIntString("message.paymenterror"), e.getMessage());
         }

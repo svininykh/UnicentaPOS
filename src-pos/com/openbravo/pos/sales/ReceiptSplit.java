@@ -157,6 +157,7 @@ public class ReceiptSplit extends javax.swing.JDialog {
 
         jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.LINE_AXIS));
 
+        jPanel5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jPanel5.setLayout(new java.awt.BorderLayout());
         jPanel1.add(jPanel5);
 

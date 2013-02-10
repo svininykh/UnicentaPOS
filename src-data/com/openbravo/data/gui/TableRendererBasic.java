@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -19,11 +19,11 @@
 
 package com.openbravo.data.gui;
 
+import com.openbravo.format.Formats;
 import java.awt.Component;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
-import com.openbravo.format.Formats;
 
 public class TableRendererBasic extends DefaultTableCellRenderer {
     
@@ -34,6 +34,7 @@ public class TableRendererBasic extends DefaultTableCellRenderer {
         m_aFormats = aFormats;
     }
     
+    @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column){
 
         JLabel aux = (JLabel) super.getTableCellRendererComponent(table, null, isSelected, hasFocus, row, column);

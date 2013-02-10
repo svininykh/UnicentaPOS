@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -22,30 +22,25 @@ package com.openbravo.pos.printer.printer;
 import com.openbravo.data.gui.JMessageDialog;
 import com.openbravo.data.gui.MessageInf;
 import com.openbravo.pos.forms.AppLocal;
-import java.awt.Toolkit;
-import java.awt.image.BufferedImage;
-import javax.swing.JComponent;
 import com.openbravo.pos.printer.DevicePrinter;
 import com.openbravo.pos.printer.ticket.BasicTicket;
 import com.openbravo.pos.printer.ticket.BasicTicketForPrinter;
 import com.openbravo.pos.util.ReportUtils;
 import com.openbravo.pos.util.SelectPrinter;
 import java.awt.Component;
+import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.print.Doc;
-import javax.print.DocFlavor;
-import javax.print.DocPrintJob;
-import javax.print.PrintException;
-import javax.print.PrintService;
-import javax.print.SimpleDoc;
+import javax.print.*;
 import javax.print.attribute.HashPrintRequestAttributeSet;
 import javax.print.attribute.PrintRequestAttributeSet;
 import javax.print.attribute.standard.JobName;
 import javax.print.attribute.standard.Media;
 import javax.print.attribute.standard.MediaSizeName;
 import javax.print.attribute.standard.OrientationRequested;
+import javax.swing.JComponent;
 
 /**
  *Class DevicePrinterPrinter is responsible for printing tickets using system <br>
@@ -59,7 +54,7 @@ import javax.print.attribute.standard.OrientationRequested;
  */
 public class DevicePrinterPrinter implements DevicePrinter {
 
-    private static Logger logger = Logger.getLogger("com.openbravo.pos.printer.printer.DevicePrinterPrinter");
+    private static final Logger logger = Logger.getLogger("com.openbravo.pos.printer.printer.DevicePrinterPrinter");
 
     private Component parent;
     /*name of a printer*/
@@ -89,8 +84,9 @@ public class DevicePrinterPrinter implements DevicePrinter {
     private int imageable_x;
     private int imageable_y;
     private Media media;
-
-    private static final HashMap<String, MediaSizeName> mediasizenamemap = new HashMap<String, MediaSizeName>();
+    
+    // JG 16 May 12 use multicatch
+    private static final HashMap<String, MediaSizeName> mediasizenamemap = new HashMap<>();
 
     /** 
      * Creates a new instance of DevicePrinterPrinter

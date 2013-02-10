@@ -42,7 +42,7 @@ public class Table {
     }
     
     public String getListSQL() {
-        StringBuffer sent = new StringBuffer();
+        StringBuilder sent = new StringBuilder();
         sent.append("select ");
 
         for (int i = 0; i < columns.length; i ++) {
@@ -60,8 +60,8 @@ public class Table {
     
     public String getInsertSQL() {
         
-        StringBuffer sent = new StringBuffer();
-        StringBuffer values = new StringBuffer();
+        StringBuilder sent = new StringBuilder();
+        StringBuilder values = new StringBuilder();
         
         sent.append("insert into ");
         sent.append(name);
@@ -85,8 +85,8 @@ public class Table {
     
     public String getUpdateSQL() {
         
-        StringBuffer values = new StringBuffer();
-        StringBuffer filter = new StringBuffer();
+        StringBuilder values = new StringBuilder();
+        StringBuilder filter = new StringBuilder();
         
         for (int i = 0; i < columns.length; i ++) {
             if (columns[i].isPK()) {
@@ -111,7 +111,7 @@ public class Table {
     
     public String getDeleteSQL() {
         
-        StringBuffer filter = new StringBuffer();
+        StringBuilder filter = new StringBuilder();
 
         for (int i = 0; i < columns.length; i ++) {
             if (columns[i].isPK()) {

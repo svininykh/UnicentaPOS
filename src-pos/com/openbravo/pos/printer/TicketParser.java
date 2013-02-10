@@ -20,16 +20,20 @@
 package com.openbravo.pos.printer;
 
 import com.openbravo.data.loader.LocalRes;
-import java.io.*;
+import com.openbravo.pos.forms.DataLogicSystem;
+import java.applet.Applet;
+import java.applet.AudioClip;
 import java.awt.image.BufferedImage;
-import java.applet.*;
-
-import org.xml.sax.*;
-import org.xml.sax.helpers.DefaultHandler;
-import javax.xml.parsers.SAXParserFactory;
+import java.io.IOException;
+import java.io.Reader;
+import java.io.StringReader;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
-import com.openbravo.pos.forms.DataLogicSystem;
+import javax.xml.parsers.SAXParserFactory;
+import org.xml.sax.Attributes;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.helpers.DefaultHandler;
 
 public class TicketParser extends DefaultHandler {
     
@@ -38,7 +42,7 @@ public class TicketParser extends DefaultHandler {
     private DeviceTicket m_printer;
     private DataLogicSystem m_system;
     
-    private StringBuffer text;
+    private StringBuilder text;
     
     private String bctype;
     private String bcposition;
@@ -46,7 +50,7 @@ public class TicketParser extends DefaultHandler {
     private int m_iTextLength;
     private int m_iTextStyle;
     
-    private StringBuffer m_sVisorLine;
+    private StringBuilder m_sVisorLine;
     private int m_iVisorAnimation;
     private String m_sVisorLine1;
     private String m_sVisorLine2;
@@ -112,13 +116,13 @@ public class TicketParser extends DefaultHandler {
     
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException{
-        //System.out.println("uri:"+uri+"/ localname:"+localName+"/ qname:"+qName+"/ attrb:"+attributes);
+        
         switch (m_iOutputType) {
         case OUTPUT_NONE:
             if ("opendrawer".equals(qName)) {
                 m_printer.getDevicePrinter(readString(attributes.getValue("printer"), "1")).openDrawer();
             } else if ("play".equals(qName)) {
-                 text = new StringBuffer();    
+                 text = new StringBuilder();    
             } else if ("ticket".equals(qName)) {
                 m_iOutputType = OUTPUT_TICKET;
                 m_oOutputPrinter = m_printer.getDevicePrinter(readString(attributes.getValue("printer"), "1"));
@@ -151,15 +155,15 @@ public class TicketParser extends DefaultHandler {
             break;
         case OUTPUT_TICKET:
             if ("image".equals(qName)){
-                text = new StringBuffer();           
+                text = new StringBuilder();           
             } else if ("barcode".equals(qName)) {
-                text = new StringBuffer();
+                text = new StringBuilder();
                 bctype = attributes.getValue("type");
                 bcposition = attributes.getValue("position");
             } else if ("line".equals(qName)) {
                 m_oOutputPrinter.beginLine(parseInt(attributes.getValue("size"), DevicePrinter.SIZE_0));
             } else if ("text".equals(qName)) {
-                text = new StringBuffer();
+                text = new StringBuilder();
                 m_iTextStyle = ("true".equals(attributes.getValue("bold")) ? DevicePrinter.STYLE_BOLD : DevicePrinter.STYLE_PLAIN)
                              | ("true".equals(attributes.getValue("underline")) ? DevicePrinter.STYLE_UNDERLINE : DevicePrinter.STYLE_PLAIN);
                 String sAlign = attributes.getValue("align");
@@ -175,13 +179,13 @@ public class TicketParser extends DefaultHandler {
             break;
         case OUTPUT_DISPLAY:
             if ("line".equals(qName)) { // line 1 or 2 of the display
-                m_sVisorLine = new StringBuffer();
+                m_sVisorLine = new StringBuilder();
             } else if ("line1".equals(qName)) { // linea 1 del visor
-                m_sVisorLine = new StringBuffer();
+                m_sVisorLine = new StringBuilder();
             } else if ("line2".equals(qName)) { // linea 2 del visor
-                m_sVisorLine = new StringBuffer();
+                m_sVisorLine = new StringBuilder();
             } else if ("text".equals(qName)) {
-                text = new StringBuffer();
+                text = new StringBuilder();
                 String sAlign = attributes.getValue("align");
                 if ("right".equals(sAlign)) {
                     m_iTextAlign = DevicePrinter.ALIGN_RIGHT;
@@ -195,22 +199,21 @@ public class TicketParser extends DefaultHandler {
             break;
         case OUTPUT_FISCAL:
             if ("line".equals(qName)) {
-                text = new StringBuffer();   
+                text = new StringBuilder();   
                 m_dValue1 = parseDouble(attributes.getValue("price"));
                 m_dValue2 = parseDouble(attributes.getValue("units"), 1.0);
                 attribute3 = parseInt(attributes.getValue("tax"));
                 
             } else if ("message".equals(qName)) {
-                text = new StringBuffer();               
+                text = new StringBuilder();               
             } else if ("total".equals(qName)) {
-                text = new StringBuffer();    
+                text = new StringBuilder();    
                 m_dValue1 = parseDouble(attributes.getValue("paid"));
             }
             break;
         }
     } 
     
-    @Override
     public void endElement(String uri, String localName, String qName) throws SAXException {
 
         switch (m_iOutputType) {

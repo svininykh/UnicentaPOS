@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -20,22 +20,7 @@
 package com.openbravo.pos.customers;
 
 import com.openbravo.basic.BasicException;
-import com.openbravo.data.loader.DataParams;
-import com.openbravo.data.loader.DataRead;
-import com.openbravo.data.loader.Datas;
-import com.openbravo.data.loader.PreparedSentence;
-import com.openbravo.data.loader.QBFBuilder;
-import com.openbravo.data.loader.SentenceExec;
-import com.openbravo.data.loader.SentenceExecTransaction;
-import com.openbravo.data.loader.SentenceList;
-import com.openbravo.data.loader.SerializerRead;
-import com.openbravo.data.loader.SerializerReadBasic;
-import com.openbravo.data.loader.SerializerWriteBasic;
-import com.openbravo.data.loader.SerializerWriteBasicExt;
-import com.openbravo.data.loader.SerializerWriteParams;
-import com.openbravo.data.loader.Session;
-import com.openbravo.data.loader.StaticSentence;
-import com.openbravo.data.loader.TableDefinition;
+import com.openbravo.data.loader.*;
 import com.openbravo.format.Formats;
 import com.openbravo.pos.forms.AppLocal;
 import com.openbravo.pos.forms.BeanFactoryDataSingle;
@@ -50,6 +35,7 @@ public class DataLogicCustomers extends BeanFactoryDataSingle {
     private TableDefinition tcustomers;
     private static Datas[] customerdatas = new Datas[] {Datas.STRING, Datas.TIMESTAMP, Datas.TIMESTAMP, Datas.STRING, Datas.STRING, Datas.STRING, Datas.STRING, Datas.INT, Datas.BOOLEAN, Datas.STRING};
     
+    @Override
     public void init(Session s){
         
         this.s = s;
@@ -76,17 +62,19 @@ public class DataLogicCustomers extends BeanFactoryDataSingle {
         
     }
     
-    // CustomerList list
+    // JG 20 Sept 12 extended for Postal - CustomerList list 
     public SentenceList getCustomerList() {
         return new StaticSentence(s
-            , new QBFBuilder("SELECT ID, TAXID, SEARCHKEY, NAME FROM CUSTOMERS WHERE VISIBLE = " + s.DB.TRUE() + " AND ?(QBF_FILTER) ORDER BY NAME", new String[] {"TAXID", "SEARCHKEY", "NAME"})
-            , new SerializerWriteBasic(new Datas[] {Datas.OBJECT, Datas.STRING, Datas.OBJECT, Datas.STRING, Datas.OBJECT, Datas.STRING})
+            , new QBFBuilder("SELECT ID, TAXID, SEARCHKEY, NAME, POSTAL FROM CUSTOMERS WHERE VISIBLE = " + s.DB.TRUE() + " AND ?(QBF_FILTER) ORDER BY NAME", new String[] {"TAXID", "SEARCHKEY", "NAME", "POSTAL"})
+            , new SerializerWriteBasic(new Datas[] {Datas.OBJECT, Datas.STRING, Datas.OBJECT, Datas.STRING, Datas.OBJECT, Datas.STRING, Datas.OBJECT, Datas.STRING})
             , new SerializerRead() {
+            @Override
                     public Object readValues(DataRead dr) throws BasicException {
                         CustomerInfo c = new CustomerInfo(dr.getString(1));
                         c.setTaxid(dr.getString(2));
                         c.setSearchkey(dr.getString(3));
                         c.setName(dr.getString(4));
+                        c.setPostal(dr.getString(5));
                         return c;
                     }                
                 });
@@ -97,7 +85,8 @@ public class DataLogicCustomers extends BeanFactoryDataSingle {
         return new PreparedSentence(s
                 , "UPDATE CUSTOMERS SET NOTES = ? WHERE ID = ?"
                 , SerializerWriteParams.INSTANCE      
-                ).exec(new DataParams() { public void writeValues() throws BasicException {
+                ).exec(new DataParams() {@Override
+ public void writeValues() throws BasicException {
                         setString(1, customer.getNotes());
                         setString(2, customer.getId());
                 }});        
@@ -114,6 +103,7 @@ public class DataLogicCustomers extends BeanFactoryDataSingle {
     
     public final SentenceExec getReservationsUpdate() {
         return new SentenceExecTransaction(s) {
+            @Override
             public int execInTransaction(Object params) throws BasicException {  
     
                 new PreparedSentence(s
@@ -133,6 +123,7 @@ public class DataLogicCustomers extends BeanFactoryDataSingle {
     
     public final SentenceExec getReservationsDelete() {
         return new SentenceExecTransaction(s) {
+            @Override
             public int execInTransaction(Object params) throws BasicException {  
     
                 new PreparedSentence(s
@@ -147,6 +138,7 @@ public class DataLogicCustomers extends BeanFactoryDataSingle {
     
     public final SentenceExec getReservationsInsert() {
         return new SentenceExecTransaction(s) {
+            @Override
             public int execInTransaction(Object params) throws BasicException {  
     
                 int i = new PreparedSentence(s

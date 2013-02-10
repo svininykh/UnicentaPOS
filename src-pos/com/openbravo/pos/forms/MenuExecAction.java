@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -41,6 +41,7 @@ public class MenuExecAction extends AbstractAction {
         m_App = app;
         m_sMyView = sMyView;
     }
+    @Override
     public void actionPerformed(ActionEvent evt) {
 
         m_App.getAppUserView().executeTask(m_sMyView);            

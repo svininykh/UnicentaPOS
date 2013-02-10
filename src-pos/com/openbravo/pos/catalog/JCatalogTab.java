@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -19,10 +19,12 @@
 
 package com.openbravo.pos.catalog;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
 import com.openbravo.beans.JFlowPanel;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Insets;
+import java.awt.event.ActionListener;
+import javax.swing.*;
 
 /**
  *
@@ -45,6 +47,7 @@ public class JCatalogTab extends javax.swing.JPanel {
         add(scroll, BorderLayout.CENTER);
     }
     
+    @Override
     public void setEnabled(boolean value) {
         flowpanel.setEnabled(value);
         super.setEnabled(value);
@@ -72,6 +75,7 @@ public class JCatalogTab extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         setLayout(new java.awt.BorderLayout());
     }// </editor-fold>//GEN-END:initComponents
     

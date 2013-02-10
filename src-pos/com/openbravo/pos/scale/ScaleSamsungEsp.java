@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -51,6 +51,7 @@ public class ScaleSamsungEsp implements Scale, SerialPortEventListener {
         m_dWeightDecimals = 1.0;
     }
     
+    @Override
     public Double readWeight() {
         
         synchronized(this) {
@@ -115,19 +116,11 @@ public class ScaleSamsungEsp implements Scale, SerialPortEventListener {
                 m_CommPortPrinter.setSerialPortParams(4800, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_ODD); // Configuramos el puerto
             }
             m_out.write(data);
-        } catch (NoSuchPortException e) {
-            e.printStackTrace();
-        } catch (PortInUseException e) {
-            e.printStackTrace();
-        } catch (UnsupportedCommOperationException e) {
-            e.printStackTrace();
-        } catch (TooManyListenersException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (NoSuchPortException | PortInUseException | UnsupportedCommOperationException | TooManyListenersException | IOException e) {
         }        
     }
     
+    @Override
     public void serialEvent(SerialPortEvent e) {
 
 	// Determine type of event.

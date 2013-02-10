@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -37,13 +37,15 @@ public class PrintItemLine implements PrintItem {
         this.font = font;
         this.fontheight = fontheight;
 
-        m_atext = new ArrayList<StyledText>();
+// JG 16 May 12 use diamond inference
+        m_atext = new ArrayList<>();
     }
 
     public void addText(int style, String text) {
         m_atext.add(new StyledText(style, text));
     }
 
+    @Override
     public void draw(Graphics2D g, int x, int y, int width) {
 
         MyPrinterState ps = new MyPrinterState(textsize);
@@ -56,6 +58,7 @@ public class PrintItemLine implements PrintItem {
         }
     }
 
+    @Override
     public int getHeight() {
         return fontheight * MyPrinterState.getLineMult(textsize);
     }

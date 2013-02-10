@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -20,9 +20,10 @@
 package com.openbravo.pos.printer.escpos;
 
 // import javax.comm.*; // Java comm library
-import gnu.io.*; // RXTX comm library
-import java.io.*;
-import com.openbravo.pos.printer.*;
+import com.openbravo.pos.printer.TicketPrinterException;
+import gnu.io.*;
+import java.io.IOException;
+import java.io.OutputStream;
 
 public class PrinterWritterRXTX extends PrinterWritter /* implements SerialPortEventListener */ {
     
@@ -38,6 +39,7 @@ public class PrinterWritterRXTX extends PrinterWritter /* implements SerialPortE
         m_out = null; 
     }
     
+    @Override
     protected void internalWrite(byte[] data) {
         try {  
             if (m_out == null) {
@@ -59,17 +61,13 @@ public class PrinterWritterRXTX extends PrinterWritter /* implements SerialPortE
                 }
             }
             m_out.write(data);
-        } catch (NoSuchPortException e) {
-            System.err.println(e);
-        } catch (PortInUseException e) {
-            System.err.println(e);
-        } catch (UnsupportedCommOperationException e) {
-            System.err.println(e);
-        } catch (IOException e) {
+// JG 16 May 12 use multicatch
+        } catch (NoSuchPortException | PortInUseException | UnsupportedCommOperationException | IOException e) {
             System.err.println(e);
         }      
     }
     
+    @Override
     protected void internalFlush() {
         try {  
             if (m_out != null) {
@@ -80,6 +78,7 @@ public class PrinterWritterRXTX extends PrinterWritter /* implements SerialPortE
         }    
     }
     
+    @Override
     protected void internalClose() {
         try {  
             if (m_out != null) {

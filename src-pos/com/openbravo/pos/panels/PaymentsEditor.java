@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -19,8 +19,6 @@
 
 package com.openbravo.pos.panels;
 
-import java.awt.Component;
-import java.util.UUID;
 import com.openbravo.basic.BasicException;
 import com.openbravo.data.gui.ComboBoxValModel;
 import com.openbravo.data.loader.IKeyed;
@@ -28,14 +26,16 @@ import com.openbravo.data.user.DirtyManager;
 import com.openbravo.data.user.EditorRecord;
 import com.openbravo.pos.forms.AppLocal;
 import com.openbravo.pos.forms.AppView;
+import java.awt.Component;
 import java.util.Date;
+import java.util.UUID;
 
 
 /**
  *
  * @author adrianromero
  */
-public class PaymentsEditor extends javax.swing.JPanel implements EditorRecord {
+public final class PaymentsEditor extends javax.swing.JPanel implements EditorRecord {
     
     private ComboBoxValModel m_ReasonModel;
     
@@ -67,6 +67,7 @@ public class PaymentsEditor extends javax.swing.JPanel implements EditorRecord {
         writeValueEOF();
     }
     
+    @Override
     public void writeValueEOF() {
         m_sId = null;
         m_sPaymentId = null;
@@ -80,6 +81,7 @@ public class PaymentsEditor extends javax.swing.JPanel implements EditorRecord {
 
     }  
     
+    @Override
     public void writeValueInsert() {
 
         m_sId = null;
@@ -95,6 +97,7 @@ public class PaymentsEditor extends javax.swing.JPanel implements EditorRecord {
         jNotes.setText(m_sNotes);
     }
     
+    @Override
     public void writeValueDelete(Object value) {
         Object[] payment = (Object[]) value;
         m_sId = (String) payment[0];
@@ -108,6 +111,7 @@ public class PaymentsEditor extends javax.swing.JPanel implements EditorRecord {
         jNotes.setEnabled(false);
     }
     
+    @Override
     public void writeValueEdit(Object value) {
         Object[] payment = (Object[]) value;
         m_sId = (String) payment[0];
@@ -122,6 +126,7 @@ public class PaymentsEditor extends javax.swing.JPanel implements EditorRecord {
         jNotes.setEnabled(false);
     }
     
+    @Override
     public Object createValue() throws BasicException {
 //JG Modified Array + 1 - July 2011
         Object[] payment = new Object[7];
@@ -140,10 +145,12 @@ public class PaymentsEditor extends javax.swing.JPanel implements EditorRecord {
         return payment;
     }
     
+    @Override
     public Component getComponent() {
         return this;
     }
     
+    @Override
     public void refresh() {
     }  
     
@@ -168,6 +175,7 @@ public class PaymentsEditor extends javax.swing.JPanel implements EditorRecord {
             m_sKey = key;
             m_sText = text;
         }
+        @Override
         public Object getKey() {
             return m_sKey;
         }
@@ -183,9 +191,11 @@ public class PaymentsEditor extends javax.swing.JPanel implements EditorRecord {
         public PaymentReasonPositive(String key, String text) {
             super(key, text);
         }
+        @Override
         public Double positivize(Double d) {
             return d;
         }
+        @Override
         public Double addSignum(Double d) {
             if (d == null) {
                 return null;
@@ -200,9 +210,11 @@ public class PaymentsEditor extends javax.swing.JPanel implements EditorRecord {
         public PaymentReasonNegative(String key, String text) {
             super(key, text);
         }
+        @Override
         public Double positivize(Double d) {
             return d == null ? null : new Double(-d.doubleValue());
         }
+        @Override
         public Double addSignum(Double d) {
             if (d == null) {
                 return null;
@@ -233,12 +245,18 @@ public class PaymentsEditor extends javax.swing.JPanel implements EditorRecord {
 
         setLayout(new java.awt.BorderLayout());
 
+        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel5.setText(AppLocal.getIntString("label.paymentreason")); // NOI18N
 
+        m_jreason.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         m_jreason.setFocusable(false);
 
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel3.setText(AppLocal.getIntString("label.paymenttotal")); // NOI18N
 
+        jTotal.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+
+        jNotes.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jNotes.setToolTipText("Enter a Comment");
         jNotes.setMinimumSize(new java.awt.Dimension(100, 25));
         jNotes.setPreferredSize(new java.awt.Dimension(100, 25));
@@ -269,15 +287,15 @@ public class PaymentsEditor extends javax.swing.JPanel implements EditorRecord {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(m_jreason, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(m_jreason, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
+                    .addComponent(jTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jNotes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(282, Short.MAX_VALUE))
+                .addComponent(jNotes, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(281, Short.MAX_VALUE))
         );
 
         jNotes.getAccessibleContext().setAccessibleDescription(null);
@@ -285,6 +303,12 @@ public class PaymentsEditor extends javax.swing.JPanel implements EditorRecord {
         add(jPanel3, java.awt.BorderLayout.CENTER);
 
         jPanel2.setLayout(new java.awt.BorderLayout());
+
+        m_jKeys.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                m_jKeysPropertyChange(evt);
+            }
+        });
         jPanel2.add(m_jKeys, java.awt.BorderLayout.NORTH);
 
         add(jPanel2, java.awt.BorderLayout.LINE_END);
@@ -293,6 +317,10 @@ public class PaymentsEditor extends javax.swing.JPanel implements EditorRecord {
 private void jNotesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jNotesActionPerformed
 // TODO add your handling code here:
 }//GEN-LAST:event_jNotesActionPerformed
+
+    private void m_jKeysPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_m_jKeysPropertyChange
+        // TODO add your handling code here:
+    }//GEN-LAST:event_m_jKeysPropertyChange
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

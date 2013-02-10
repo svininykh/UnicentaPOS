@@ -21,11 +21,7 @@ package com.openbravo.pos.inventory;
 
 import com.openbravo.basic.BasicException;
 import com.openbravo.data.loader.Datas;
-import com.openbravo.data.model.Column;
-import com.openbravo.data.model.Field;
-import com.openbravo.data.model.PrimaryKey;
-import com.openbravo.data.model.Row;
-import com.openbravo.data.model.Table;
+import com.openbravo.data.model.*;
 import com.openbravo.data.user.EditorRecord;
 import com.openbravo.format.Formats;
 import com.openbravo.pos.forms.AppLocal;
@@ -43,6 +39,7 @@ public class AttributeUsePanel extends JPanelTable2 {
     private AttributeUseEditor editor;
     private AttributeSetFilter filter;
 
+    @Override
     protected void init() {
 
         filter = new AttributeSetFilter();
@@ -88,6 +85,7 @@ public class AttributeUsePanel extends JPanelTable2 {
         return filter.getComponent();
     }
 
+    @Override
     public EditorRecord getEditor() {
         return editor;
     }
@@ -100,6 +98,7 @@ public class AttributeUsePanel extends JPanelTable2 {
         bd.actionLoad();
     }
 
+    @Override
     public String getTitle() {
         return AppLocal.getIntString("Menu.AttributeUse");
     }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
     uniCenta oPOS - Touch friendly Point Of Sale
-    Copyright (c) 2009-2011 uniCenta.
+    Copyright (c) 2009-2012 uniCenta.
     http://sourceforge.net/projects/unicentaopos
 
     This file is part of uniCenta oPOS.
@@ -27,3 +27,10 @@
     <column name="label.tax" width="50" align="right" value="${ticketline.printTaxRate()}"/>
     <column name="label.value" width="100" align="right" value="${ticketline.printValue()}"/>
 </line>
+
+<!-- Display and show value of the sale including tax:
+<column name="label.price" width="100" align="right" value="${ticketline.printValue()}"/>
+
+Display and show value of the sale excluding tax:
+<column name="label.value" width="100" align="right" value="${ticketline.printSubValue()}"/>
+-->

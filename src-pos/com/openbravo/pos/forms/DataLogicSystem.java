@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -19,18 +19,16 @@
 
 package com.openbravo.pos.forms;
 
-import java.awt.image.BufferedImage;
-import java.io.*;
-import java.util.List;
-import java.util.Properties;
-import java.util.UUID;
-import javax.imageio.ImageIO;
 import com.openbravo.basic.BasicException;
 import com.openbravo.data.loader.*;
 import com.openbravo.format.Formats;
 import com.openbravo.pos.util.ThumbNailBuilder;
-import java.util.HashMap;
-import java.util.Map;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.*;
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
 /**
@@ -65,6 +63,7 @@ public class DataLogicSystem extends BeanFactoryDataSingle {
     public DataLogicSystem() {            
     }
     
+    @Override
     public void init(Session s){
 
         m_sInitScript = "/com/openbravo/pos/scripts/" + s.DB.getName();
@@ -74,6 +73,7 @@ public class DataLogicSystem extends BeanFactoryDataSingle {
          
         final ThumbNailBuilder tnb = new ThumbNailBuilder(32, 32, "com/openbravo/images/sysadmin.png");        
         peopleread = new SerializerRead() {
+            @Override
             public Object readValues(DataRead dr) throws BasicException {
                 return new AppUser(
                         dr.getString(1),
@@ -143,11 +143,10 @@ public class DataLogicSystem extends BeanFactoryDataSingle {
         return m_sInitScript;
     }
     
-//    public abstract BaseSentence getShutdown();
-    
     public final String findVersion() throws BasicException {
         return (String) m_version.find(AppLocal.APP_ID);
     }
+    
     public final void execDummy() throws BasicException {
         m_dummy.exec();
     }
@@ -172,7 +171,8 @@ public class DataLogicSystem extends BeanFactoryDataSingle {
     }
     
     public final void resetResourcesCache() {
-        resourcescache = new HashMap<String, byte[]>();      
+// JG 16 May use multicatch
+        resourcescache = new HashMap<>();      
     }
     
 //    private final byte[] getResource(String name) {

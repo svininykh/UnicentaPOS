@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -19,14 +19,17 @@
 
 package com.openbravo.pos.inventory;
 
-import java.awt.*;
-import javax.swing.JFrame;
-import javax.swing.ListModel;
 import com.openbravo.data.gui.MessageInf;
 import com.openbravo.data.user.BrowsableEditableData;
 import com.openbravo.pos.forms.AppLocal;
 import com.openbravo.pos.scanpal2.DeviceScanner;
 import com.openbravo.pos.scanpal2.DeviceScannerException;
+import java.awt.Component;
+import java.awt.Dialog;
+import java.awt.Frame;
+import java.awt.Window;
+import javax.swing.JFrame;
+import javax.swing.ListModel;
 
 /**
  *
@@ -127,9 +130,10 @@ public class JDlgUploadProducts extends javax.swing.JDialog {
 
         jPanel1.setLayout(null);
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel1.setText(AppLocal.getIntString("message.preparescanner")); // NOI18N
         jPanel1.add(jLabel1);
-        jLabel1.setBounds(20, 30, 420, 14);
+        jLabel1.setBounds(20, 30, 420, 15);
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 

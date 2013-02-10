@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -19,60 +19,49 @@
 
 package com.openbravo.pos.sales;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.util.Date;
-
-import com.openbravo.data.gui.ComboBoxValModel;
-import com.openbravo.data.gui.MessageInf;
-import com.openbravo.pos.printer.*;
-
-import com.openbravo.pos.forms.JPanelView;
-import com.openbravo.pos.forms.AppView;
-import com.openbravo.pos.forms.AppLocal;
-import com.openbravo.pos.panels.JProductFinder;
-import com.openbravo.pos.scale.ScaleException;
-import com.openbravo.pos.payment.JPaymentSelect;
 import com.openbravo.basic.BasicException;
+import com.openbravo.data.gui.ComboBoxValModel;
 import com.openbravo.data.gui.ListKeyed;
+import com.openbravo.data.gui.MessageInf;
 import com.openbravo.data.loader.SentenceList;
 import com.openbravo.pos.customers.CustomerInfoExt;
 import com.openbravo.pos.customers.DataLogicCustomers;
 import com.openbravo.pos.customers.JCustomerFinder;
+import com.openbravo.pos.forms.*;
+import com.openbravo.pos.inventory.TaxCategoryInfo;
+import com.openbravo.pos.panels.JProductFinder;
+import com.openbravo.pos.payment.JPaymentSelect;
+import com.openbravo.pos.payment.JPaymentSelectReceipt;
+import com.openbravo.pos.payment.JPaymentSelectRefund;
+import com.openbravo.pos.printer.TicketParser;
+import com.openbravo.pos.printer.TicketPrinterException;
+import com.openbravo.pos.scale.ScaleException;
 import com.openbravo.pos.scripting.ScriptEngine;
 import com.openbravo.pos.scripting.ScriptException;
 import com.openbravo.pos.scripting.ScriptFactory;
-import com.openbravo.pos.forms.DataLogicSystem;
-import com.openbravo.pos.forms.DataLogicSales;
-import com.openbravo.pos.forms.BeanFactoryApp;
-import com.openbravo.pos.forms.BeanFactoryException;
-import com.openbravo.pos.inventory.TaxCategoryInfo;
-import com.openbravo.pos.payment.JPaymentSelectReceipt;
-import com.openbravo.pos.payment.JPaymentSelectRefund;
 import com.openbravo.pos.ticket.ProductInfoExt;
 import com.openbravo.pos.ticket.TaxInfo;
 import com.openbravo.pos.ticket.TicketInfo;
 import com.openbravo.pos.ticket.TicketLineInfo;
+import com.openbravo.pos.util.AltEncrypter;
 import com.openbravo.pos.util.JRPrinterAWT300;
 import com.openbravo.pos.util.ReportUtils;
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
+import java.awt.Component;
+import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.MissingResourceException;
-import java.util.ResourceBundle;
+import java.util.*;
 import javax.print.PrintService;
-import net.sf.jasperreports.engine.JasperCompileManager;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
+import javax.swing.JComponent;
+import javax.swing.JPanel;
+import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRMapArrayDataSource;
 import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
-
-// Added JG Sept 2011
-import com.openbravo.pos.util.AltEncrypter; 
  
 
 /**
@@ -106,7 +95,7 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
     private int m_iNumberStatus;
     private int m_iNumberStatusInput;
     private int m_iNumberStatusPor;
-    private StringBuffer m_sBarcode;
+    private StringBuilder m_sBarcode;
             
     private JTicketsBag m_ticketsbag;
     
@@ -137,6 +126,7 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
         initComponents ();
     }
    
+    @Override
     public void init(AppView app) throws BeanFactoryException {
         
         m_App = app;
@@ -179,14 +169,17 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
         m_oTicketExt = null;      
     }
     
+    @Override
     public Object getBean() {
         return this;
     }
     
+    @Override
     public JComponent getComponent() {
         return this;
     }
 
+    @Override
     public void activate() throws BasicException {
 
         paymentdialogreceipt = JPaymentSelectReceipt.getDialog(this);
@@ -197,11 +190,11 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
         // impuestos incluidos seleccionado ?
         m_jaddtax.setSelected("true".equals(m_jbtnconfig.getProperty("taxesincluded")));
 
-        // Inicializamos el combo de los impuestos.
+        // JG May 2012 use Diamond inference
         java.util.List<TaxInfo> taxlist = senttax.list();
-        taxcollection = new ListKeyed<TaxInfo>(taxlist);
+        taxcollection = new ListKeyed<>(taxlist);
         java.util.List<TaxCategoryInfo> taxcategorieslist = senttaxcategories.list();
-        taxcategoriescollection = new ListKeyed<TaxCategoryInfo>(taxcategorieslist);
+        taxcategoriescollection = new ListKeyed<>(taxcategorieslist);
         
         taxcategoriesmodel = new ComboBoxValModel(taxcategorieslist);
         m_jTax.setModel(taxcategoriesmodel);
@@ -236,6 +229,7 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
         m_ticketsbag.activate();        
     }
     
+    @Override
     public boolean deactivate() {
 
         return m_ticketsbag.deactivate();
@@ -245,6 +239,7 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
     protected abstract Component getSouthComponent();
     protected abstract void resetSouthComponent();
      
+    @Override
     public void setActiveTicket(TicketInfo oTicket, Object oTicketExt) {
        
         m_oTicket = oTicket;
@@ -262,6 +257,7 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
         refreshTicket();               
     }
     
+    @Override
     public TicketInfo getActiveTicket() {
         return m_oTicket;
     }
@@ -315,6 +311,7 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
             // activo el tecleador...
             m_jKeyFactory.setText(null);       
             java.awt.EventQueue.invokeLater(new Runnable() {
+                @Override
                 public void run() {
                     m_jKeyFactory.requestFocus();
                 }
@@ -459,9 +456,8 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
     private double getPorValue() {
         try {
             return Double.parseDouble(m_jPor.getText().substring(1));                
-        } catch (NumberFormatException e){
-            return 1.0;
-        } catch (StringIndexOutOfBoundsException e){
+// JG May 2012 replaced with Multicatch
+        } catch (NumberFormatException | StringIndexOutOfBoundsException e){
             return 1.0;
         }
     }
@@ -469,7 +465,7 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
     private void stateToZero(){
         m_jPor.setText("");
         m_jPrice.setText("");
-        m_sBarcode = new StringBuffer();
+        m_sBarcode = new StringBuilder();
 
         m_iNumberStatus = NUMBER_INPUTZERO;
         m_iNumberStatusInput = NUMBERZERO;
@@ -945,10 +941,8 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
                 script.put("ticket", ticket);
                 script.put("place", ticketext);
                 m_TTP.printTicket(script.eval(sresource).toString());
-            } catch (ScriptException e) {
-                MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotprintticket"), e);
-                msg.show(JPanelTicket.this);
-            } catch (TicketPrinterException e) {
+// JG May 2012 replaced with Multicatch            
+            } catch (    ScriptException | TicketPrinterException e) {
                 MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotprintticket"), e);
                 msg.show(JPanelTicket.this);
             }
@@ -967,10 +961,10 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
                 JasperDesign jd = JRXmlLoader.load(getClass().getResourceAsStream(resourcefile + ".jrxml"));            
                 jr = JasperCompileManager.compileReport(jd);    
             } else {
-                // read the compiled reporte
-                ObjectInputStream oin = new ObjectInputStream(in);
-                jr = (JasperReport) oin.readObject();
-                oin.close();
+// JG May 2012 replaced with try-to-resources
+                try (ObjectInputStream oin = new ObjectInputStream(in)) {
+                    jr = (JasperReport) oin.readObject();
+                }
             }
            
             // Construyo el mapa de los parametros.
@@ -992,7 +986,8 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
             
             JRPrinterAWT300.printPages(jp, 0, jp.getPages().size() - 1, service);
             
-        } catch (Exception e) {
+// JG May 2012 replaced with Multicatch
+        } catch (JRException | IOException | ClassNotFoundException e) {
             MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotloadreport"), e);
             msg.show(this);
         }               
@@ -1006,10 +1001,8 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
                 ScriptEngine script = ScriptFactory.getScriptEngine(ScriptFactory.VELOCITY);
                 script.put("ticketline", oLine);
                 m_TTP.printTicket(script.eval(dlSystem.getResourceAsXML("Printer.TicketLine")).toString());
-            } catch (ScriptException e) {
-                MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotprintline"), e);
-                msg.show(JPanelTicket.this);
-            } catch (TicketPrinterException e) {
+// JG May 2012 replaced with Multicatch
+            } catch (    ScriptException | TicketPrinterException e) {
                 MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotprintline"), e);
                 msg.show(JPanelTicket.this);
             }
@@ -1019,7 +1012,7 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
     
     private Object evalScript(ScriptObject scr, String resource, ScriptArg... args) {
         
-        // resource here is guaratied to be not null
+        // resource here is guaranteed to be not null
          try {
             scr.setSelectedIndex(m_ticketlines.getSelectedIndex());
             return scr.evalScript(dlSystem.getResourceAsXML(resource), args);                
@@ -1189,6 +1182,7 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
         m_jOptions = new javax.swing.JPanel();
         m_jButtons = new javax.swing.JPanel();
         m_jTicketId = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
         btnCustomer = new javax.swing.JButton();
         btnSplit = new javax.swing.JButton();
         m_jPanelScripts = new javax.swing.JPanel();
@@ -1233,13 +1227,25 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
 
         m_jOptions.setLayout(new java.awt.BorderLayout());
 
-        m_jTicketId.setBackground(java.awt.Color.white);
         m_jTicketId.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         m_jTicketId.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(javax.swing.UIManager.getDefaults().getColor("Button.darkShadow")), javax.swing.BorderFactory.createEmptyBorder(1, 4, 1, 4)));
         m_jTicketId.setOpaque(true);
         m_jTicketId.setPreferredSize(new java.awt.Dimension(160, 25));
         m_jTicketId.setRequestFocusEnabled(false);
         m_jButtons.add(m_jTicketId);
+
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/customer_add_sml.png"))); // NOI18N
+        jButton1.setToolTipText("Add New Customer");
+        jButton1.setFocusPainted(false);
+        jButton1.setFocusable(false);
+        jButton1.setMargin(new java.awt.Insets(8, 14, 8, 14));
+        jButton1.setRequestFocusEnabled(false);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        m_jButtons.add(jButton1);
 
         btnCustomer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/customer_sml.png"))); // NOI18N
         btnCustomer.setToolTipText("Show Customers");
@@ -1354,7 +1360,7 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
         });
         jPanel2.add(m_jDelete);
 
-        m_jList.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/search24.png"))); // NOI18N
+        m_jList.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/search32.png"))); // NOI18N
         m_jList.setToolTipText("Product Search");
         m_jList.setFocusPainted(false);
         m_jList.setFocusable(false);
@@ -1406,6 +1412,7 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
 
         m_jPanTicket.add(jPanel5, java.awt.BorderLayout.LINE_END);
 
+        m_jPanelCentral.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         m_jPanelCentral.setPreferredSize(new java.awt.Dimension(450, 240));
         m_jPanelCentral.setLayout(new java.awt.BorderLayout());
 
@@ -1414,25 +1421,25 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
         m_jPanTotals.setPreferredSize(new java.awt.Dimension(375, 60));
         m_jPanTotals.setLayout(new java.awt.GridLayout(2, 0));
 
-        m_jLblTotalEuros3.setFont(new java.awt.Font("Tahoma", 1, 14));
+        m_jLblTotalEuros3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         m_jLblTotalEuros3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         m_jLblTotalEuros3.setLabelFor(m_jSubtotalEuros);
         m_jLblTotalEuros3.setText(AppLocal.getIntString("label.subtotalcash")); // NOI18N
         m_jPanTotals.add(m_jLblTotalEuros3);
 
-        m_jLblTotalEuros2.setFont(new java.awt.Font("Tahoma", 1, 14));
+        m_jLblTotalEuros2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         m_jLblTotalEuros2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         m_jLblTotalEuros2.setLabelFor(m_jTax);
         m_jLblTotalEuros2.setText(AppLocal.getIntString("label.taxcash")); // NOI18N
         m_jPanTotals.add(m_jLblTotalEuros2);
 
-        m_jLblTotalEuros1.setFont(new java.awt.Font("Tahoma", 1, 14));
+        m_jLblTotalEuros1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         m_jLblTotalEuros1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         m_jLblTotalEuros1.setLabelFor(m_jTotalEuros);
         m_jLblTotalEuros1.setText(AppLocal.getIntString("label.totalcash")); // NOI18N
         m_jPanTotals.add(m_jLblTotalEuros1);
 
-        m_jSubtotalEuros.setFont(new java.awt.Font("Tahoma", 0, 14));
+        m_jSubtotalEuros.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         m_jSubtotalEuros.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         m_jSubtotalEuros.setMaximumSize(new java.awt.Dimension(125, 25));
         m_jSubtotalEuros.setMinimumSize(new java.awt.Dimension(80, 25));
@@ -1441,7 +1448,7 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
         m_jSubtotalEuros.setRequestFocusEnabled(false);
         m_jPanTotals.add(m_jSubtotalEuros);
 
-        m_jTaxesEuros.setFont(new java.awt.Font("Tahoma", 0, 14));
+        m_jTaxesEuros.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         m_jTaxesEuros.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         m_jTaxesEuros.setLabelFor(m_jTaxesEuros);
         m_jTaxesEuros.setMaximumSize(new java.awt.Dimension(125, 25));
@@ -1451,7 +1458,8 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
         m_jTaxesEuros.setRequestFocusEnabled(false);
         m_jPanTotals.add(m_jTaxesEuros);
 
-        m_jTotalEuros.setFont(new java.awt.Font("Tahoma", 1, 14));
+        m_jTotalEuros.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        m_jTotalEuros.setForeground(new java.awt.Color(0, 188, 243));
         m_jTotalEuros.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         m_jTotalEuros.setMaximumSize(new java.awt.Dimension(125, 25));
         m_jTotalEuros.setMinimumSize(new java.awt.Dimension(80, 25));
@@ -1472,6 +1480,8 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
 
         m_jPanEntries.setLayout(new javax.swing.BoxLayout(m_jPanEntries, javax.swing.BoxLayout.Y_AXIS));
 
+        m_jNumberKeys.setMinimumSize(new java.awt.Dimension(200, 200));
+        m_jNumberKeys.setPreferredSize(new java.awt.Dimension(250, 250));
         m_jNumberKeys.addJNumberEventListener(new com.openbravo.beans.JNumberEventListener() {
             public void keyPerformed(com.openbravo.beans.JNumberEvent evt) {
                 m_jNumberKeysKeyPerformed(evt);
@@ -1482,11 +1492,10 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
         jPanel9.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
         jPanel9.setLayout(new java.awt.GridBagLayout());
 
-        m_jPrice.setBackground(java.awt.Color.white);
         m_jPrice.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         m_jPrice.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(javax.swing.UIManager.getDefaults().getColor("Button.darkShadow")), javax.swing.BorderFactory.createEmptyBorder(1, 4, 1, 4)));
         m_jPrice.setOpaque(true);
-        m_jPrice.setPreferredSize(new java.awt.Dimension(100, 22));
+        m_jPrice.setPreferredSize(new java.awt.Dimension(100, 25));
         m_jPrice.setRequestFocusEnabled(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -1497,11 +1506,10 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
         gridBagConstraints.weighty = 1.0;
         jPanel9.add(m_jPrice, gridBagConstraints);
 
-        m_jPor.setBackground(java.awt.Color.white);
         m_jPor.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         m_jPor.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(javax.swing.UIManager.getDefaults().getColor("Button.darkShadow")), javax.swing.BorderFactory.createEmptyBorder(1, 4, 1, 4)));
         m_jPor.setOpaque(true);
-        m_jPor.setPreferredSize(new java.awt.Dimension(22, 22));
+        m_jPor.setPreferredSize(new java.awt.Dimension(22, 25));
         m_jPor.setRequestFocusEnabled(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
@@ -1532,7 +1540,9 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
         gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
         jPanel9.add(m_jEnter, gridBagConstraints);
 
+        m_jTax.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         m_jTax.setFocusable(false);
+        m_jTax.setPreferredSize(new java.awt.Dimension(28, 25));
         m_jTax.setRequestFocusEnabled(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -1547,6 +1557,7 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
         m_jaddtax.setText("+");
         m_jaddtax.setFocusPainted(false);
         m_jaddtax.setFocusable(false);
+        m_jaddtax.setPreferredSize(new java.awt.Dimension(40, 25));
         m_jaddtax.setRequestFocusEnabled(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
@@ -1720,11 +1731,19 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
         
 }//GEN-LAST:event_jEditAttributesActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        {                                        
+m_App.getAppUserView().showTask("com.openbravo.pos.customers.CustomersPanel");
+}
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCustomer;
     private javax.swing.JButton btnSplit;
     private javax.swing.JPanel catcontainer;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jEditAttributes;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

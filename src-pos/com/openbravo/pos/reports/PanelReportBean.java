@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -20,11 +20,7 @@
 package com.openbravo.pos.reports;
 
 import com.openbravo.basic.BasicException;
-import com.openbravo.data.loader.BaseSentence;
-import com.openbravo.data.loader.Datas;
-import com.openbravo.data.loader.QBFBuilder;
-import com.openbravo.data.loader.SerializerReadBasic;
-import com.openbravo.data.loader.StaticSentence;
+import com.openbravo.data.loader.*;
 import com.openbravo.data.user.EditorCreator;
 import com.openbravo.pos.forms.AppLocal;
 import com.openbravo.pos.forms.AppView;
@@ -45,10 +41,11 @@ public class PanelReportBean extends JPanelReport {
     
     private String sentence;
     
-    private List<Datas> fielddatas = new ArrayList<Datas>();
-    private List<String> fieldnames = new ArrayList<String>();
+// JG 16 May 12 use diamond inference
+    private List<Datas> fielddatas = new ArrayList<>();
+    private List<String> fieldnames = new ArrayList<>();
     
-    private List<String> paramnames = new ArrayList<String>();
+    private List<String> paramnames = new ArrayList<>();
     
     private JParamsComposed qbffilter = new JParamsComposed();
     

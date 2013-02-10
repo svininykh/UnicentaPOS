@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (C) 2008-2009 Openbravo, S.L.
+//    Copyright (C) 2008-2012 Openbravo, S.L.
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -34,7 +34,8 @@ public class TaxesLogicElement {
     
     public TaxesLogicElement(TaxInfo tax) {
         this.tax = tax;
-        this.taxsons = new ArrayList<TaxesLogicElement>();
+        // JG June 2012 use diamond inference
+        this.taxsons = new ArrayList<>();
     }
     
     public TaxInfo getTax() {

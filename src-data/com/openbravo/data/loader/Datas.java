@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -19,9 +19,9 @@
 
 package com.openbravo.data.loader;
 
+import com.openbravo.basic.BasicException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import com.openbravo.basic.BasicException;
 
 public abstract class Datas {
     
@@ -174,18 +174,23 @@ public abstract class Datas {
         }   
     }    
     private static final class DatasIMAGE extends Datas {
+        @Override
         public Object getValue(DataRead dr, int i) throws BasicException {
             return ImageUtils.readImage(dr.getBytes(i));
         }
+        @Override
         public void setValue(DataWrite dw, int i, Object value) throws BasicException {
             dw.setBytes(i, ImageUtils.writeImage((java.awt.image.BufferedImage) value));
         }
+        @Override
         public Class getClassValue() {
             return java.awt.image.BufferedImage.class;
         }
+        @Override
         protected String toStringAbstract(Object value) {
             return "0x" + ImageUtils.bytes2hex(ImageUtils.writeImage((java.awt.image.BufferedImage) value));
         }
+        @Override
         protected int compareAbstract(Object o1, Object o2) {
             throw new UnsupportedOperationException();
         }   

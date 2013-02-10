@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -34,17 +34,24 @@ public class DeviceScale {
         String sScaleType = sd.nextToken(':');
         String sScaleParam1 = sd.nextToken(',');
         // String sScaleParam2 = sd.nextToken(',');
-        
-        if ("dialog1".equals(sScaleType)) {
-            m_scale = new ScaleComm(sScaleParam1);
-        } else if ("samsungesp".equals(sScaleType)) {
-            m_scale = new ScaleSamsungEsp(sScaleParam1);            
-        } else if ("fake".equals(sScaleType)) { // a fake scale for debugging purposes
-            m_scale = new ScaleFake();            
-        } else if ("screen".equals(sScaleType)) { // on screen scale
-            m_scale = new ScaleDialog(parent);
-        } else {
-            m_scale = null;
+        switch (sScaleType) {
+            case "dialog1":
+                m_scale = new ScaleComm(sScaleParam1);
+                break;
+            case "samsungesp":
+                m_scale = new ScaleSamsungEsp(sScaleParam1);
+                break;
+            case "fake":
+                // a fake scale for debugging purposes
+                m_scale = new ScaleFake();
+                break;
+            case "screen":
+                // on screen scale
+                m_scale = new ScaleDialog(parent);
+                break;
+            default:
+                m_scale = null;
+                break;
         }
     }
     

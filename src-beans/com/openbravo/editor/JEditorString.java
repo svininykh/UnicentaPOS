@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -26,10 +26,12 @@ public class JEditorString extends JEditorText {
         super();
     }
     
+    @Override
     protected final int getMode() {
         return EditorKeys.MODE_STRING;
     }
         
+    @Override
     protected int getStartMode() {
         return MODE_Abc1;
     }

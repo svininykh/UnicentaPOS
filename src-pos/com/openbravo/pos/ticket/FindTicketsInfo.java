@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (C) 2008-2009 Openbravo, S.L.
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -19,8 +19,8 @@
 
 package com.openbravo.pos.ticket;
 
-import com.openbravo.data.loader.DataRead;
 import com.openbravo.basic.BasicException;
+import com.openbravo.data.loader.DataRead;
 import com.openbravo.data.loader.SerializableRead;
 import com.openbravo.format.Formats;
 import java.util.Date;

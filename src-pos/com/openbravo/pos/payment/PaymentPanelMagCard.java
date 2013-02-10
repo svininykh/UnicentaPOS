@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -20,7 +20,7 @@
 package com.openbravo.pos.payment;
 
 import com.openbravo.pos.forms.AppLocal;
-import javax.swing.*;
+import javax.swing.JComponent;
 
 public class PaymentPanelMagCard extends javax.swing.JPanel implements PaymentPanel {
     
@@ -51,10 +51,12 @@ public class PaymentPanelMagCard extends javax.swing.JPanel implements PaymentPa
         }
     }
     
+    @Override
     public JComponent getComponent(){
         return this;
     }
     
+    @Override
     public void activate(String sTransaction, double dTotal) {
         
         m_sTransactionID = sTransaction;
@@ -64,6 +66,7 @@ public class PaymentPanelMagCard extends javax.swing.JPanel implements PaymentPa
         
         m_jKeyFactory.setText(null);       
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 m_jKeyFactory.requestFocus();
             }
@@ -87,6 +90,7 @@ public class PaymentPanelMagCard extends javax.swing.JPanel implements PaymentPa
         }
     }
     
+    @Override
     public PaymentInfoMagcard getPaymentInfoMagcard() {
 
         if (m_dTotal > 0.0) {
@@ -137,6 +141,7 @@ public class PaymentPanelMagCard extends javax.swing.JPanel implements PaymentPa
     
     private class KeyBarsListener extends java.awt.event.KeyAdapter {
         
+        @Override
         public void keyTyped(java.awt.event.KeyEvent e){
             m_jKeyFactory.setText(null);
             stateTransition(e.getKeyChar());
@@ -190,20 +195,18 @@ public class PaymentPanelMagCard extends javax.swing.JPanel implements PaymentPa
 
         jLabel6.setText(AppLocal.getIntString("label.cardnumber")); // NOI18N
         jPanel1.add(jLabel6);
-        jLabel6.setBounds(20, 50, 100, 14);
+        jLabel6.setBounds(20, 50, 100, 25);
 
         jLabel7.setText(AppLocal.getIntString("label.cardexpdate")); // NOI18N
         jPanel1.add(jLabel7);
-        jLabel7.setBounds(20, 80, 100, 14);
+        jLabel7.setBounds(20, 80, 100, 25);
 
-        m_jExpirationDate.setBackground(java.awt.Color.white);
         m_jExpirationDate.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(javax.swing.UIManager.getDefaults().getColor("Button.darkShadow")), javax.swing.BorderFactory.createEmptyBorder(1, 4, 1, 4)));
         m_jExpirationDate.setOpaque(true);
         m_jExpirationDate.setPreferredSize(new java.awt.Dimension(150, 25));
         jPanel1.add(m_jExpirationDate);
         m_jExpirationDate.setBounds(120, 80, 70, 25);
 
-        m_jCardNumber.setBackground(java.awt.Color.white);
         m_jCardNumber.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(javax.swing.UIManager.getDefaults().getColor("Button.darkShadow")), javax.swing.BorderFactory.createEmptyBorder(1, 4, 1, 4)));
         m_jCardNumber.setOpaque(true);
         m_jCardNumber.setPreferredSize(new java.awt.Dimension(150, 25));
@@ -212,7 +215,7 @@ public class PaymentPanelMagCard extends javax.swing.JPanel implements PaymentPa
 
         jLabel8.setText(AppLocal.getIntString("label.cardholder")); // NOI18N
         jPanel1.add(jLabel8);
-        jLabel8.setBounds(20, 20, 100, 14);
+        jLabel8.setBounds(20, 20, 100, 25);
 
         m_jHolderName.setBackground(java.awt.Color.white);
         m_jHolderName.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(javax.swing.UIManager.getDefaults().getColor("Button.darkShadow")), javax.swing.BorderFactory.createEmptyBorder(1, 4, 1, 4)));

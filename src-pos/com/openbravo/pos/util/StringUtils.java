@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -48,7 +48,7 @@ public class StringUtils {
         if (sValue == null) {
             return null;
         } else {
-            StringBuffer buffer = new StringBuffer();      
+            StringBuilder buffer = new StringBuilder();      
             for (int i = 0; i < sValue.length(); i++) {
                 char charToCompare = sValue.charAt(i);
                 if (charToCompare == '&') {
@@ -71,7 +71,7 @@ public class StringUtils {
     
     public static String byte2hex(byte[] binput) {
         
-        StringBuffer sb = new StringBuffer(binput.length * 2);
+        StringBuilder sb = new StringBuilder(binput.length * 2);
         for (int i = 0; i < binput.length; i++) {
             int high = ((binput[i] & 0xF0) >> 4);
             int low = (binput[i] & 0x0F);

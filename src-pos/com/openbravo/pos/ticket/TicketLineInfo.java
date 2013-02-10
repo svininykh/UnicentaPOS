@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -19,15 +19,15 @@
 
 package com.openbravo.pos.ticket;
 
-import java.io.*;
-import com.openbravo.pos.util.StringUtils;
-import com.openbravo.data.loader.DataRead;
-import com.openbravo.data.loader.SerializableRead;
-import com.openbravo.data.loader.DataWrite;
-import com.openbravo.format.Formats;
-import com.openbravo.data.loader.SerializableWrite;
 import com.openbravo.basic.BasicException;
+import com.openbravo.data.loader.DataRead;
+import com.openbravo.data.loader.DataWrite;
+import com.openbravo.data.loader.SerializableRead;
+import com.openbravo.data.loader.SerializableWrite;
+import com.openbravo.format.Formats;
 import com.openbravo.pos.forms.AppLocal;
+import com.openbravo.pos.util.StringUtils;
+import java.io.*;
 import java.util.Properties;
 
 /**
@@ -127,6 +127,7 @@ public class TicketLineInfo implements SerializableWrite, SerializableRead, Seri
         m_iLine = line;
     }
 
+    @Override
     public void writeValues(DataWrite dp) throws BasicException {
         dp.setString(1, m_sTicket);
         dp.setInt(2, new Integer(m_iLine));
@@ -146,6 +147,7 @@ public class TicketLineInfo implements SerializableWrite, SerializableRead, Seri
         }
     }
 
+    @Override
     public void readValues(DataRead dr) throws BasicException {
         m_sTicket = dr.getString(1);
         m_iLine = dr.getInt(2).intValue();

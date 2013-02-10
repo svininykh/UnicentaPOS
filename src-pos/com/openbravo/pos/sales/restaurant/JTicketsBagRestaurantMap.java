@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -19,20 +19,20 @@
 
 package com.openbravo.pos.sales.restaurant;
 
-import com.openbravo.pos.ticket.TicketInfo;
-import java.util.*;
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-import com.openbravo.pos.sales.*;
-import com.openbravo.pos.forms.*; 
-import com.openbravo.data.loader.StaticSentence;
-import com.openbravo.data.loader.SerializerReadClass;
 import com.openbravo.basic.BasicException;
 import com.openbravo.data.gui.MessageInf;
 import com.openbravo.data.loader.SentenceList;
+import com.openbravo.data.loader.SerializerReadClass;
+import com.openbravo.data.loader.StaticSentence;
 import com.openbravo.pos.customers.CustomerInfo;
+import com.openbravo.pos.forms.*;
+import com.openbravo.pos.sales.*;
+import com.openbravo.pos.ticket.TicketInfo;
 import com.openbravo.pos.ticket.TicketLineInfo;
+import java.awt.*;
+import java.awt.event.*;
+import java.util.*;
+import javax.swing.*;
 
 public class JTicketsBagRestaurantMap extends JTicketsBag {
 
@@ -53,7 +53,7 @@ public class JTicketsBagRestaurantMap extends JTicketsBag {
     
     private Place m_PlaceCurrent;
 
-// Addedd JG 03.07.2011
+// TODO - Add Server JG 03.07.2011
     private ServerCurrent m_ServerCurrent;
     
     // State vars
@@ -87,7 +87,7 @@ public class JTicketsBagRestaurantMap extends JTicketsBag {
                 
             
         } catch (BasicException eD) {
-            m_afloors = new ArrayList<Floor>();
+            m_afloors = new ArrayList<>();
         }
         try {
             SentenceList sent = new StaticSentence(
@@ -97,7 +97,7 @@ public class JTicketsBagRestaurantMap extends JTicketsBag {
                     new SerializerReadClass(Place.class));
             m_aplaces = sent.list();
         } catch (BasicException eD) {
-            m_aplaces = new ArrayList<Place>();
+            m_aplaces = new ArrayList<>();
         } 
         
         initComponents(); 
@@ -173,6 +173,7 @@ public class JTicketsBagRestaurantMap extends JTicketsBag {
         add(m_jreservations, "res");
     }
     
+    @Override
     public void activate() {
         
         // precondicion es que no tenemos ticket activado ni ticket en el panel
@@ -190,6 +191,7 @@ public class JTicketsBagRestaurantMap extends JTicketsBag {
         // postcondicion es que tenemos ticket activado aqui y ticket en el panel
     }
     
+    @Override
     public boolean deactivate() {
         
         // precondicion es que tenemos ticket activado aqui y ticket en el panel
@@ -225,9 +227,11 @@ public class JTicketsBagRestaurantMap extends JTicketsBag {
     }
 
         
+    @Override
     protected JComponent getBagComponent() {
         return m_restaurantmap;
     }
+    @Override
     protected JComponent getNullComponent() {
         return this;
     }
@@ -290,6 +294,7 @@ public class JTicketsBagRestaurantMap extends JTicketsBag {
         m_panelticket.setActiveTicket(null, null);     
     }
     
+    @Override
     public void deleteTicket() {
         
         if (m_PlaceCurrent != null) {
@@ -310,7 +315,7 @@ public class JTicketsBagRestaurantMap extends JTicketsBag {
         m_panelticket.setActiveTicket(null, null); 
     }
 
-// Added JG 03.07.2011 - TODO
+// Added JG 03.07.2011 - TODO - Change Server Dialog here
         public void changeServer() {
 
         if (m_ServerCurrent != null) {
@@ -328,7 +333,7 @@ public class JTicketsBagRestaurantMap extends JTicketsBag {
     
     public void loadTickets() {
 
-        Set<String> atickets = new HashSet<String>();
+        Set<String> atickets = new HashSet<>();
         
         try {
             java.util.List<SharedTicketInfo> l = dlReceipts.getSharedTicketList();
@@ -403,6 +408,7 @@ public class JTicketsBagRestaurantMap extends JTicketsBag {
             m_place = place;
         }
         
+        @Override
         public void actionPerformed(ActionEvent evt) {    
             
             if (m_PlaceClipboard == null) {  
@@ -596,7 +602,7 @@ public class JTicketsBagRestaurantMap extends JTicketsBag {
 
         jPanel2.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
-        m_jbtnReservations.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/calender.png"))); // NOI18N
+        m_jbtnReservations.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/date.png"))); // NOI18N
         m_jbtnReservations.setText(AppLocal.getIntString("button.reservations")); // NOI18N
         m_jbtnReservations.setToolTipText("Open Reservations screen");
         m_jbtnReservations.setFocusPainted(false);

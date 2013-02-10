@@ -36,6 +36,7 @@ public class AttributeInfo implements IKeyed {
         this.name = name;
     }
 
+    @Override
     public Object getKey() {
         return id;
     }

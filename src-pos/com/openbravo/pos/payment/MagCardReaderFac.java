@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -30,13 +30,14 @@ public class MagCardReaderFac {
     }
     
     public static MagCardReader getMagCardReader(String sReader) {
-        
-        if ("Intelligent".equals(sReader)) {
-            return new MagCardReaderIntelligent();
-        } else if ("Generic".equals(sReader)) {
-            return new MagCardReaderGeneric();
-        } else {
-            return null;
+// JG 16 May 12 use switch        
+        switch (sReader) {
+            case "Intelligent":
+                return new MagCardReaderIntelligent();
+            case "Generic":
+                return new MagCardReaderGeneric();
+            default:
+                return null;
         }
     }    
 }

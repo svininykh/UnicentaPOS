@@ -1,5 +1,5 @@
 //    uniCenta oPOS - touch friendly EPoS
-//    Copyright (c) 2009 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net
 //
 //    This file is part of uniCenta oPOS
@@ -16,7 +16,12 @@
 //
 //    You should have received a copy of the GNU General Public License
 //    along with uniCenta oPOS.  If not, see <http://www.gnu.org/licenses/>.
-//added by g.irura @ 27/03/2010. If a retailer issues item which is //taxable but gets back a refund, means when this happens, the tax //effected initially is deducted. all taxes occur in taxlines.amount //where the sum is obtained. It is therefore important to show on this //report the taxes that were charged on a receipt but later refunded
+
+// added by g.irura @ 27/03/2010. If a retailer issues item which is 
+// taxable but gets back a refund, means when this happens, the tax 
+// effected initially is deducted. all taxes occur in taxlines.amount 
+// where the sum is obtained. It is therefore important to show on this 
+// report the taxes that were charged on a receipt but later refunded
 
 report = new com.openbravo.pos.reports.PanelReportBean();
 
@@ -29,8 +34,10 @@ report.setSentence(
 "FROM RECEIPTS, TAXLINES, TAXES, TAXCATEGORIES,TICKETS, PAYMENTS " +
                 "WHERE PAYMENTS.RECEIPT = RECEIPTS.ID AND RECEIPTS.ID = TAXLINES.RECEIPT AND RECEIPTS.ID=TICKETS.ID AND TAXLINES.TAXID = TAXES.ID AND TAXES.CATEGORY = TAXCATEGORIES.ID AND ?(QBF_FILTER) "+
                "ORDER BY RECEIPTS.DATENEW");
+
 report.addParameter("RECEIPTS.DATENEW");
 report.addParameter("RECEIPTS.DATENEW");
+
 paramdates = new com.openbravo.pos.reports.JParamsDatesInterval();
 paramdates.setEndDate(com.openbravo.beans.DateUtils.getToday());
 report.addQBFFilter(paramdates);

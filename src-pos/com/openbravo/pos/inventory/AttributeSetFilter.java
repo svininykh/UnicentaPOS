@@ -21,12 +21,7 @@ package com.openbravo.pos.inventory;
 
 import com.openbravo.basic.BasicException;
 import com.openbravo.data.gui.ComboBoxValModel;
-import com.openbravo.data.loader.DataRead;
-import com.openbravo.data.loader.SentenceList;
-import com.openbravo.data.loader.SerializerRead;
-import com.openbravo.data.loader.SerializerWrite;
-import com.openbravo.data.loader.SerializerWriteString;
-import com.openbravo.data.loader.StaticSentence;
+import com.openbravo.data.loader.*;
 import com.openbravo.pos.forms.AppLocal;
 import com.openbravo.pos.forms.AppView;
 import com.openbravo.pos.reports.ReportEditorCreator;
@@ -47,17 +42,20 @@ public class AttributeSetFilter extends javax.swing.JPanel implements ReportEdit
     public AttributeSetFilter() {
         initComponents();
     }
+    @Override
     public void init(AppView app) {
 
         attusesent = new StaticSentence(app.getSession()
             , "SELECT ID, NAME FROM ATTRIBUTESET ORDER BY NAME"
             , null
-            , new SerializerRead() { public Object readValues(DataRead dr) throws BasicException {
+            , new SerializerRead() {@Override
+ public Object readValues(DataRead dr) throws BasicException {
                 return new AttributeSetInfo(dr.getString(1), dr.getString(2));
             }});
         attusemodel = new ComboBoxValModel();
     }
 
+    @Override
     public void activate() throws BasicException {
         List a = attusesent.list();
         attusemodel = new ComboBoxValModel(a);
@@ -65,10 +63,12 @@ public class AttributeSetFilter extends javax.swing.JPanel implements ReportEdit
         jAttrSet.setModel(attusemodel); 
     }
 
+    @Override
     public SerializerWrite getSerializerWrite() {
         return SerializerWriteString.INSTANCE;
     }
 
+    @Override
     public Component getComponent() {
         return this;
     }
@@ -81,6 +81,7 @@ public class AttributeSetFilter extends javax.swing.JPanel implements ReportEdit
         jAttrSet.removeActionListener(l);
     }
 
+    @Override
     public Object createValue() throws BasicException {
         AttributeSetInfo attset = (AttributeSetInfo) attusemodel.getSelectedItem();
 
@@ -99,7 +100,13 @@ public class AttributeSetFilter extends javax.swing.JPanel implements ReportEdit
         jLabel8 = new javax.swing.JLabel();
         jAttrSet = new javax.swing.JComboBox();
 
+        setPreferredSize(new java.awt.Dimension(354, 61));
+
+        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel8.setText(AppLocal.getIntString("label.attributeset")); // NOI18N
+
+        jAttrSet.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jAttrSet.setPreferredSize(new java.awt.Dimension(28, 28));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -116,10 +123,10 @@ public class AttributeSetFilter extends javax.swing.JPanel implements ReportEdit
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(jAttrSet, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jAttrSet, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 

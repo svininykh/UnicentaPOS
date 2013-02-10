@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -19,13 +19,18 @@
 
 package com.openbravo.pos.config;
 
-import java.awt.*;
-import java.awt.event.*;
 import com.openbravo.basic.BasicException;
-import com.openbravo.pos.forms.*;
+import com.openbravo.pos.forms.AppConfig;
+import com.openbravo.pos.forms.AppLocal;
+import com.openbravo.pos.forms.AppProperties;
+import com.openbravo.pos.forms.JRootFrame;
+import java.awt.BorderLayout;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  *
@@ -60,11 +65,13 @@ public class JFrmConfig extends javax.swing.JFrame {
     
     private class MyFrameListener extends WindowAdapter{
         
+        @Override
         public void windowClosing(WindowEvent evt) {
             if (config.deactivate()) {
                 dispose();
             }
         }
+        @Override
         public void windowClosed(WindowEvent evt) {
             System.exit(0);
         }
@@ -88,15 +95,17 @@ public class JFrmConfig extends javax.swing.JFrame {
      */
     public static void main(final String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 
                 AppConfig config = new AppConfig(args);
                 config.load();    
                 
-                // Set the look and feel.
+// Set the look and feel.
+// JG 6 May 2012 to Multicatch                
                 try {                    
                     UIManager.setLookAndFeel(config.getProperty("swing.defaultlaf"));
-                } catch (Exception e) {
+                } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
                 }
                 
                 new JFrmConfig(config).setVisible(true);

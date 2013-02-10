@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -19,9 +19,9 @@
 
 package com.openbravo.pos.printer.ticket;
 
+import com.openbravo.pos.printer.DevicePrinter;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
-import com.openbravo.pos.printer.DevicePrinter;
 import org.krysalis.barcode4j.BarcodeDimension;
 import org.krysalis.barcode4j.HumanReadablePlacement;
 import org.krysalis.barcode4j.impl.AbstractBarcodeBean;
@@ -66,6 +66,7 @@ public class PrintItemBarcode implements PrintItem {
         }
     }
 
+    @Override
     public void draw(Graphics2D g, int x, int y, int width) {
 
         if (m_barcode != null) {
@@ -88,6 +89,7 @@ public class PrintItemBarcode implements PrintItem {
         }
     }
 
+    @Override
     public int getHeight() {
         return (int) (m_iHeight * scale) + 20;
     }

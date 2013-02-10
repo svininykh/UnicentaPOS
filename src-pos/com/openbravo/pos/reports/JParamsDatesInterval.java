@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -19,17 +19,17 @@
 
 package com.openbravo.pos.reports;
 
+import com.openbravo.basic.BasicException;
+import com.openbravo.beans.JCalendarDialog;
+import com.openbravo.data.loader.Datas;
+import com.openbravo.data.loader.QBFCompareEnum;
+import com.openbravo.data.loader.SerializerWrite;
+import com.openbravo.data.loader.SerializerWriteBasic;
+import com.openbravo.format.Formats;
+import com.openbravo.pos.forms.AppLocal;
 import com.openbravo.pos.forms.AppView;
 import java.awt.Component;
 import java.util.Date;
-import com.openbravo.beans.JCalendarDialog;
-import com.openbravo.pos.forms.AppLocal;
-import com.openbravo.data.loader.QBFCompareEnum;
-import com.openbravo.format.Formats;
-import com.openbravo.basic.BasicException;
-import com.openbravo.data.loader.Datas;
-import com.openbravo.data.loader.SerializerWrite;
-import com.openbravo.data.loader.SerializerWriteBasic;
 
 public class JParamsDatesInterval extends javax.swing.JPanel implements ReportEditorCreator {
 
@@ -46,20 +46,25 @@ public class JParamsDatesInterval extends javax.swing.JPanel implements ReportEd
         jTxtEndDate.setText(Formats.TIMESTAMP.formatValue(d));
     }
 
+    @Override
     public void init(AppView app) {
     }
 
+    @Override
     public void activate() throws BasicException {
     }
     
+    @Override
     public SerializerWrite getSerializerWrite() {
         return new SerializerWriteBasic(new Datas[] {Datas.OBJECT, Datas.TIMESTAMP, Datas.OBJECT, Datas.TIMESTAMP});
     }
 
+    @Override
     public Component getComponent() {
         return this;
     }
     
+    @Override
     public Object createValue() throws BasicException {
         Object startdate = Formats.TIMESTAMP.parseValue(jTxtStartDate.getText());
         Object enddate = Formats.TIMESTAMP.parseValue(jTxtEndDate.getText());   
@@ -90,17 +95,23 @@ public class JParamsDatesInterval extends javax.swing.JPanel implements ReportEd
         setPreferredSize(new java.awt.Dimension(0, 100));
         setLayout(null);
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel1.setText(AppLocal.getIntString("Label.StartDate")); // NOI18N
         add(jLabel1);
-        jLabel1.setBounds(20, 20, 80, 20);
-        add(jTxtStartDate);
-        jTxtStartDate.setBounds(100, 20, 120, 20);
+        jLabel1.setBounds(20, 20, 80, 25);
 
+        jTxtStartDate.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        add(jTxtStartDate);
+        jTxtStartDate.setBounds(100, 20, 130, 25);
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel2.setText(AppLocal.getIntString("Label.EndDate")); // NOI18N
         add(jLabel2);
-        jLabel2.setBounds(290, 20, 80, 20);
+        jLabel2.setBounds(300, 20, 80, 25);
+
+        jTxtEndDate.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         add(jTxtEndDate);
-        jTxtEndDate.setBounds(370, 20, 120, 20);
+        jTxtEndDate.setBounds(380, 20, 140, 25);
 
         btnDateStart.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/date.png"))); // NOI18N
         btnDateStart.setToolTipText("Open Calendar");
@@ -113,7 +124,7 @@ public class JParamsDatesInterval extends javax.swing.JPanel implements ReportEd
             }
         });
         add(btnDateStart);
-        btnDateStart.setBounds(230, 15, 40, 33);
+        btnDateStart.setBounds(240, 20, 40, 33);
 
         btnDateEnd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/date.png"))); // NOI18N
         btnDateEnd.setToolTipText("Open Calendar");
@@ -126,7 +137,7 @@ public class JParamsDatesInterval extends javax.swing.JPanel implements ReportEd
             }
         });
         add(btnDateEnd);
-        btnDateEnd.setBounds(500, 15, 40, 33);
+        btnDateEnd.setBounds(530, 20, 40, 33);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnDateStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDateStartActionPerformed

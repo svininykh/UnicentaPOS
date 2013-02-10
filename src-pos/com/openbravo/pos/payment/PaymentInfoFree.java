@@ -28,15 +28,19 @@ public class PaymentInfoFree extends PaymentInfo {
         m_dTotal = dTotal;
     }
     
+    @Override
     public PaymentInfo copyPayment(){
         return new PaymentInfoFree(m_dTotal);
     }    
+    @Override
     public String getName() {
         return "free";
     }   
+    @Override
     public double getTotal() {
         return m_dTotal;
     }
+    @Override
     public String getTransactionID(){
         return "no ID";
     }

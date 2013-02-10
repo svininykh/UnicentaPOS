@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -20,7 +20,8 @@
 package com.openbravo.beans;
 
 import java.awt.ComponentOrientation;
-import java.util.*;
+import java.util.Enumeration;
+import java.util.Vector;
 
 public class JNumberKeys extends javax.swing.JPanel {
 
@@ -122,6 +123,7 @@ public class JNumberKeys extends javax.swing.JPanel {
         public MyKeyNumberListener(char cCad){
             m_cCad = cCad;
         }
+        @Override
         public void actionPerformed(java.awt.event.ActionEvent evt) {
            
             JNumberEvent oEv = new JNumberEvent(JNumberKeys.this, m_cCad);            
@@ -180,6 +182,7 @@ public class JNumberKeys extends javax.swing.JPanel {
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 0);
         add(m_jCE, gridBagConstraints);
 
         m_jMultiply.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/btnmult.png"))); // NOI18N
@@ -196,7 +199,7 @@ public class JNumberKeys extends javax.swing.JPanel {
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 0);
         add(m_jMultiply, gridBagConstraints);
 
         m_jMinus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/btnminus.png"))); // NOI18N
@@ -213,7 +216,7 @@ public class JNumberKeys extends javax.swing.JPanel {
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(0, 5, 5, 0);
         add(m_jMinus, gridBagConstraints);
 
         m_jPlus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/btnplus.png"))); // NOI18N
@@ -229,7 +232,7 @@ public class JNumberKeys extends javax.swing.JPanel {
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
         add(m_jPlus, gridBagConstraints);
 
         m_jKey9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/btn9.png"))); // NOI18N
@@ -246,7 +249,6 @@ public class JNumberKeys extends javax.swing.JPanel {
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
         add(m_jKey9, gridBagConstraints);
 
         m_jKey8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/btn8.png"))); // NOI18N
@@ -263,7 +265,6 @@ public class JNumberKeys extends javax.swing.JPanel {
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
         add(m_jKey8, gridBagConstraints);
 
         m_jKey7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/btn7.png"))); // NOI18N
@@ -280,7 +281,6 @@ public class JNumberKeys extends javax.swing.JPanel {
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(5, 0, 0, 0);
         add(m_jKey7, gridBagConstraints);
 
         m_jKey4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/btn4.png"))); // NOI18N
@@ -297,7 +297,6 @@ public class JNumberKeys extends javax.swing.JPanel {
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(5, 0, 0, 0);
         add(m_jKey4, gridBagConstraints);
 
         m_jKey5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/btn5.png"))); // NOI18N
@@ -314,7 +313,6 @@ public class JNumberKeys extends javax.swing.JPanel {
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
         add(m_jKey5, gridBagConstraints);
 
         m_jKey6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/btn6.png"))); // NOI18N
@@ -331,7 +329,6 @@ public class JNumberKeys extends javax.swing.JPanel {
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
         add(m_jKey6, gridBagConstraints);
 
         m_jKey3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/btn3.png"))); // NOI18N
@@ -348,7 +345,6 @@ public class JNumberKeys extends javax.swing.JPanel {
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
         add(m_jKey3, gridBagConstraints);
 
         m_jKey2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/btn2.png"))); // NOI18N
@@ -365,7 +361,6 @@ public class JNumberKeys extends javax.swing.JPanel {
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
         add(m_jKey2, gridBagConstraints);
 
         m_jKey1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/btn1.png"))); // NOI18N
@@ -382,7 +377,6 @@ public class JNumberKeys extends javax.swing.JPanel {
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(5, 0, 0, 0);
         add(m_jKey1, gridBagConstraints);
 
         m_jKey0.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/btn0.png"))); // NOI18N
@@ -433,7 +427,7 @@ public class JNumberKeys extends javax.swing.JPanel {
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
         add(m_jEquals, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 

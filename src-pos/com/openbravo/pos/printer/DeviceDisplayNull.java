@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -37,20 +37,26 @@ public class DeviceDisplayNull implements DeviceDisplay {
         m_sDescription = desc;
     }
 
+    @Override
     public String getDisplayName() {
         return m_sName;
     }    
+    @Override
     public String getDisplayDescription() {
         return m_sDescription;
     }        
+    @Override
     public javax.swing.JComponent getDisplayComponent() {
         return null;
     }
     
+    @Override
     public void clearVisor() {
     }      
+    @Override
     public void writeVisor(String sLine1, String sLine2) {
     } 
+    @Override
     public void writeVisor(int animation, String sLine1, String sLine2) {
     } 
 }

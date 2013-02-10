@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -19,10 +19,10 @@
 
 package com.openbravo.pos.printer.ticket;
 
-   import java.awt.Font;
-   import java.awt.Graphics2D;
-   import java.awt.image.BufferedImage;
-   import java.util.ArrayList;
+import java.awt.Font;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
    public abstract class BasicTicket implements PrintItem {
 
@@ -32,7 +32,8 @@ package com.openbravo.pos.printer.ticket;
    
        /** Creates a new instance of AbstractTicket */
        public BasicTicket() {
-           m_aCommands = new ArrayList<PrintItem>();
+// JG 16 May 12 use diamond inference
+           m_aCommands = new ArrayList<>();
            pil = null;
            m_iBodyHeight = 0;
        }
@@ -43,10 +44,12 @@ package com.openbravo.pos.printer.ticket;
 
        protected abstract double getImageScale();
 
+    @Override
        public int getHeight() {
           return m_iBodyHeight;
        }
 
+    @Override
        public void draw(Graphics2D g2d, int x, int y, int width) {
 
            int currenty = y;

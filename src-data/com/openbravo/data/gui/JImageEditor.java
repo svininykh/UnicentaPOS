@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -283,7 +283,7 @@ public class JImageEditor extends javax.swing.JPanel {
         setLayout(new java.awt.BorderLayout());
 
         m_jImage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        m_jImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/icon_no_photo.png"))); // NOI18N
+        m_jImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/no_photo.png"))); // NOI18N
         m_jImage.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         m_jScr.setViewportView(m_jImage);
 
@@ -294,7 +294,7 @@ public class JImageEditor extends javax.swing.JPanel {
         jPanel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 5, 0, 5));
         jPanel2.setLayout(new java.awt.GridLayout(0, 1, 0, 5));
 
-        m_jbtnopen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/fileopen.png"))); // NOI18N
+        m_jbtnopen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/camera.png"))); // NOI18N
         m_jbtnopen.setToolTipText("Open Folder");
         m_jbtnopen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -321,7 +321,6 @@ public class JImageEditor extends javax.swing.JPanel {
         });
         jPanel2.add(m_jbtnzoomin);
 
-        m_jPercent.setBackground(java.awt.Color.white);
         m_jPercent.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         m_jPercent.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(javax.swing.UIManager.getDefaults().getColor("Button.darkShadow")), javax.swing.BorderFactory.createEmptyBorder(1, 4, 1, 4)));
         m_jPercent.setOpaque(true);

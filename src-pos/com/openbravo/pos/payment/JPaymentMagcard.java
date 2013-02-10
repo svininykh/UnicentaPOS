@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -56,6 +56,7 @@ public class JPaymentMagcard extends javax.swing.JPanel implements JPaymentInter
         }
     }
     
+    @Override
     public void activate(CustomerInfoExt customerext, double dTotal, String transID) {   
         this.transaction = transID;
 
@@ -68,6 +69,7 @@ public class JPaymentMagcard extends javax.swing.JPanel implements JPaymentInter
             // The cardpanel sets the status
         }
     }
+    @Override
     public PaymentInfo executePayment() {
         
         jlblMessage.setText(null);
@@ -82,6 +84,7 @@ public class JPaymentMagcard extends javax.swing.JPanel implements JPaymentInter
             return null;
         }
     }  
+    @Override
     public Component getComponent() {
         return this;
     }

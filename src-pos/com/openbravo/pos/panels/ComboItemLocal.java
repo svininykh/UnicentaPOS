@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -37,12 +37,14 @@ public class ComboItemLocal implements IKeyed {
         m_iKey = iKey;
         m_sKeyValue = sKeyValue;
     }
+    @Override
     public Object getKey() {
         return m_iKey;
     }
     public Object getValue() {
         return m_sKeyValue;
     }
+    @Override
     public String toString() {
         return AppLocal.getIntString(m_sKeyValue);
     }

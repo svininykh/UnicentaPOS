@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -29,7 +29,7 @@ import java.util.logging.Logger;
  */
 public class StaticSentence extends JDBCSentence {
 
-    private static Logger logger = Logger.getLogger("com.openbravo.data.loader.StaticSentence");
+    private static final Logger logger = Logger.getLogger("com.openbravo.data.loader.StaticSentence");
     
     private ISQLBuilderStatic m_sentence;
     protected SerializerWrite m_SerWrite = null;
@@ -67,6 +67,7 @@ public class StaticSentence extends JDBCSentence {
         this(s, new NormalBuilder(sentence), null, null);
     }
     
+    @Override
     public DataResultSet openExec(Object params) throws BasicException {
         // true -> un resultset
         // false -> un updatecount (si -1 entonces se acabo)

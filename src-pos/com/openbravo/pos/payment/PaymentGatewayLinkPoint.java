@@ -22,13 +22,7 @@ import com.openbravo.data.loader.LocalRes;
 import com.openbravo.pos.forms.AppLocal;
 import com.openbravo.pos.forms.AppProperties;
 import com.openbravo.pos.util.AltEncrypter;
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
@@ -36,8 +30,6 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLSession;
@@ -169,9 +161,10 @@ public class PaymentGatewayLinkPoint implements PaymentGateway {
             
         if (payinfo.getTrack1(true) == null){
             moreInfo.append("<creditcard>");
-            moreInfo.append("<cardnumber>"+ payinfo.getCardNumber() +"</cardnumber> ");
-            moreInfo.append("<cardexpmonth>" + tmp.charAt(0) + "" + tmp.charAt(1) + "</cardexpmonth>");
-            moreInfo.append("<cardexpyear>" + tmp.charAt(2) + "" + tmp.charAt(3) + "</cardexpyear>");
+// JG 16 May 12 use chain of .append
+            moreInfo.append("<cardnumber>").append(payinfo.getCardNumber()).append("</cardnumber> ");
+                moreInfo.append("<cardexpmonth>").append(tmp.charAt(0)).append("").append(tmp.charAt(1)).append("</cardexpmonth>");
+                StringBuilder append = moreInfo.append("<cardexpyear>").append(tmp.charAt(2)).append("").append(tmp.charAt(3)).append("</cardexpyear>");
             moreInfo.append("</creditcard>");
             
         } else {
@@ -186,9 +179,10 @@ public class PaymentGatewayLinkPoint implements PaymentGateway {
         
         //Construct the order
         xml.append("<order>");
-        xml.append("<merchantinfo><configfile>"+ sConfigfile +"</configfile></merchantinfo>");
-        xml.append("<orderoptions><ordertype>"+ sTransactionType +"</ordertype><result>LIVE</result></orderoptions>");
-        xml.append("<payment><chargetotal>"+ URLEncoder.encode(amount.replace(',', '.'), "UTF-8") +"</chargetotal></payment>");
+// JG 16 May 12 use chain of .append
+            xml.append("<merchantinfo><configfile>").append(sConfigfile).append("</configfile></merchantinfo>");
+            xml.append("<orderoptions><ordertype>").append(sTransactionType).append("</ordertype><result>LIVE</result></orderoptions>");
+            xml.append("<payment><chargetotal>").append(URLEncoder.encode(amount.replace(',', '.'), "UTF-8")).append("</chargetotal></payment>");
         xml.append(moreInfo);
         xml.append("<transactiondetails>");
         xml.append(refundLine);
@@ -237,43 +231,57 @@ public class PaymentGatewayLinkPoint implements PaymentGateway {
     @Override
     public void endElement(String uri, String localName, String qName) throws SAXException {
         try {
-            if (qName.equals("r_csp")) {
-                props.put("r_csp", URLDecoder.decode(text, "UTF-8"));
-                text="";
-            } else if (qName.equals("r_time")){
-                props.put("r_time", URLDecoder.decode(text, "UTF-8"));
-                text="";
-            } else if (qName.equals("r_ref")) {
-                props.put("r_ref", URLDecoder.decode(text, "UTF-8"));
-                text="";
-            } else if (qName.equals("r_error")) {
-                props.put("r_error", URLDecoder.decode(text, "UTF-8"));
-                text="";
-            } else if (qName.equals("r_ordernum")) {
-                props.put("r_ordernum", URLDecoder.decode(text, "UTF-8"));
-                text="";
-            } else if (qName.equals("r_message")) {
-                props.put("r_message", URLDecoder.decode(text, "UTF-8"));
-                text="";
-            } else if (qName.equals("r_code")) {
-                props.put("r_code", URLDecoder.decode(text, "UTF-8"));
-                text="";
-            } else if (qName.equals("r_tdate")) {
-                props.put("r_tdate", URLDecoder.decode(text, "UTF-8"));
-                text="";
-            } else if (qName.equals("r_score")) {
-                props.put("r_score", URLDecoder.decode(text, "UTF-8"));
-                text="";
-            } else if (qName.equals("r_authresponse")) {
-                props.put("r_authresponse", URLDecoder.decode(text, "UTF-8"));
-                text="";
-            } else if (qName.equals("r_approved")) {
-                props.put("r_approved", URLDecoder.decode(text, "UTF-8"));
-                text="";
-            } else if (qName.equals("r_avs")) {
-                props.put("r_avs", URLDecoder.decode(text, "UTF-8"));
-                text="";
-            }
+// JG 16 May 12 use switch
+            switch (qName) {
+                    case "r_csp":
+                        props.put("r_csp", URLDecoder.decode(text, "UTF-8"));
+                        text="";
+                        break;
+                    case "r_time":
+                        props.put("r_time", URLDecoder.decode(text, "UTF-8"));
+                        text="";
+                        break;
+                    case "r_ref":
+                        props.put("r_ref", URLDecoder.decode(text, "UTF-8"));
+                        text="";
+                        break;
+                    case "r_error":
+                        props.put("r_error", URLDecoder.decode(text, "UTF-8"));
+                        text="";
+                        break;
+                    case "r_ordernum":
+                        props.put("r_ordernum", URLDecoder.decode(text, "UTF-8"));
+                        text="";
+                        break;
+                    case "r_message":
+                        props.put("r_message", URLDecoder.decode(text, "UTF-8"));
+                        text="";
+                        break;
+                    case "r_code":
+                        props.put("r_code", URLDecoder.decode(text, "UTF-8"));
+                        text="";
+                        break;
+                    case "r_tdate":
+                        props.put("r_tdate", URLDecoder.decode(text, "UTF-8"));
+                        text="";
+                        break;
+                    case "r_score":
+                        props.put("r_score", URLDecoder.decode(text, "UTF-8"));
+                        text="";
+                        break;
+                    case "r_authresponse":
+                        props.put("r_authresponse", URLDecoder.decode(text, "UTF-8"));
+                        text="";
+                        break;
+                    case "r_approved":
+                        props.put("r_approved", URLDecoder.decode(text, "UTF-8"));
+                        text="";
+                        break;
+                    case "r_avs":
+                        props.put("r_avs", URLDecoder.decode(text, "UTF-8"));
+                        text="";
+                        break;
+                }
         }
         catch(UnsupportedEncodingException eUE){
             result = eUE.getMessage();

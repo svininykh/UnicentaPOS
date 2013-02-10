@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -18,17 +18,17 @@
 //    along with uniCenta oPOS.  If not, see <http://www.gnu.org/licenses/>.
 
 package com.openbravo.pos.sales;
-import java.awt.Component;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import com.openbravo.basic.BasicException;
 import com.openbravo.pos.catalog.CatalogSelector;
 import com.openbravo.pos.catalog.JCatalog;
 import com.openbravo.pos.forms.AppView;
 import com.openbravo.pos.ticket.ProductInfoExt;
+import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 public class JPanelTicketSales extends JPanelTicket {
 
@@ -44,10 +44,12 @@ public class JPanelTicketSales extends JPanelTicket {
         m_ticketlines.addListSelectionListener(new CatalogSelectionListener());
     }
     
+    @Override
     public String getTitle() {
         return null;
     }
     
+    @Override
     protected Component getSouthComponent() {
         m_cat = new JCatalog(dlSales,
                 "true".equals(m_jbtnconfig.getProperty("pricevisible")),
@@ -61,10 +63,12 @@ public class JPanelTicketSales extends JPanelTicket {
         return m_cat.getComponent();
     }
 
+    @Override
     protected void resetSouthComponent() {
         m_cat.showCatalogPanel(null);
     }
     
+    @Override
     protected JTicketsBag getJTicketsBag() {
         return JTicketsBag.createTicketsBag(m_App.getProperties().getProperty("machine.ticketsbag"), m_App, this);
     }
@@ -76,12 +80,14 @@ public class JPanelTicketSales extends JPanelTicket {
     }      
     
     private class CatalogListener implements ActionListener {
+        @Override
         public void actionPerformed(ActionEvent e) {
             buttonTransition((ProductInfoExt) e.getSource());
         }  
     }
     
     private class CatalogSelectionListener implements ListSelectionListener {
+        @Override
         public void valueChanged(ListSelectionEvent e) {      
             
             if (!e.getValueIsAdjusting()) {

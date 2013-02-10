@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -37,28 +37,36 @@ public class SQLColumn implements TreeNode {
         m_table = t;
         m_sName = name;
     }
+    @Override
     public String toString() {
         return m_sName;
     }
     
+    @Override
     public Enumeration children(){
         return null;
     }
+    @Override
     public boolean getAllowsChildren() {
         return false;
     }
+    @Override
     public TreeNode getChildAt(int childIndex) {
         throw new ArrayIndexOutOfBoundsException();
     }
+    @Override
     public int getChildCount() {
         return 0;
     }
+    @Override
     public int getIndex(TreeNode node){
         throw new ArrayIndexOutOfBoundsException();
     }
+    @Override
     public TreeNode getParent() {
         return m_table;
     }
+    @Override
     public boolean isLeaf() {
         return true;
     }      

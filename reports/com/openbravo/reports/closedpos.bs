@@ -1,5 +1,5 @@
-//    uniCenta oPOS - touch friendly EPoS
-//    Copyright (c) 2009 uniCenta
+//    uniCenta oPOS - Touch Friendly Point Of Sale
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net
 //
 //    This file is part of uniCenta oPOS
@@ -35,14 +35,17 @@ report.setSentence("SELECT " +
                     "WHERE CLOSEDCASH.MONEY = RECEIPTS.MONEY AND PAYMENTS.RECEIPT = RECEIPTS.ID AND ?(QBF_FILTER) " +
                     "GROUP BY CLOSEDCASH.HOST, CLOSEDCASH.HOSTSEQUENCE, CLOSEDCASH.MONEY, CLOSEDCASH.DATESTART, CLOSEDCASH.DATEEND, PAYMENTS.PAYMENT " +
                     "ORDER BY CLOSEDCASH.HOST, CLOSEDCASH.HOSTSEQUENCE");
+
 report.addParameter("CLOSEDCASH.DATEEND");
 report.addParameter("CLOSEDCASH.DATEEND");
+
 paramdates = new com.openbravo.pos.reports.JParamsDatesInterval();
-paramdates.setStartDate(com.openbravo.beans.DateUtils.getToday());
+paramdates.setEndDate(com.openbravo.beans.DateUtils.getToday());
+
 report.addQBFFilter(paramdates);
 
 report.addField("HOST", com.openbravo.data.loader.Datas.STRING);
-report.addField("SEQUENCE", com.openbravo.data.loader.Datas.INT);
+report.addField("HOSTSEQUENCE", com.openbravo.data.loader.Datas.INT);
 report.addField("MONEY", com.openbravo.data.loader.Datas.STRING);
 report.addField("DATESTART", com.openbravo.data.loader.Datas.TIMESTAMP);
 report.addField("DATEEND", com.openbravo.data.loader.Datas.TIMESTAMP);

@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -27,9 +27,14 @@ report.setSentence("SELECT CLOSEDCASH.HOST, PEOPLE.ID, PEOPLE.NAME, SUM(TICKETLI
                  "FROM CLOSEDCASH, RECEIPTS, TICKETS, PEOPLE, TICKETLINES " +
                  "WHERE CLOSEDCASH.MONEY = RECEIPTS.MONEY AND RECEIPTS.ID = TICKETS.ID AND TICKETS.ID = TICKETLINES.TICKET AND TICKETS.PERSON = PEOPLE.ID AND ?(QBF_FILTER) " +
                  "GROUP BY CLOSEDCASH.HOST, PEOPLE.ID, PEOPLE.NAME");
+
 report.addParameter("RECEIPTS.DATENEW");
 report.addParameter("RECEIPTS.DATENEW");
-report.addQBFFilter(new com.openbravo.pos.reports.JParamsDatesInterval());
+
+paramdates = new com.openbravo.pos.reports.JParamsDatesInterval();
+paramdates.setEndDate(com.openbravo.beans.DateUtils.getToday());
+
+report.addQBFFilter(paramdates);
 
 report.addField("HOST", com.openbravo.data.loader.Datas.STRING);
 report.addField("PERSON", com.openbravo.data.loader.Datas.STRING);

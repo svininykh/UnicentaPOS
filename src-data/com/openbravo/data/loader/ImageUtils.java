@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -180,7 +180,7 @@ public class ImageUtils {
        
     public static String bytes2hex(byte[] binput) {
         
-        StringBuffer s = new StringBuffer(binput.length *2);
+        StringBuilder s = new StringBuilder(binput.length *2);
         for (int i = 0; i < binput.length; i++) {
             byte b = binput[i];
             s.append(HEXCHARS[(b & 0xF0) >> 4]);

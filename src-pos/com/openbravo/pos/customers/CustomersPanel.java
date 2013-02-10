@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -45,6 +45,7 @@ public class CustomersPanel extends JPanelTable {
     public CustomersPanel() {    
     }
     
+    @Override
     protected void init() {        
         DataLogicCustomers dlCustomers  = (DataLogicCustomers) app.getBean("com.openbravo.pos.customers.DataLogicCustomers");
         tcustomers = dlCustomers.getTableCustomers();        
@@ -58,10 +59,12 @@ public class CustomersPanel extends JPanelTable {
         super.activate();
     }
     
+    @Override
     public ListProvider getListProvider() {
         return new ListProviderCreator(tcustomers);
     }
     
+    @Override
     public SaveProvider getSaveProvider() {
         return new SaveProvider(tcustomers, new int[] {0, 1, 2, 3, 4, 5, 6, 7, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22});      
     }
@@ -81,10 +84,12 @@ public class CustomersPanel extends JPanelTable {
         return new ListCellRendererBasic(tcustomers.getRenderStringBasic(new int[]{3}));
     }
     
+    @Override
     public EditorRecord getEditor() {
         return jeditor;
     }       
     
+    @Override
     public String getTitle() {
         return AppLocal.getIntString("Menu.CustomersManagement");
     }    

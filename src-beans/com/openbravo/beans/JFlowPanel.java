@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -80,7 +80,9 @@ public class JFlowPanel extends JPanel implements Scrollable {
                     if (x == 0 || (x + hgap + d.width + hgap) <= maxWidth) {
                         // continuamos con esta linea
                         x += hgap;
-                        if (bDoChilds) m.setBounds(getPosition(x, maxWidth - d.width), dim.height, d.width, d.height);
+                        if (bDoChilds) {
+                            m.setBounds(getPosition(x, maxWidth - d.width), dim.height, d.width, d.height);
+                        }
                         x += d.width;
                         if (d.height > maxRowHeight) {
                             maxRowHeight = d.height;
@@ -88,7 +90,9 @@ public class JFlowPanel extends JPanel implements Scrollable {
                     } else {
                         // nueva linea
                         dim.height += maxRowHeight + vgap;
-                        if (bDoChilds) m.setBounds(getPosition(hgap, maxWidth - d.width), dim.height, d.width, d.height);
+                        if (bDoChilds) {
+                            m.setBounds(getPosition(hgap, maxWidth - d.width), dim.height, d.width, d.height);
+                        }
                         if (x > maxRowWidth) {
                             maxRowWidth = x;
                         }

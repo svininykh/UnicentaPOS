@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -20,13 +20,14 @@
 package com.openbravo.pos.forms;
 
 import com.openbravo.pos.config.JFrmConfig;
-import java.awt.BorderLayout;
-import java.rmi.RemoteException;
-import javax.swing.JFrame;
 import com.openbravo.pos.instance.AppMessage;
 import com.openbravo.pos.instance.InstanceManager;
+import java.awt.BorderLayout;
 import java.io.IOException;
+import java.rmi.AlreadyBoundException;
+import java.rmi.RemoteException;
 import javax.imageio.ImageIO;
+import javax.swing.JFrame;
 
 /**
  *
@@ -59,7 +60,8 @@ public class JRootFrame extends javax.swing.JFrame implements AppMessage {
                 // Register the running application
                 try {
                     m_instmanager = new InstanceManager(this);
-                } catch (Exception e) {
+// JG 16 May use multicatch
+                } catch (RemoteException | AlreadyBoundException e) {
                 }
             }
         
@@ -80,8 +82,10 @@ public class JRootFrame extends javax.swing.JFrame implements AppMessage {
         }
     }
     
+    @Override
     public void restoreWindow() throws RemoteException {
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 if (getExtendedState() == JFrame.ICONIFIED) {
                     setExtendedState(JFrame.NORMAL);

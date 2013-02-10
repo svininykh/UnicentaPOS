@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -19,28 +19,38 @@
 
 package com.openbravo.pos.inventory;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.util.*;
-import javax.swing.*;
 import com.openbravo.basic.BasicException;
-import com.openbravo.beans.*;
-import com.openbravo.data.gui.*;
-import com.openbravo.data.loader.*;
+import com.openbravo.beans.DateUtils;
+import com.openbravo.beans.JCalendarDialog;
+import com.openbravo.data.gui.ComboBoxValModel;
+import com.openbravo.data.gui.MessageInf;
+import com.openbravo.data.loader.LocalRes;
+import com.openbravo.data.loader.SentenceExec;
+import com.openbravo.data.loader.SentenceList;
 import com.openbravo.format.Formats;
-import com.openbravo.pos.scripting.ScriptEngine;
-import com.openbravo.pos.scripting.ScriptException;
-import com.openbravo.pos.scripting.ScriptFactory;
 import com.openbravo.pos.catalog.CatalogSelector;
-import com.openbravo.pos.forms.*;
 import com.openbravo.pos.catalog.JCatalog;
+import com.openbravo.pos.forms.*;
 import com.openbravo.pos.printer.TicketParser;
 import com.openbravo.pos.printer.TicketPrinterException;
 import com.openbravo.pos.sales.JProductAttEdit;
 import com.openbravo.pos.scanpal2.DeviceScanner;
 import com.openbravo.pos.scanpal2.DeviceScannerException;
 import com.openbravo.pos.scanpal2.ProductDownloaded;
+import com.openbravo.pos.scripting.ScriptEngine;
+import com.openbravo.pos.scripting.ScriptException;
+import com.openbravo.pos.scripting.ScriptFactory;
 import com.openbravo.pos.ticket.ProductInfoExt;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Date;
+import java.util.UUID;
+import javax.swing.JComponent;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 /**
  *
@@ -108,14 +118,17 @@ public class StockManagement extends JPanel implements JPanelView {
         jPanel5.add(m_invlines, BorderLayout.CENTER);
     }
      
+    @Override
     public String getTitle() {
         return AppLocal.getIntString("Menu.StockMovement");
     }         
     
+    @Override
     public JComponent getComponent() {
         return this;
     }
 
+    @Override
     public void activate() throws BasicException {
         m_cat.loadCatalog();
         
@@ -128,6 +141,7 @@ public class StockManagement extends JPanel implements JPanelView {
         stateToInsert();
         
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 jTextField1.requestFocus();
             }
@@ -145,6 +159,7 @@ public class StockManagement extends JPanel implements JPanelView {
         m_jcodebar.setText(null);
     }
     
+    @Override
     public boolean deactivate() {
 
         if (m_invlines.getCount() > 0) {
@@ -352,10 +367,8 @@ public class StockManagement extends JPanel implements JPanelView {
                 ScriptEngine script = ScriptFactory.getScriptEngine(ScriptFactory.VELOCITY);
                 script.put("inventoryrecord", invrec);
                 m_TTP.printTicket(script.eval(sresource).toString());
-            } catch (ScriptException e) {
-                MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotprintticket"), e);
-                msg.show(this);
-            } catch (TicketPrinterException e) {
+// JG 16 May 2012 use multicatch
+            } catch (    ScriptException | TicketPrinterException e) {
                 MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotprintticket"), e);
                 msg.show(this);
             }
@@ -364,6 +377,7 @@ public class StockManagement extends JPanel implements JPanelView {
   
     
     private class CatalogListener implements ActionListener {
+        @Override
         public void actionPerformed(ActionEvent e) {
             String sQty = m_jcodebar.getText();
             if (sQty != null) {
@@ -445,6 +459,7 @@ public class StockManagement extends JPanel implements JPanelView {
         jPanel4.add(m_jEnter, gridBagConstraints);
 
         m_jcodebar.setBackground(java.awt.Color.white);
+        m_jcodebar.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         m_jcodebar.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         m_jcodebar.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1)));
         m_jcodebar.setOpaque(true);
@@ -484,13 +499,16 @@ public class StockManagement extends JPanel implements JPanelView {
 
         jPanel3.setLayout(null);
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel1.setText(AppLocal.getIntString("label.stockdate")); // NOI18N
         jPanel3.add(jLabel1);
-        jLabel1.setBounds(10, 10, 80, 20);
-        jPanel3.add(m_jdate);
-        m_jdate.setBounds(100, 10, 200, 20);
+        jLabel1.setBounds(10, 10, 80, 25);
 
-        m_jbtndate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/calender.png"))); // NOI18N
+        m_jdate.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jPanel3.add(m_jdate);
+        m_jdate.setBounds(100, 10, 200, 25);
+
+        m_jbtndate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/date.png"))); // NOI18N
         m_jbtndate.setToolTipText("Open Calendar");
         m_jbtndate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -498,28 +516,33 @@ public class StockManagement extends JPanel implements JPanelView {
             }
         });
         jPanel3.add(m_jbtndate);
-        m_jbtndate.setBounds(310, 5, 40, 33);
+        m_jbtndate.setBounds(310, 5, 40, 30);
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel2.setText(AppLocal.getIntString("label.stockreason")); // NOI18N
         jPanel3.add(jLabel2);
-        jLabel2.setBounds(10, 50, 80, 20);
+        jLabel2.setBounds(10, 50, 80, 25);
 
+        m_jreason.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         m_jreason.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 m_jreasonActionPerformed(evt);
             }
         });
         jPanel3.add(m_jreason);
-        m_jreason.setBounds(100, 50, 200, 20);
+        m_jreason.setBounds(100, 50, 200, 25);
 
+        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel8.setText(AppLocal.getIntString("label.warehouse")); // NOI18N
         jLabel8.setMaximumSize(new java.awt.Dimension(40, 20));
         jLabel8.setMinimumSize(new java.awt.Dimension(40, 20));
         jLabel8.setPreferredSize(new java.awt.Dimension(40, 20));
         jPanel3.add(jLabel8);
-        jLabel8.setBounds(10, 90, 80, 20);
+        jLabel8.setBounds(10, 90, 80, 25);
+
+        m_jLocation.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jPanel3.add(m_jLocation);
-        m_jLocation.setBounds(100, 90, 200, 20);
+        m_jLocation.setBounds(100, 90, 200, 25);
 
         m_jDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/editdelete.png"))); // NOI18N
         m_jDelete.setToolTipText("Remove Line");
@@ -563,8 +586,10 @@ public class StockManagement extends JPanel implements JPanelView {
         jPanel5.setLayout(new java.awt.BorderLayout());
         jPanel3.add(jPanel5);
         jPanel5.setBounds(10, 130, 410, 150);
+
+        m_jLocationDes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jPanel3.add(m_jLocationDes);
-        m_jLocationDes.setBounds(310, 90, 200, 20);
+        m_jLocationDes.setBounds(310, 90, 200, 25);
 
         jEditAttributes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/attributes.png"))); // NOI18N
         jEditAttributes.setToolTipText("Attrubutes");
@@ -584,13 +609,14 @@ public class StockManagement extends JPanel implements JPanelView {
 
         btnDownloadProducts.setText("ScanPal");
         btnDownloadProducts.setToolTipText("Download from Mobile Device");
+        btnDownloadProducts.setPreferredSize(new java.awt.Dimension(69, 33));
         btnDownloadProducts.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDownloadProductsActionPerformed(evt);
             }
         });
         jPanel3.add(btnDownloadProducts);
-        btnDownloadProducts.setBounds(450, 250, 69, 23);
+        btnDownloadProducts.setBounds(450, 233, 69, 40);
 
         add(jPanel3, java.awt.BorderLayout.CENTER);
 
@@ -684,6 +710,7 @@ private void jTextField1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event
 
 private void m_jcodebarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_m_jcodebarMouseClicked
     java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 jTextField1.requestFocus();
             }

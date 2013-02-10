@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -40,9 +40,11 @@ public class FormatsValidate extends Formats {
         this(fmt, new FormatsConstrain[]{constrain});
     }
     
+    @Override
     protected String formatValueInt(Object value) {
         return m_fmt.formatValueInt(value);
     }
+    @Override
     protected Object parseValueInt(String value) throws ParseException {
         // Primero obtenemos el valor        
         Object val = m_fmt.parseValueInt(value);        
@@ -52,6 +54,7 @@ public class FormatsValidate extends Formats {
         
         return val;
     }
+    @Override
     public int getAlignment() {
         return m_fmt.getAlignment();
     }

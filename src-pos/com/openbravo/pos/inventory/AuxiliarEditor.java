@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -24,12 +24,12 @@ import com.openbravo.data.gui.MessageInf;
 import com.openbravo.data.user.DirtyManager;
 import com.openbravo.data.user.EditorRecord;
 import com.openbravo.format.Formats;
+import com.openbravo.pos.forms.AppLocal;
 import com.openbravo.pos.forms.AppView;
 import com.openbravo.pos.forms.DataLogicSales;
+import com.openbravo.pos.panels.JProductFinder;
 import com.openbravo.pos.ticket.ProductInfoExt;
 import java.awt.Component;
-import com.openbravo.pos.forms.AppLocal;
-import com.openbravo.pos.panels.JProductFinder;
 import java.awt.Toolkit;
 import java.util.UUID;
 
@@ -67,9 +67,11 @@ public class AuxiliarEditor extends javax.swing.JPanel implements EditorRecord {
         }
     }
 
+    @Override
     public void refresh() {
     }
 
+    @Override
     public void writeValueEOF() {
         
         id = null;
@@ -88,6 +90,7 @@ public class AuxiliarEditor extends javax.swing.JPanel implements EditorRecord {
         m_jSearch.setEnabled(false);
     }
 
+    @Override
     public void writeValueInsert() {
         
         id = UUID.randomUUID().toString();
@@ -106,6 +109,7 @@ public class AuxiliarEditor extends javax.swing.JPanel implements EditorRecord {
         m_jSearch.setEnabled(true);
     }
 
+    @Override
     public void writeValueEdit(Object value) {
         Object[] obj = (Object[]) value;
         
@@ -125,6 +129,7 @@ public class AuxiliarEditor extends javax.swing.JPanel implements EditorRecord {
         m_jSearch.setEnabled(true);
     }
 
+    @Override
     public void writeValueDelete(Object value) {
         Object[] obj = (Object[]) value;
         
@@ -145,6 +150,7 @@ public class AuxiliarEditor extends javax.swing.JPanel implements EditorRecord {
         m_jSearch.setEnabled(false);       
     }
 
+    @Override
     public Object createValue() throws BasicException {
         return new Object[] {
             id, 
@@ -156,6 +162,7 @@ public class AuxiliarEditor extends javax.swing.JPanel implements EditorRecord {
         };
     }
 
+    @Override
     public Component getComponent() {
         return this;
     }
@@ -227,8 +234,10 @@ public class AuxiliarEditor extends javax.swing.JPanel implements EditorRecord {
         m_jBarcode = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
 
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel3.setText(AppLocal.getIntString("label.prodref")); // NOI18N
 
+        m_jReference.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         m_jReference.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 m_jReferenceActionPerformed(evt);
@@ -263,12 +272,14 @@ public class AuxiliarEditor extends javax.swing.JPanel implements EditorRecord {
             }
         });
 
+        m_jBarcode.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         m_jBarcode.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 m_jBarcodeActionPerformed(evt);
             }
         });
 
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel4.setText(AppLocal.getIntString("label.prodbarcode")); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -306,18 +317,18 @@ public class AuxiliarEditor extends javax.swing.JPanel implements EditorRecord {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(m_jEnter1)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel3)
-                        .addComponent(m_jReference, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(m_jReference, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(m_jBarcode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel4))
+                        .addComponent(m_jBarcode, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(m_jEnter2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(m_jSearch)
-                    .addComponent(m_jProduct, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(m_jProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(21, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents

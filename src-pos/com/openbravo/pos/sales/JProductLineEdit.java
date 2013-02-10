@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -226,31 +226,44 @@ public class JProductLineEdit extends javax.swing.JDialog {
 
         jPanel2.setLayout(null);
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel1.setText(AppLocal.getIntString("label.price")); // NOI18N
         jPanel2.add(jLabel1);
-        jLabel1.setBounds(10, 80, 90, 14);
+        jLabel1.setBounds(10, 80, 90, 25);
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel2.setText(AppLocal.getIntString("label.units")); // NOI18N
         jPanel2.add(jLabel2);
-        jLabel2.setBounds(10, 50, 90, 14);
+        jLabel2.setBounds(10, 50, 90, 25);
 
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel3.setText(AppLocal.getIntString("label.pricetax")); // NOI18N
         jPanel2.add(jLabel3);
-        jLabel3.setBounds(10, 110, 90, 14);
+        jLabel3.setBounds(10, 110, 90, 25);
 
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel4.setText(AppLocal.getIntString("label.item")); // NOI18N
         jPanel2.add(jLabel4);
-        jLabel4.setBounds(10, 20, 90, 14);
+        jLabel4.setBounds(10, 20, 90, 25);
+
+        m_jName.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jPanel2.add(m_jName);
         m_jName.setBounds(100, 20, 270, 25);
+
+        m_jUnits.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jPanel2.add(m_jUnits);
         m_jUnits.setBounds(100, 50, 240, 25);
+
+        m_jPrice.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jPanel2.add(m_jPrice);
         m_jPrice.setBounds(100, 80, 240, 25);
+
+        m_jPriceTax.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jPanel2.add(m_jPriceTax);
         m_jPriceTax.setBounds(100, 110, 240, 25);
 
         m_jTaxrate.setBackground(javax.swing.UIManager.getDefaults().getColor("TextField.disabledBackground"));
+        m_jTaxrate.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         m_jTaxrate.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         m_jTaxrate.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(javax.swing.UIManager.getDefaults().getColor("Button.darkShadow")), javax.swing.BorderFactory.createEmptyBorder(1, 4, 1, 4)));
         m_jTaxrate.setOpaque(true);
@@ -259,15 +272,18 @@ public class JProductLineEdit extends javax.swing.JDialog {
         jPanel2.add(m_jTaxrate);
         m_jTaxrate.setBounds(100, 140, 210, 25);
 
+        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel5.setText(AppLocal.getIntString("label.tax")); // NOI18N
         jPanel2.add(jLabel5);
-        jLabel5.setBounds(10, 140, 90, 14);
+        jLabel5.setBounds(10, 140, 90, 25);
 
+        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel6.setText(AppLocal.getIntString("label.totalcash")); // NOI18N
         jPanel2.add(jLabel6);
-        jLabel6.setBounds(10, 200, 90, 14);
+        jLabel6.setBounds(10, 200, 90, 25);
 
         m_jTotal.setBackground(javax.swing.UIManager.getDefaults().getColor("TextField.disabledBackground"));
+        m_jTotal.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         m_jTotal.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         m_jTotal.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(javax.swing.UIManager.getDefaults().getColor("Button.darkShadow")), javax.swing.BorderFactory.createEmptyBorder(1, 4, 1, 4)));
         m_jTotal.setOpaque(true);
@@ -276,11 +292,13 @@ public class JProductLineEdit extends javax.swing.JDialog {
         jPanel2.add(m_jTotal);
         m_jTotal.setBounds(100, 200, 210, 25);
 
+        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel7.setText(AppLocal.getIntString("label.subtotalcash")); // NOI18N
         jPanel2.add(jLabel7);
-        jLabel7.setBounds(10, 170, 90, 14);
+        jLabel7.setBounds(10, 170, 90, 25);
 
         m_jSubtotal.setBackground(javax.swing.UIManager.getDefaults().getColor("TextField.disabledBackground"));
+        m_jSubtotal.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         m_jSubtotal.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         m_jSubtotal.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(javax.swing.UIManager.getDefaults().getColor("Button.darkShadow")), javax.swing.BorderFactory.createEmptyBorder(1, 4, 1, 4)));
         m_jSubtotal.setOpaque(true);

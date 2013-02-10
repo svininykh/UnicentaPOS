@@ -58,6 +58,7 @@ public class PaymentInfoMagcard extends PaymentInfo {
         this(sHolderName, sCardNumber, sExpirationDate, null, null, null, sTransactionID, dTotal);
     }
     
+    @Override
     public PaymentInfo copyPayment(){
         PaymentInfoMagcard p = new PaymentInfoMagcard(m_sHolderName, m_sCardNumber, m_sExpirationDate, track1, track2, track3, m_sTransactionID, m_dTotal);
         p.m_sAuthorization = m_sAuthorization;
@@ -65,9 +66,11 @@ public class PaymentInfoMagcard extends PaymentInfo {
         return p;
     }    
     
+    @Override
     public String getName() {
         return "magcard";
     }
+    @Override
     public double getTotal() {
         return m_dTotal;
     }         
@@ -84,6 +87,7 @@ public class PaymentInfoMagcard extends PaymentInfo {
     public String getExpirationDate() {
         return m_sExpirationDate;
     }    
+    @Override
     public String getTransactionID() {
         return m_sTransactionID;
     }
@@ -146,6 +150,7 @@ public class PaymentInfoMagcard extends PaymentInfo {
     public String printCardNumber() {
         // hide start numbers
         if (m_sCardNumber.length() > 4) {
+
             return m_sCardNumber.substring(0, m_sCardNumber.length()-4).replaceAll(".", "*") +
                     m_sCardNumber.substring(m_sCardNumber.length() - 4);
         } else {

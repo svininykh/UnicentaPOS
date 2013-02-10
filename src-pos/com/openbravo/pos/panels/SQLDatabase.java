@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -40,6 +40,7 @@ public class SQLDatabase implements TreeNode {
         m_aTables = new ArrayList();
         m_mTables = new HashMap();
     }
+    @Override
     public String toString() {
         return m_sName;
     }
@@ -53,25 +54,33 @@ public class SQLDatabase implements TreeNode {
         return (SQLTable) m_mTables.get(sTable);
     }
     
+    @Override
     public Enumeration children(){
         return new EnumerationIter(m_aTables.iterator());
     }
+    @Override
     public boolean getAllowsChildren() {
         return true;
     }
+    @Override
     public TreeNode getChildAt(int childIndex) {
         return (TreeNode) m_aTables.get(childIndex);
     }
+    @Override
     public int getChildCount() {
         return m_aTables.size();
     }
+    @Override
     public int getIndex(TreeNode node){
         return m_aTables.indexOf(node);
     }
+    @Override
     public TreeNode getParent() {
         return null;
     }
+    @Override
     public boolean isLeaf() {
-        return m_aTables.size() == 0;
+// JG 16 May 2012 use isEmpty
+        return m_aTables.isEmpty();
     }    
 }

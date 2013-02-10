@@ -19,17 +19,16 @@
 
 package com.openbravo.pos.inventory;
 
+import com.openbravo.basic.BasicException;
+import com.openbravo.data.user.DirtyManager;
+import com.openbravo.data.user.EditorRecord;
+import com.openbravo.format.Formats;
+import com.openbravo.pos.forms.AppLocal;
 import java.awt.Component;
 import java.util.UUID;
-import javax.swing.*;
+import javax.swing.JPanel;
 
-import com.openbravo.format.Formats;
-import com.openbravo.basic.BasicException;
-import com.openbravo.data.user.EditorRecord;
-import com.openbravo.data.user.DirtyManager;
-import com.openbravo.pos.forms.AppLocal;
-
-public class TaxCategoriesEditor extends JPanel implements EditorRecord {
+public final class TaxCategoriesEditor extends JPanel implements EditorRecord {
     
     private Object m_oId;
     
@@ -41,16 +40,19 @@ public class TaxCategoriesEditor extends JPanel implements EditorRecord {
         
         writeValueEOF();
     }
+    @Override
     public void writeValueEOF() {
         m_oId = null;
         m_jName.setText(null);
         m_jName.setEnabled(false);
     }
+    @Override
     public void writeValueInsert() {
         m_oId = UUID.randomUUID().toString();
         m_jName.setText(null);
         m_jName.setEnabled(true);
     }
+    @Override
     public void writeValueDelete(Object value) {
 
         Object[] taxcustcat = (Object[]) value;
@@ -58,6 +60,7 @@ public class TaxCategoriesEditor extends JPanel implements EditorRecord {
         m_jName.setText(Formats.STRING.formatValue(taxcustcat[1]));
         m_jName.setEnabled(false);
     }    
+    @Override
     public void writeValueEdit(Object value) {
 
         Object[] taxcustcat = (Object[]) value;
@@ -66,6 +69,7 @@ public class TaxCategoriesEditor extends JPanel implements EditorRecord {
         m_jName.setEnabled(true);
     }
 
+    @Override
     public Object createValue() throws BasicException {
         
         Object[] taxcustcat = new Object[2];
@@ -76,10 +80,12 @@ public class TaxCategoriesEditor extends JPanel implements EditorRecord {
         return taxcustcat;
     }    
      
+    @Override
     public Component getComponent() {
         return this;
     }
     
+    @Override
     public void refresh() {
     }
     
@@ -95,7 +101,10 @@ public class TaxCategoriesEditor extends JPanel implements EditorRecord {
         jLabel2 = new javax.swing.JLabel();
         m_jName = new javax.swing.JTextField();
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel2.setText(AppLocal.getIntString("Label.Name")); // NOI18N
+
+        m_jName.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -113,8 +122,8 @@ public class TaxCategoriesEditor extends JPanel implements EditorRecord {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(m_jName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(m_jName, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents

@@ -40,10 +40,12 @@ public abstract class BaseAnimator implements DisplayAnimator {
         baseLine2 = line2;
     }
 
+    @Override
     public String getLine1() {
         return currentLine1;
     }
 
+    @Override
     public String getLine2() {
         return currentLine2;
     }

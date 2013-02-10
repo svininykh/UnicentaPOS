@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -244,7 +244,6 @@ public class JTicketsBagTicket extends JTicketsBag {
 
         m_jButtons.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
-        m_jTicketId.setBackground(java.awt.Color.white);
         m_jTicketId.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         m_jTicketId.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(javax.swing.UIManager.getDefaults().getColor("Button.darkShadow")), javax.swing.BorderFactory.createEmptyBorder(1, 4, 1, 4)));
         m_jTicketId.setOpaque(true);
@@ -327,6 +326,7 @@ public class JTicketsBagTicket extends JTicketsBag {
         add(m_jOptions, java.awt.BorderLayout.NORTH);
 
         m_jPanelTicket.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        m_jPanelTicket.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         m_jPanelTicket.setLayout(new java.awt.BorderLayout());
         add(m_jPanelTicket, java.awt.BorderLayout.CENTER);
 
@@ -363,6 +363,8 @@ public class JTicketsBagTicket extends JTicketsBag {
         gridBagConstraints.weighty = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
         jPanel5.add(jButton1, gridBagConstraints);
+
+        m_jTicketEditor.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;

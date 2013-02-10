@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -86,6 +86,7 @@ public JRefundLines(DataLogicSystem dlSystem, JPanelTicketEdits jTicketEdit) {
         m_jbtnAddOne.setFocusPainted(false);
         m_jbtnAddOne.setFocusable(false);
         m_jbtnAddOne.setMargin(new java.awt.Insets(8, 14, 8, 14));
+        m_jbtnAddOne.setPreferredSize(new java.awt.Dimension(100, 33));
         m_jbtnAddOne.setRequestFocusEnabled(false);
         m_jbtnAddOne.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -99,6 +100,7 @@ public JRefundLines(DataLogicSystem dlSystem, JPanelTicketEdits jTicketEdit) {
         m_jbtnAddLine.setFocusPainted(false);
         m_jbtnAddLine.setFocusable(false);
         m_jbtnAddLine.setMargin(new java.awt.Insets(8, 14, 8, 14));
+        m_jbtnAddLine.setPreferredSize(new java.awt.Dimension(100, 33));
         m_jbtnAddLine.setRequestFocusEnabled(false);
         m_jbtnAddLine.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -112,6 +114,7 @@ public JRefundLines(DataLogicSystem dlSystem, JPanelTicketEdits jTicketEdit) {
         m_jbtnAddAll.setFocusPainted(false);
         m_jbtnAddAll.setFocusable(false);
         m_jbtnAddAll.setMargin(new java.awt.Insets(8, 14, 8, 14));
+        m_jbtnAddAll.setPreferredSize(new java.awt.Dimension(100, 33));
         m_jbtnAddAll.setRequestFocusEnabled(false);
         m_jbtnAddAll.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

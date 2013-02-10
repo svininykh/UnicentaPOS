@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -78,6 +78,7 @@ public class JClockPanel extends javax.swing.JPanel {
         return m_date;
     }
     
+    @Override
     public void paintComponent(Graphics g) {
         
         super.paintComponent(g);
@@ -203,11 +204,11 @@ public class JClockPanel extends javax.swing.JPanel {
         g2.setPaint(oldPainter);
     }   
     
-    // <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-    }
-    // </editor-fold>//GEN-END:initComponents
+        setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+    }// </editor-fold>//GEN-END:initComponents
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

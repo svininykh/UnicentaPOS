@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -19,11 +19,7 @@
 
 package com.openbravo.pos.payment;
 
-import java.awt.Component;
-import java.awt.ComponentOrientation;
-import java.awt.Dialog;
-import java.awt.Frame;
-import java.awt.Window;
+import java.awt.*;
 
 /**
  *
@@ -51,6 +47,7 @@ public class JPaymentSelectRefund extends JPaymentSelect {
         }
     } 
     
+    @Override
     protected void addTabs() {
         
         addTabPayment(new JPaymentSelect.JPaymentCashRefundCreator());
@@ -60,12 +57,14 @@ public class JPaymentSelectRefund extends JPaymentSelect {
         setHeaderVisible(false);
     }
     
+    @Override
     protected void setStatusPanel(boolean isPositive, boolean isComplete) {
         
         setAddEnabled(isPositive && !isComplete);
         setOKEnabled(isComplete);
     }    
     
+    @Override
     protected PaymentInfo getDefaultPayment(double total) {
         return new PaymentInfoTicket(total, "cashrefund");
     } 

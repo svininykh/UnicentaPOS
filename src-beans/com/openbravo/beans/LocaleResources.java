@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -36,7 +36,8 @@ public class LocaleResources {
     
     /** Creates a new instance of LocaleResources */
     public LocaleResources() {
-        m_resources = new LinkedList<ResourceBundle>();
+//        m_resources = new LinkedList<ResourceBundle>();
+        m_resources = new LinkedList<>();        
         
 //        File fuserdir = new File(System.getProperty("user.dir"));
 //        File fresources = new File(fuserdir, "locales");

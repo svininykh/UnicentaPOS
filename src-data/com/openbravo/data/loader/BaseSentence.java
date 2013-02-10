@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -19,8 +19,9 @@
 
 package com.openbravo.data.loader;
 
-import java.util.*;
 import com.openbravo.basic.BasicException;
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class BaseSentence implements SentenceList, SentenceFind, SentenceExec {
 
@@ -30,14 +31,17 @@ public abstract class BaseSentence implements SentenceList, SentenceFind, Senten
     public abstract void closeExec() throws BasicException;
 
     // Funciones
+    @Override
     public final int exec() throws BasicException {
         return exec((Object) null);
     }
 
+    @Override
     public final int exec(Object... params) throws BasicException {
         return exec((Object) params);
     }
 
+    @Override
     public final int exec(Object params) throws BasicException {        
         DataResultSet SRS = openExec(params);
         if (SRS == null) {
@@ -50,14 +54,17 @@ public abstract class BaseSentence implements SentenceList, SentenceFind, Senten
     }
 
     
+    @Override
     public final List list() throws BasicException {
         return list((Object) null);
     }
 
+    @Override
     public final List list(Object... params) throws BasicException {
         return list((Object) params);
     }
 
+    @Override
     public final List list(Object params) throws BasicException {
     // En caso de error o lanza un pepinazo en forma de DataException 
         DataResultSet SRS = openExec(params);
@@ -67,9 +74,11 @@ public abstract class BaseSentence implements SentenceList, SentenceFind, Senten
         return aSO;
     }
     
+    @Override
     public final List listPage(int offset, int length) throws BasicException {
         return listPage(null, offset, length);
     }
+    @Override
     public final List listPage(Object params, int offset, int length) throws BasicException {
     // En caso de error o lanza un pepinazo en forma de DataException         
         DataResultSet SRS = openExec(params);
@@ -79,14 +88,17 @@ public abstract class BaseSentence implements SentenceList, SentenceFind, Senten
         return aSO;
     }
     
+    @Override
     public final Object find() throws BasicException {
         return find((Object) null);
     }
 
+    @Override
     public final Object find(Object... params) throws BasicException {
         return find((Object) params);
     }
 
+    @Override
     public final Object find(Object params) throws BasicException {
     // En caso de error o lanza un pepinazo en forma de SQLException          
         DataResultSet SRS = openExec(params);

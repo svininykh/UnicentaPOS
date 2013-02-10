@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -19,22 +19,21 @@
 
 package com.openbravo.pos.inventory;
 
-import java.awt.Component;
-import java.util.UUID;
-import javax.swing.*;
-
-import com.openbravo.pos.forms.AppLocal;
-import com.openbravo.format.Formats;
 import com.openbravo.basic.BasicException;
 import com.openbravo.data.gui.ComboBoxValModel;
 import com.openbravo.data.gui.MessageInf;
 import com.openbravo.data.loader.SentenceList;
-import com.openbravo.data.user.EditorRecord;
 import com.openbravo.data.user.DirtyManager;
+import com.openbravo.data.user.EditorRecord;
+import com.openbravo.format.Formats;
+import com.openbravo.pos.forms.AppLocal;
 import com.openbravo.pos.forms.AppView;
 import com.openbravo.pos.forms.DataLogicSales;
+import java.awt.Component;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+import javax.swing.JPanel;
 
 public class TaxEditor extends JPanel implements EditorRecord {
     
@@ -90,6 +89,7 @@ public class TaxEditor extends JPanel implements EditorRecord {
        
     }
     
+    @Override
     public void refresh() {
         
         List a;
@@ -107,6 +107,7 @@ public class TaxEditor extends JPanel implements EditorRecord {
         m_jTaxParent.setModel(taxparentmodel);    
     }
     
+    @Override
     public void writeValueEOF() {
         m_oId = null;
         m_jName.setText(null);
@@ -125,6 +126,7 @@ public class TaxEditor extends JPanel implements EditorRecord {
         jCascade.setEnabled(false);
         jOrder.setEnabled(false);
     }
+    @Override
     public void writeValueInsert() {
         m_oId = UUID.randomUUID().toString();
         m_jName.setText(null);
@@ -143,6 +145,7 @@ public class TaxEditor extends JPanel implements EditorRecord {
         jCascade.setEnabled(true);    
         jOrder.setEnabled(true);
     }
+    @Override
     public void writeValueDelete(Object value) {
 
         Object[] tax = (Object[]) value;
@@ -163,6 +166,7 @@ public class TaxEditor extends JPanel implements EditorRecord {
         jCascade.setEnabled(false);
         jOrder.setEnabled(false);
     }    
+    @Override
     public void writeValueEdit(Object value) {
 
         Object[] tax = (Object[]) value;
@@ -184,6 +188,7 @@ public class TaxEditor extends JPanel implements EditorRecord {
         jOrder.setEnabled(true);
     }
 
+    @Override
     public Object createValue() throws BasicException {
         
         Object[] tax = new Object[8];
@@ -200,6 +205,7 @@ public class TaxEditor extends JPanel implements EditorRecord {
         return tax;
     }    
      
+    @Override
     public Component getComponent() {
         return this;
     }
@@ -227,46 +233,65 @@ public class TaxEditor extends JPanel implements EditorRecord {
         jOrder = new javax.swing.JTextField();
 
         setLayout(null);
-        add(m_jName);
-        m_jName.setBounds(240, 20, 200, 19);
 
+        m_jName.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        add(m_jName);
+        m_jName.setBounds(240, 20, 200, 25);
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel2.setText(AppLocal.getIntString("Label.Name")); // NOI18N
         add(jLabel2);
-        jLabel2.setBounds(20, 20, 220, 15);
+        jLabel2.setBounds(20, 20, 220, 25);
 
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel3.setText(AppLocal.getIntString("label.dutyrate")); // NOI18N
         add(jLabel3);
-        jLabel3.setBounds(20, 140, 220, 15);
-        add(m_jRate);
-        m_jRate.setBounds(240, 140, 60, 19);
+        jLabel3.setBounds(20, 140, 220, 25);
 
+        m_jRate.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        add(m_jRate);
+        m_jRate.setBounds(240, 140, 60, 25);
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel1.setText(AppLocal.getIntString("label.taxcategory")); // NOI18N
         add(jLabel1);
-        jLabel1.setBounds(20, 50, 220, 15);
+        jLabel1.setBounds(20, 50, 220, 25);
 
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel4.setText(AppLocal.getIntString("label.custtaxcategory")); // NOI18N
         add(jLabel4);
-        jLabel4.setBounds(20, 80, 220, 15);
+        jLabel4.setBounds(20, 80, 220, 25);
 
+        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel5.setText(AppLocal.getIntString("label.taxparent")); // NOI18N
         add(jLabel5);
-        jLabel5.setBounds(20, 110, 220, 15);
+        jLabel5.setBounds(20, 110, 220, 25);
 
+        jCascade.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jCascade.setText(AppLocal.getIntString("label.cascade")); // NOI18N
         add(jCascade);
-        jCascade.setBounds(320, 140, 110, 23);
-        add(m_jTaxCategory);
-        m_jTaxCategory.setBounds(240, 50, 200, 24);
-        add(m_jTaxParent);
-        m_jTaxParent.setBounds(240, 110, 200, 24);
-        add(m_jCustTaxCategory);
-        m_jCustTaxCategory.setBounds(240, 80, 200, 24);
+        jCascade.setBounds(320, 140, 110, 25);
 
+        m_jTaxCategory.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        add(m_jTaxCategory);
+        m_jTaxCategory.setBounds(240, 50, 200, 25);
+
+        m_jTaxParent.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        add(m_jTaxParent);
+        m_jTaxParent.setBounds(240, 110, 200, 25);
+
+        m_jCustTaxCategory.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        add(m_jCustTaxCategory);
+        m_jCustTaxCategory.setBounds(240, 80, 200, 25);
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel6.setText(AppLocal.getIntString("label.order")); // NOI18N
         add(jLabel6);
-        jLabel6.setBounds(20, 170, 220, 15);
+        jLabel6.setBounds(20, 170, 220, 25);
+
+        jOrder.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         add(jOrder);
-        jOrder.setBounds(240, 170, 60, 19);
+        jOrder.setBounds(240, 170, 60, 25);
     }// </editor-fold>//GEN-END:initComponents
     
     

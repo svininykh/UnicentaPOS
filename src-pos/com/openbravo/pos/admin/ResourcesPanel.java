@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -19,14 +19,18 @@
 
 package com.openbravo.pos.admin;
 
-import javax.swing.ListCellRenderer;
 import com.openbravo.data.gui.ListCellRendererBasic;
 import com.openbravo.data.loader.ComparatorCreator;
-import com.openbravo.pos.forms.*;
-import com.openbravo.pos.panels.*;
 import com.openbravo.data.loader.TableDefinition;
 import com.openbravo.data.loader.Vectorer;
-import com.openbravo.data.user.*;
+import com.openbravo.data.user.EditorRecord;
+import com.openbravo.data.user.ListProvider;
+import com.openbravo.data.user.ListProviderCreator;
+import com.openbravo.data.user.SaveProvider;
+import com.openbravo.pos.forms.AppLocal;
+import com.openbravo.pos.forms.DataLogicSystem;
+import com.openbravo.pos.panels.JPanelTable;
+import javax.swing.ListCellRenderer;
 
 /**
  *

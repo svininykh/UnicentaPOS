@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -19,10 +19,9 @@
 
 package com.openbravo.pos.printer.ticket;
 
-import java.awt.*;
-import java.awt.geom.*;
-
 import com.openbravo.pos.printer.DevicePrinter;
+import java.awt.Font;
+import java.awt.geom.AffineTransform;
 
 public class MyPrinterState {
 

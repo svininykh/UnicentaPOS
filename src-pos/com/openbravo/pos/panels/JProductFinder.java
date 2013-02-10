@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -19,16 +19,16 @@
 
 package com.openbravo.pos.panels;
 
-import com.openbravo.pos.ticket.ProductFilterSales;
-import com.openbravo.pos.ticket.ProductInfoExt;
-import com.openbravo.pos.ticket.ProductRenderer;
-import javax.swing.*;
-import java.awt.*;
-import com.openbravo.pos.forms.AppLocal;
 import com.openbravo.basic.BasicException;
 import com.openbravo.data.user.ListProvider;
 import com.openbravo.data.user.ListProviderCreator;
+import com.openbravo.pos.forms.AppLocal;
 import com.openbravo.pos.forms.DataLogicSales;
+import com.openbravo.pos.ticket.ProductFilterSales;
+import com.openbravo.pos.ticket.ProductInfoExt;
+import com.openbravo.pos.ticket.ProductRenderer;
+import java.awt.*;
+import javax.swing.JFrame;
 
 /**
  *
@@ -123,10 +123,12 @@ public class JProductFinder extends javax.swing.JDialog {
             m_data = data;
         }
         
+        @Override
         public Object getElementAt(int index) {
             return m_data.get(index);
         }
         
+        @Override
         public int getSize() {
             return m_data.size();
         } 
@@ -183,6 +185,7 @@ public class JProductFinder extends javax.swing.JDialog {
 
         jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
+        jListProducts.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jListProducts.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jListProducts.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
@@ -267,7 +270,6 @@ public class JProductFinder extends javax.swing.JDialog {
                 jListProducts.setSelectedIndex(0);
             }
         } catch (BasicException e) {
-            e.printStackTrace();
         }
         
     }//GEN-LAST:event_jButton3ActionPerformed

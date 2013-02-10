@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -19,10 +19,10 @@
 
 package com.openbravo.data.gui;
 
-import javax.swing.*;
-import java.util.*;
 import com.openbravo.data.loader.IKeyGetter;
 import com.openbravo.data.loader.KeyGetterBuilder;
+import java.util.*;
+import javax.swing.*;
 
 /**
  *
@@ -52,6 +52,10 @@ public class ComboBoxValModel extends AbstractListModel implements ComboBoxModel
     
     public void add(Object c) {
         m_aData.add(c);
+    }
+
+    public void del(Object c) {
+        m_aData.remove(c);
     }
 
     public void add(int index, Object c) {
@@ -84,7 +88,7 @@ public class ComboBoxValModel extends AbstractListModel implements ComboBoxModel
     }
     
     public void setSelectedFirst() {
-        m_selected = (m_aData.size() == 0) ? null : m_aData.get(0);
+        m_selected = (m_aData.isEmpty()) ? null : m_aData.get(0);
     }
     
     public Object getElementByKey(Object aKey) {
@@ -100,18 +104,22 @@ public class ComboBoxValModel extends AbstractListModel implements ComboBoxModel
         return null;
     }
     
+    @Override
     public Object getElementAt(int index) {
         return m_aData.get(index);
     }
     
+    @Override
     public Object getSelectedItem() {
         return m_selected;
     }
     
+    @Override
     public int getSize() {
         return m_aData.size();
     }
     
+    @Override
     public void setSelectedItem(Object anItem) {
         
         if ((m_selected != null && !m_selected.equals(anItem)) || m_selected == null && anItem != null) {

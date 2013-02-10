@@ -32,19 +32,23 @@ public class PaymentInfoCash extends PaymentInfo {
         m_dPaid = dPaid;
     }
     
+    @Override
     public PaymentInfo copyPayment(){
         return new PaymentInfoCash(m_dTotal, m_dPaid);
     }
     
+    @Override
     public String getName() {
         return "cash";
     }   
+    @Override
     public double getTotal() {
         return m_dTotal;
     }   
     public double getPaid() {
         return m_dPaid;
     }
+    @Override
     public String getTransactionID(){
         return "no ID";
     }

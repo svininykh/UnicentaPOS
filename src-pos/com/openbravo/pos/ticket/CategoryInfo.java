@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -16,14 +16,15 @@
 //
 //    You should have received a copy of the GNU General Public License
 //    along with uniCenta oPOS.  If not, see <http://www.gnu.org/licenses/>.
+
 package com.openbravo.pos.ticket;
 
 import com.openbravo.basic.BasicException;
 import com.openbravo.data.loader.DataRead;
-import java.awt.image.*;
 import com.openbravo.data.loader.IKeyed;
 import com.openbravo.data.loader.ImageUtils;
 import com.openbravo.data.loader.SerializerRead;
+import java.awt.image.*;
 
 /**
  *
@@ -44,6 +45,7 @@ public class CategoryInfo implements IKeyed {
         m_Image = image;
     }
 
+    @Override
     public Object getKey() {
         return m_sID;
     }
@@ -78,7 +80,8 @@ public class CategoryInfo implements IKeyed {
     }
 
     public static SerializerRead getSerializerRead() {
-        return new SerializerRead() { public Object readValues(DataRead dr) throws BasicException {
+        return new SerializerRead() {@Override
+ public Object readValues(DataRead dr) throws BasicException {
             return new CategoryInfo(dr.getString(1), dr.getString(2), ImageUtils.readImage(dr.getBytes(3)));
         }};
     }

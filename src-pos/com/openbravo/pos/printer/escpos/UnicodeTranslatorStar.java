@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -25,10 +25,12 @@ public class UnicodeTranslatorStar extends UnicodeTranslator {
     public UnicodeTranslatorStar() {
     }
 
+    @Override
     public byte[] getCodeTable() {
         return new byte[] {0x1B, 0x1D, 0x74, 0x01}; // Select code page 437
     }
 
+    @Override
     public byte transChar(char sChar) {
         if ((sChar >= 0x0000) && (sChar < 0x0080)) {
             return (byte) sChar;

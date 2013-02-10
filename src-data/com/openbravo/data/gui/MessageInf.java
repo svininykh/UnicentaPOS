@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -19,9 +19,9 @@
 
 package com.openbravo.data.gui;
 
+import com.openbravo.data.loader.LocalRes;
 import java.awt.*;
 import javax.swing.*;
-import com.openbravo.data.loader.LocalRes;
 
 public class MessageInf {
         
@@ -49,7 +49,8 @@ public class MessageInf {
     
     /** Creates a new instance of MessageInf */
     public MessageInf(int iSignalWord, String sHazard, Object e) {
-        m_iMsgNumber = iSignalWord | CLS_GENERIC;
+//        m_iMsgNumber = iSignalWord | CLS_GENERIC;
+        m_iMsgNumber = iSignalWord;        
         m_sHazard = sHazard;
         m_sConsequences = "";
         m_sAvoiding = "";
@@ -98,7 +99,7 @@ public class MessageInf {
     
     public String getErrorCodeMsg() {
         
-        StringBuffer sb = new StringBuffer();       
+        StringBuilder sb = new StringBuilder();       
         int iSignalWord = getSignalWord();
         if (iSignalWord == SGN_DANGER) {
             sb.append("DNG_");
@@ -137,7 +138,7 @@ public class MessageInf {
     
     public String getMessageMsg() {
         
-        StringBuffer sb = new StringBuffer();     
+        StringBuilder sb = new StringBuilder();     
         int iSignalWord = getSignalWord();
         if (iSignalWord == SGN_DANGER) {
             sb.append(LocalRes.getIntString("sgn.danger"));

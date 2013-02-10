@@ -1,5 +1,5 @@
 //    uniCenta oPOS - touch friendly EPoS
-//    Copyright (c) 2009 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net
 //
 //    This file is part of uniCenta oPOS
@@ -29,9 +29,14 @@ report.setSentence(
                 "WHERE RECEIPTS.ID = TAXLINES.RECEIPT AND TAXLINES.TAXID = TAXES.ID AND TAXES.CATEGORY = TAXCATEGORIES.ID " +
                 "AND ?(QBF_FILTER) " +
                 "GROUP BY TAXCATEGORIES.ID,  TAXCATEGORIES.NAME");
+
 report.addParameter("RECEIPTS.DATENEW");
 report.addParameter("RECEIPTS.DATENEW");
-report.addQBFFilter(new com.openbravo.pos.reports.JParamsDatesInterval());
+
+paramdates = new com.openbravo.pos.reports.JParamsDatesInterval();
+paramdates.setEndDate(com.openbravo.beans.DateUtils.getToday());
+
+report.addQBFFilter(paramdates);
 
 report.addField("TAXID", com.openbravo.data.loader.Datas.STRING);
 report.addField("TAXNAME", com.openbravo.data.loader.Datas.STRING);

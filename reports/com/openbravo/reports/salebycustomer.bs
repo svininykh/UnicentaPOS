@@ -1,5 +1,5 @@
 //    uniCenta oPOS - touch friendly EPoS
-//    Copyright (c) 2009 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net
 //
 //    This file is part of uniCenta oPOS
@@ -35,9 +35,14 @@ report.setSentence("SELECT " +
                 "WHERE CUSTOMERS.ID = TICKETS.CUSTOMER AND TICKETLINES.PRODUCT = PRODUCTS.ID AND RECEIPTS.ID = TICKETS.ID AND TICKETS.ID = TICKETLINES.TICKET AND ?(QBF_FILTER) " +
                 "GROUP BY CUSTOMERS.NAME, RECEIPTS.DATENEW, TICKETS.TICKETID, PRODUCTS.NAME, TICKETS.TICKETTYPE " +
                 "ORDER BY CUSTOMERS.NAME, PRODUCTS.NAME, RECEIPTS.DATENEW");
+
 report.addParameter("RECEIPTS.DATENEW");
 report.addParameter("RECEIPTS.DATENEW");
-report.addQBFFilter(new com.openbravo.pos.reports.JParamsDatesInterval());
+
+paramdates = new com.openbravo.pos.reports.JParamsDatesInterval();
+paramdates.setEndDate(com.openbravo.beans.DateUtils.getToday());
+report.addQBFFilter(paramdates);
+
 report.addParameter("CUSTOMERS.ID");
 report.addParameter("CUSTOMERS.NAME");
 report.addQBFFilter(new com.openbravo.pos.reports.JParamsCustomer());
@@ -51,4 +56,3 @@ report.addField("UNITS", com.openbravo.data.loader.Datas.DOUBLE);
 report.addField("TOTAL", com.openbravo.data.loader.Datas.DOUBLE);
 
 report;
-

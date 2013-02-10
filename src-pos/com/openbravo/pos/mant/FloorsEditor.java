@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -19,22 +19,22 @@
 
 package com.openbravo.pos.mant;
 
+import com.openbravo.basic.BasicException;
+import com.openbravo.data.user.DirtyManager;
+import com.openbravo.data.user.EditorRecord;
+import com.openbravo.format.Formats;
+import com.openbravo.pos.forms.AppLocal;
 import java.awt.Component;
 import java.awt.image.BufferedImage;
 import java.util.UUID;
-import javax.swing.*;
-import com.openbravo.pos.forms.AppLocal;
-import com.openbravo.format.Formats;
-import com.openbravo.basic.BasicException;
-import com.openbravo.data.user.EditorRecord;
-import com.openbravo.data.user.DirtyManager;
+import javax.swing.JPanel;
 
 
 /**
  *
  * @author adrianromero
  */
-public class FloorsEditor extends JPanel implements EditorRecord {
+public final class FloorsEditor extends JPanel implements EditorRecord {
     
 //    private DirtyManager m_Dirty = new DirtyManager();    
     private String m_sID;
@@ -49,6 +49,7 @@ public class FloorsEditor extends JPanel implements EditorRecord {
         writeValueEOF();
     }
 
+    @Override
     public void writeValueEOF() {
         
         m_sID = null;
@@ -58,6 +59,7 @@ public class FloorsEditor extends JPanel implements EditorRecord {
         m_jName.setEnabled(false);
         m_jImage.setEnabled(false);
     }  
+    @Override
     public void writeValueInsert() {
         
         m_sID = UUID.randomUUID().toString(); 
@@ -67,6 +69,7 @@ public class FloorsEditor extends JPanel implements EditorRecord {
         m_jName.setEnabled(true);
         m_jImage.setEnabled(true);
     }
+    @Override
     public void writeValueDelete(Object value) {
         
         Object[] floor = (Object[]) value;
@@ -77,6 +80,7 @@ public class FloorsEditor extends JPanel implements EditorRecord {
         m_jName.setEnabled(false);
         m_jImage.setEnabled(false);
     }    
+    @Override
     public void writeValueEdit(Object value) {
         
         Object[] floor = (Object[]) value;
@@ -88,6 +92,7 @@ public class FloorsEditor extends JPanel implements EditorRecord {
         m_jImage.setEnabled(true);
     }
 
+    @Override
     public Object createValue() throws BasicException {
         
         Object[] floor = new Object[3];
@@ -98,10 +103,12 @@ public class FloorsEditor extends JPanel implements EditorRecord {
         return floor;
     }    
     
+    @Override
     public Component getComponent() {
         return this;
     }
     
+    @Override
     public void refresh() {
     }
     
@@ -126,11 +133,14 @@ public class FloorsEditor extends JPanel implements EditorRecord {
         jPanel1.setPreferredSize(new java.awt.Dimension(150, 100));
         jPanel1.setLayout(null);
 
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel3.setText(AppLocal.getIntString("Label.Name")); // NOI18N
         jPanel1.add(jLabel3);
-        jLabel3.setBounds(20, 20, 90, 20);
+        jLabel3.setBounds(20, 20, 90, 25);
+
+        m_jName.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jPanel1.add(m_jName);
-        m_jName.setBounds(110, 20, 180, 22);
+        m_jName.setBounds(110, 20, 180, 25);
 
         add(jPanel1, java.awt.BorderLayout.NORTH);
 

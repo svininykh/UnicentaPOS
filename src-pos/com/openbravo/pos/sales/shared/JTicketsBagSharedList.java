@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -22,12 +22,7 @@ package com.openbravo.pos.sales.shared;
 
 import com.openbravo.pos.forms.AppLocal;
 import com.openbravo.pos.sales.SharedTicketInfo;
-import java.awt.Component;
-import java.awt.Dialog;
-import java.awt.Dimension;
-import java.awt.Frame;
-import java.awt.Insets;
-import java.awt.Window;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
@@ -100,7 +95,9 @@ public class JTicketsBagSharedList extends javax.swing.JDialog {
             //setFont(new java.awt.Font ("Dialog", 1, 24));    
             //setBackground(new java.awt.Color (220, 220, 220));
             addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent evt) {
+        
+        @Override
+        public void actionPerformed(ActionEvent evt) {
                     
                     // Selecciono el ticket
                     m_sDialogTicket = m_Ticket.getId();
@@ -136,6 +133,7 @@ public class JTicketsBagSharedList extends javax.swing.JDialog {
         jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
         jPanel1.setLayout(new java.awt.BorderLayout());
 
+        jPanel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jPanel2.setLayout(new java.awt.BorderLayout());
 
         m_jtickets.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
@@ -167,7 +165,7 @@ public class JTicketsBagSharedList extends javax.swing.JDialog {
         getContentPane().add(jPanel3, java.awt.BorderLayout.SOUTH);
 
         java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-        setBounds((screenSize.width-340)/2, (screenSize.height-272)/2, 340, 272);
+        setBounds((screenSize.width-340)/2, (screenSize.height-335)/2, 340, 335);
     }// </editor-fold>//GEN-END:initComponents
 
     private void m_jButtonCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_m_jButtonCancelActionPerformed

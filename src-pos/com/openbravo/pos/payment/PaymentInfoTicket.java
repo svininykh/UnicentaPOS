@@ -49,21 +49,26 @@ public class PaymentInfoTicket extends PaymentInfo implements SerializableRead  
         m_transactionID = null;
      }
     
+    @Override
     public void readValues(DataRead dr) throws BasicException {
         m_sName = dr.getString(1);
         m_dTicket = dr.getDouble(2).doubleValue();
         m_transactionID = dr.getString(3);
     }
     
+    @Override
     public PaymentInfo copyPayment(){
         return new PaymentInfoTicket(m_dTicket, m_sName);
     }
+    @Override
     public String getName() {
         return m_sName;
     }   
+    @Override
     public double getTotal() {
         return m_dTicket;
     }
+    @Override
     public String getTransactionID(){
         return m_transactionID;
     }

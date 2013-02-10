@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -58,10 +58,12 @@ public class JListData extends javax.swing.JDialog {
             m_data = data;
         }
         
+        @Override
         public Object getElementAt(int index) {
             return m_data.get(index);
         }
         
+        @Override
         public int getSize() {
             return m_data.size();
         } 
@@ -89,6 +91,9 @@ public class JListData extends javax.swing.JDialog {
         jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
         m_jOK.setText("Accept");
+        m_jOK.setMaximumSize(new java.awt.Dimension(65, 33));
+        m_jOK.setMinimumSize(new java.awt.Dimension(65, 33));
+        m_jOK.setPreferredSize(new java.awt.Dimension(65, 33));
         m_jOK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 m_jOKActionPerformed(evt);
@@ -97,6 +102,9 @@ public class JListData extends javax.swing.JDialog {
         jPanel1.add(m_jOK);
 
         m_jCancel.setText("Cancel");
+        m_jCancel.setMaximumSize(new java.awt.Dimension(65, 33));
+        m_jCancel.setMinimumSize(new java.awt.Dimension(65, 33));
+        m_jCancel.setPreferredSize(new java.awt.Dimension(65, 33));
         m_jCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 m_jCancelActionPerformed(evt);
@@ -106,6 +114,7 @@ public class JListData extends javax.swing.JDialog {
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.SOUTH);
 
+        m_jData.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         m_jData.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(m_jData);
 

@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -19,10 +19,10 @@
 
 package com.openbravo.pos.forms;
 
-import javax.swing.JComponent;
-import javax.swing.JPanel;
 import com.openbravo.basic.BasicException;
 import java.awt.Component;
+import javax.swing.JComponent;
+import javax.swing.JPanel;
 
 /**
  *
@@ -42,14 +42,17 @@ public class JPanelMenu extends JPanel implements JPanelView {
         initComponents();       
     }
 
+    @Override
     public JComponent getComponent() {
         return this;
     }
     
+    @Override
     public String getTitle() {
         return m_menu.getTitle();
     }  
     
+    @Override
     public void activate() throws BasicException {
         
         if (created == false) {
@@ -62,6 +65,7 @@ public class JPanelMenu extends JPanel implements JPanelView {
         }
     }    
     
+    @Override
     public boolean deactivate() {  
         return true;
     }

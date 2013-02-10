@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -66,13 +66,16 @@ class ScriptEngineVelocity implements ScriptEngine {
          c = new VelocityContext();
     }
     
+    @Override
     public void put(String key, Object value) {
         c.put(key, value);
     }
+    @Override
     public Object get(String key) {
         return c.get(key);
     }
     
+    @Override
     public Object eval(String src) throws ScriptException {
         
         if (m_ve == null) {

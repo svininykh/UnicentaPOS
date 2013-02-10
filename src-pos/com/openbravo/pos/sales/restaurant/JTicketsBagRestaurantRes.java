@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -360,7 +360,7 @@ public class JTicketsBagRestaurantRes extends javax.swing.JPanel implements Edit
 
         m_jToolbarContainer.setLayout(new java.awt.BorderLayout());
 
-        m_jbtnTables.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/edit_group.png"))); // NOI18N
+        m_jbtnTables.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/tables.png"))); // NOI18N
         m_jbtnTables.setText(AppLocal.getIntString("button.tables")); // NOI18N
         m_jbtnTables.setToolTipText("Go to Table Plan");
         m_jbtnTables.setFocusPainted(false);
@@ -401,39 +401,46 @@ public class JTicketsBagRestaurantRes extends javax.swing.JPanel implements Edit
         jPanel1.add(m_jPanelTime);
         m_jPanelTime.setBounds(90, 0, 270, 155);
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel1.setText(AppLocal.getIntString("rest.label.date")); // NOI18N
         jPanel1.add(jLabel1);
         jLabel1.setBounds(10, 10, 80, 20);
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel2.setText(AppLocal.getIntString("rest.label.customer")); // NOI18N
         jPanel1.add(jLabel2);
-        jLabel2.setBounds(10, 160, 80, 20);
+        jLabel2.setBounds(10, 160, 80, 25);
 
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel3.setText(AppLocal.getIntString("rest.label.chairs")); // NOI18N
         jPanel1.add(jLabel3);
-        jLabel3.setBounds(10, 190, 80, 20);
+        jLabel3.setBounds(10, 190, 80, 25);
 
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel4.setText(AppLocal.getIntString("rest.label.notes")); // NOI18N
         jPanel1.add(jLabel4);
         jLabel4.setBounds(10, 220, 80, 20);
 
+        m_jtxtDescription.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         m_jtxtDescription.setMaximumSize(new java.awt.Dimension(180, 25));
         jPanel1.add(m_jtxtDescription);
         m_jtxtDescription.setBounds(90, 220, 350, 30);
 
+        m_jtxtChairs.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         m_jtxtChairs.setMaximumSize(new java.awt.Dimension(50, 25));
         m_jtxtChairs.setMinimumSize(new java.awt.Dimension(50, 25));
         m_jtxtChairs.setPreferredSize(new java.awt.Dimension(50, 25));
         jPanel1.add(m_jtxtChairs);
-        m_jtxtChairs.setBounds(90, 190, 90, 20);
+        m_jtxtChairs.setBounds(90, 190, 90, 25);
 
+        txtCustomer.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtCustomer.setMaximumSize(new java.awt.Dimension(200, 25));
         txtCustomer.setMinimumSize(new java.awt.Dimension(200, 25));
         txtCustomer.setPreferredSize(new java.awt.Dimension(232, 25));
         jPanel1.add(txtCustomer);
-        txtCustomer.setBounds(90, 160, 220, 20);
+        txtCustomer.setBounds(90, 160, 220, 25);
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/customer_sml.png"))); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/customer_add_sml.png"))); // NOI18N
         jButton1.setToolTipText("Show Customers");
         jButton1.setFocusPainted(false);
         jButton1.setFocusable(false);

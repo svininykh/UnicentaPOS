@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -19,14 +19,21 @@
 
 package com.openbravo.pos.sales.shared;
 
-import com.openbravo.pos.ticket.TicketInfo;
-import java.util.*;
-import javax.swing.*;
-
 import com.openbravo.basic.BasicException;
 import com.openbravo.data.gui.MessageInf;
-import com.openbravo.pos.sales.*;
-import com.openbravo.pos.forms.*; 
+import com.openbravo.pos.forms.AppLocal;
+import com.openbravo.pos.forms.AppView;
+import com.openbravo.pos.sales.DataLogicReceipts;
+import com.openbravo.pos.sales.JTicketsBag;
+import com.openbravo.pos.sales.SharedTicketInfo;
+import com.openbravo.pos.sales.TicketsEditor;
+import com.openbravo.pos.ticket.TicketInfo;
+import java.util.List;
+import java.util.UUID;
+import javax.swing.JComponent;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 public class JTicketsBagShared extends JTicketsBag {
     
@@ -44,23 +51,22 @@ public class JTicketsBagShared extends JTicketsBag {
         initComponents();
     }
     
+    @Override
     public void activate() {
         
         // precondicion es que no tenemos ticket activado ni ticket en el panel
-        
         m_sCurrentTicket = null;
         selectValidTicket();     
         
-        // Authorization
+        // Authorisation
         m_jDelTicket.setEnabled(m_App.getAppUserView().getUser().hasPermission("com.openbravo.pos.sales.JPanelTicketEdits"));
        
-        // postcondicion es que tenemos ticket activado aqui y ticket en el panel
     }
     
+    @Override
     public boolean deactivate() {
         
         // precondicion es que tenemos ticket activado aqui y ticket en el panel 
-   
         saveCurrentTicket();
         
         m_sCurrentTicket = null;
@@ -71,15 +77,18 @@ public class JTicketsBagShared extends JTicketsBag {
         // postcondicion es que no tenemos ticket activado ni ticket en el panel
     }
         
+    @Override
     public void deleteTicket() {          
         m_sCurrentTicket = null;
         selectValidTicket();      
     }
     
+    @Override
     protected JComponent getBagComponent() {
         return this;
     }
     
+    @Override
     protected JComponent getNullComponent() {
         return new JPanel();
     }
@@ -101,7 +110,7 @@ public class JTicketsBagShared extends JTicketsBag {
         // BEGIN TRANSACTION
         TicketInfo ticket = dlReceipts.getSharedTicket(id);
         if (ticket == null)  {
-            // Does not exists ???
+            // Does it exist
             throw new BasicException(AppLocal.getIntString("message.noticket"));
         } else {
             dlReceipts.deleteSharedTicket(id);
@@ -115,7 +124,7 @@ public class JTicketsBagShared extends JTicketsBag {
         
         try {
             List<SharedTicketInfo> l = dlReceipts.getSharedTicketList();
-            if (l.size() == 0) {
+            if (l.isEmpty()) {
                 newTicket();
             } else {
                 setActiveTicket(l.get(0).getId());
@@ -196,6 +205,7 @@ public class JTicketsBagShared extends JTicketsBag {
 
         
         SwingUtilities.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 
                 try {

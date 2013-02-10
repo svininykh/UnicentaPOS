@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -138,7 +138,7 @@ public abstract class JEditorText extends JEditorAbstract {
     
     protected String getTextEdit() {
         
-        StringBuffer s = new StringBuffer();
+        StringBuilder s = new StringBuilder();
         s.append("<html>");
         if (m_svalue != null) {
             s.append(m_svalue);
@@ -311,7 +311,7 @@ public abstract class JEditorText extends JEditorAbstract {
     }    
     
     private String appendChar2Value(char c) {
-        StringBuffer s = new StringBuffer();
+        StringBuilder s = new StringBuilder();
         if (m_svalue != null) {
             s.append(m_svalue);
         }

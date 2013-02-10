@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -20,8 +20,9 @@
 
 package com.openbravo.data.gui;
 
-import javax.swing.*;
 import com.openbravo.data.loader.QBFCompareEnum;
+import javax.swing.AbstractListModel;
+import javax.swing.ComboBoxModel;
 /**
  *
  * @author  adrian
@@ -33,7 +34,8 @@ private Object m_sel;
 
 /** Creates a new instance of ListQBFModelNumber */
 //    public ListQBFModelNumber() {
-    private ListQBFModelNumber(Object... items) {
+//    private ListQBFModelNumber(Object... items) {
+    public ListQBFModelNumber(Object... items) {
         m_items = items;
         m_sel = m_items[0];
     }
@@ -98,19 +100,23 @@ private Object m_sel;
         );
       }
 
+    @Override
       public Object getElementAt(int index) {
 
         return m_items[index];
     }
    
+    @Override
     public int getSize() {
         return m_items.length;
     }
     
+    @Override
     public Object getSelectedItem() {
         return m_sel;
     }
      
+    @Override
     public void setSelectedItem(Object anItem) {
         m_sel = anItem;
     }

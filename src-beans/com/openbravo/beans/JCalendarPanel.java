@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -22,8 +22,8 @@ package com.openbravo.beans;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.*;
 import java.text.*;
+import java.util.*;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 
@@ -244,11 +244,11 @@ public class JCalendarPanel extends javax.swing.JPanel {
 
         ActionListener dateclick = new DateClick();
         
-        m_jBtnYearDec = new JButtonDate(new ImageIcon(getClass().getResource("/com/openbravo/images/2uparrow.png")), dateclick);
-        m_jBtnMonthDec = new JButtonDate(new ImageIcon(getClass().getResource("/com/openbravo/images/1uparrow.png")), dateclick);
+        m_jBtnYearDec = new JButtonDate(new ImageIcon(getClass().getResource("/com/openbravo/images/2leftarrow.png")), dateclick);
+        m_jBtnMonthDec = new JButtonDate(new ImageIcon(getClass().getResource("/com/openbravo/images/1leftarrow.png")), dateclick);
         m_jBtnToday = new JButtonDate(m_resources.getString("button.Today"), dateclick);
-        m_jBtnMonthInc = new JButtonDate(new ImageIcon(getClass().getResource("/com/openbravo/images/1downarrow.png")), dateclick);
-        m_jBtnYearInc = new JButtonDate(new ImageIcon(getClass().getResource("/com/openbravo/images/2downarrow.png")), dateclick);
+        m_jBtnMonthInc = new JButtonDate(new ImageIcon(getClass().getResource("/com/openbravo/images/1rightarrow.png")), dateclick);
+        m_jBtnYearInc = new JButtonDate(new ImageIcon(getClass().getResource("/com/openbravo/images/2rightarrow.png")), dateclick);
                
         m_jBtnToday.DateInf = new Date();
         m_jActions.add(m_jBtnYearDec);
@@ -311,6 +311,7 @@ public class JCalendarPanel extends javax.swing.JPanel {
         jPanel3 = new javax.swing.JPanel();
         m_jActions = new javax.swing.JPanel();
 
+        setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         setLayout(new java.awt.BorderLayout());
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -327,7 +328,7 @@ public class JCalendarPanel extends javax.swing.JPanel {
 
         jPanel1.add(m_jMonth, java.awt.BorderLayout.CENTER);
 
-        m_jLblMonth.setFont(new java.awt.Font("Dialog", 1, 14));
+        m_jLblMonth.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jPanel2.add(m_jLblMonth);
 
         jPanel1.add(jPanel2, java.awt.BorderLayout.NORTH);

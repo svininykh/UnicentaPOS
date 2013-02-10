@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -19,11 +19,13 @@
 
 package com.openbravo.pos.sales;
 
-import com.openbravo.pos.sales.simple.JTicketsBagSimple;
-import com.openbravo.pos.forms.*; 
-import javax.swing.*;
+import com.openbravo.pos.forms.AppView;
+import com.openbravo.pos.forms.DataLogicSales;
 import com.openbravo.pos.sales.restaurant.JTicketsBagRestaurantMap;
 import com.openbravo.pos.sales.shared.JTicketsBagShared;
+import com.openbravo.pos.sales.simple.JTicketsBagSimple;
+import javax.swing.JComponent;
+import javax.swing.JPanel;
 
 public abstract class JTicketsBag extends JPanel {
     
@@ -46,14 +48,15 @@ public abstract class JTicketsBag extends JPanel {
     protected abstract JComponent getNullComponent();
     
     public static JTicketsBag createTicketsBag(String sName, AppView app, TicketsEditor panelticket) {
-        
-        if ("standard".equals(sName)) {
-            // return new JTicketsBagMulti(oApp, user, panelticket);
-            return new JTicketsBagShared(app, panelticket);
-        } else if ("restaurant".equals(sName)) {
-            return new JTicketsBagRestaurantMap(app, panelticket);
-        } else { // "simple"
-            return new JTicketsBagSimple(app, panelticket);
+        switch (sName) {
+            case "standard":
+                // return new JTicketsBagMulti(oApp, user, panelticket);
+                return new JTicketsBagShared(app, panelticket);
+            case "restaurant":
+                return new JTicketsBagRestaurantMap(app, panelticket);
+            default:
+                // "simple"
+           return new JTicketsBagSimple(app, panelticket);
         }
     }   
 }

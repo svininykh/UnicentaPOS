@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -19,32 +19,22 @@
 
 package com.openbravo.pos.forms;
 
-import com.openbravo.pos.ticket.CategoryInfo;
-import com.openbravo.pos.ticket.ProductInfoExt;
-import com.openbravo.pos.ticket.TaxInfo;
-import com.openbravo.pos.ticket.TicketInfo;
-import com.openbravo.pos.ticket.TicketLineInfo;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
-import com.openbravo.data.loader.*;
-import com.openbravo.format.Formats;
 import com.openbravo.basic.BasicException;
+import com.openbravo.data.loader.*;
 import com.openbravo.data.model.Field;
 import com.openbravo.data.model.Row;
+import com.openbravo.format.Formats;
 import com.openbravo.pos.customers.CustomerInfoExt;
-import com.openbravo.pos.inventory.AttributeSetInfo;
-import com.openbravo.pos.inventory.TaxCustCategoryInfo;
-import com.openbravo.pos.inventory.LocationInfo;
-import com.openbravo.pos.inventory.MovementReason;
-import com.openbravo.pos.inventory.TaxCategoryInfo;
+import com.openbravo.pos.inventory.*;
 import com.openbravo.pos.mant.FloorsInfo;
 import com.openbravo.pos.payment.PaymentInfo;
 import com.openbravo.pos.payment.PaymentInfoTicket;
-import com.openbravo.pos.ticket.FindTicketsInfo;
-import com.openbravo.pos.ticket.TicketTaxInfo;
+import com.openbravo.pos.ticket.*;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
 
 /**
  *
@@ -94,6 +84,7 @@ public class DataLogicSales extends BeanFactoryDataSingle {
 // **
     }
 
+    @Override
     public void init(Session s){
         this.s = s;
     }
@@ -160,6 +151,8 @@ public class DataLogicSales extends BeanFactoryDataSingle {
 		, SerializerWriteString.INSTANCE
 		, ProductInfoExt.getSerializerRead()).list(id);
     }
+    
+    
   
     // Products list
 // ADDED JG 20.12.10 ISKITCHEN - Kitchen Print + 25.06.2011 ISSERVICE - ISSERVICE***
@@ -210,7 +203,8 @@ public class DataLogicSales extends BeanFactoryDataSingle {
         return new StaticSentence(s
             , "SELECT ID, NAME FROM PEOPLE ORDER BY NAME"
             , null
-            , new SerializerRead() { public Object readValues(DataRead dr) throws BasicException {
+            , new SerializerRead() {@Override
+ public Object readValues(DataRead dr) throws BasicException {
                 return new TaxCategoryInfo(
                         dr.getString(1), 
                         dr.getString(2));
@@ -222,7 +216,8 @@ public class DataLogicSales extends BeanFactoryDataSingle {
         return new StaticSentence(s
             , "SELECT ID, NAME, CATEGORY, CUSTCATEGORY, PARENTID, RATE, RATECASCADE, RATEORDER FROM TAXES ORDER BY NAME"
             , null
-            , new SerializerRead() { public Object readValues(DataRead dr) throws BasicException {
+            , new SerializerRead() {@Override
+ public Object readValues(DataRead dr) throws BasicException {
                 return new TaxInfo(
                         dr.getString(1), 
                         dr.getString(2),
@@ -244,7 +239,8 @@ public class DataLogicSales extends BeanFactoryDataSingle {
         return new StaticSentence(s
             , "SELECT ID, NAME FROM TAXCUSTCATEGORIES ORDER BY NAME"
             , null
-            , new SerializerRead() { public Object readValues(DataRead dr) throws BasicException {
+            , new SerializerRead() {@Override
+ public Object readValues(DataRead dr) throws BasicException {
                 return new TaxCustCategoryInfo(dr.getString(1), dr.getString(2));
             }});
     }
@@ -252,7 +248,8 @@ public class DataLogicSales extends BeanFactoryDataSingle {
         return new StaticSentence(s
             , "SELECT ID, NAME FROM TAXCATEGORIES ORDER BY NAME"
             , null
-            , new SerializerRead() { public Object readValues(DataRead dr) throws BasicException {
+            , new SerializerRead() {@Override
+ public Object readValues(DataRead dr) throws BasicException {
                 return new TaxCategoryInfo(dr.getString(1), dr.getString(2));
             }});
     }
@@ -260,7 +257,8 @@ public class DataLogicSales extends BeanFactoryDataSingle {
         return new StaticSentence(s
             , "SELECT ID, NAME FROM ATTRIBUTESET ORDER BY NAME"
             , null
-            , new SerializerRead() { public Object readValues(DataRead dr) throws BasicException {
+            , new SerializerRead() {@Override
+ public Object readValues(DataRead dr) throws BasicException {
                 return new AttributeSetInfo(dr.getString(1), dr.getString(2));
             }});
     }
@@ -311,7 +309,8 @@ public class DataLogicSales extends BeanFactoryDataSingle {
                 , "SELECT T.ID, T.TICKETTYPE, T.TICKETID, R.DATENEW, R.MONEY, R.ATTRIBUTES, P.ID, P.NAME, T.CUSTOMER FROM RECEIPTS R JOIN TICKETS T ON R.ID = T.ID LEFT OUTER JOIN PEOPLE P ON T.PERSON = P.ID WHERE T.TICKETTYPE = ? AND T.TICKETID = ?"
                 , SerializerWriteParams.INSTANCE
                 , new SerializerReadClass(TicketInfo.class))
-                .find(new DataParams() { public void writeValues() throws BasicException {
+                .find(new DataParams() {@Override
+ public void writeValues() throws BasicException {
                     setInt(1, tickettype);
                     setInt(2, ticketid);
                 }});
@@ -338,6 +337,7 @@ public class DataLogicSales extends BeanFactoryDataSingle {
     public final void saveTicket(final TicketInfo ticket, final String location) throws BasicException {
 
         Transaction t = new Transaction(s) {
+            @Override
             public Object transact() throws BasicException {
 
                 // Set Receipt Id
@@ -362,7 +362,8 @@ public class DataLogicSales extends BeanFactoryDataSingle {
                 new PreparedSentence(s
                    , "INSERT INTO RECEIPTS (ID, MONEY, DATENEW, ATTRIBUTES, PERSON) VALUES (?, ?, ?, ?, ?)"
                     , SerializerWriteParams.INSTANCE
-                    ).exec(new DataParams() { public void writeValues() throws BasicException {
+                    ).exec(new DataParams() {@Override
+ public void writeValues() throws BasicException {
                         setString(1, ticket.getId());
                         setString(2, ticket.getActiveCash());
                         setTimestamp(3, ticket.getDate());
@@ -380,7 +381,8 @@ public class DataLogicSales extends BeanFactoryDataSingle {
                 new PreparedSentence(s
                     , "INSERT INTO TICKETS (ID, TICKETTYPE, TICKETID, PERSON, CUSTOMER) VALUES (?, ?, ?, ?, ?)"
                     , SerializerWriteParams.INSTANCE
-                    ).exec(new DataParams() { public void writeValues() throws BasicException {
+                    ).exec(new DataParams() {@Override
+ public void writeValues() throws BasicException {
                         setString(1, ticket.getId());
                         setInt(2, ticket.getTicketType());
                         setInt(3, ticket.getTicketId());
@@ -416,7 +418,8 @@ public class DataLogicSales extends BeanFactoryDataSingle {
                     , "INSERT INTO PAYMENTS (ID, RECEIPT, PAYMENT, TOTAL, TRANSID, RETURNMSG) VALUES (?, ?, ?, ?, ?, ?)"
                     , SerializerWriteParams.INSTANCE);
                 for (final PaymentInfo p : ticket.getPayments()) {
-                    paymentinsert.exec(new DataParams() { public void writeValues() throws BasicException {
+                    paymentinsert.exec(new DataParams() {@Override
+ public void writeValues() throws BasicException {
                         setString(1, UUID.randomUUID().toString());
                         setString(2, ticket.getId());
                         setString(3, p.getName());
@@ -431,7 +434,8 @@ public class DataLogicSales extends BeanFactoryDataSingle {
                         ticket.getCustomer().updateCurDebt(p.getTotal(), ticket.getDate());
 
                         // save customer fields...
-                        getDebtUpdate().exec(new DataParams() { public void writeValues() throws BasicException {
+                        getDebtUpdate().exec(new DataParams() {@Override
+ public void writeValues() throws BasicException {
                             setDouble(1, ticket.getCustomer().getCurdebt());
                             setTimestamp(2, ticket.getCustomer().getCurdate());
                             setString(3, ticket.getCustomer().getId());
@@ -444,7 +448,8 @@ public class DataLogicSales extends BeanFactoryDataSingle {
                         , SerializerWriteParams.INSTANCE);
                 if (ticket.getTaxes() != null) {
                     for (final TicketTaxInfo tickettax: ticket.getTaxes()) {
-                        taxlinesinsert.exec(new DataParams() { public void writeValues() throws BasicException {
+                        taxlinesinsert.exec(new DataParams() {@Override
+ public void writeValues() throws BasicException {
                             setString(1, UUID.randomUUID().toString());
                             setString(2, ticket.getId());
                             setString(3, tickettax.getTaxInfo().getId());
@@ -463,6 +468,7 @@ public class DataLogicSales extends BeanFactoryDataSingle {
     public final void deleteTicket(final TicketInfo ticket, final String location) throws BasicException {
 
         Transaction t = new Transaction(s) {
+            @Override
             public Object transact() throws BasicException {
 
                 // update the inventory
@@ -493,7 +499,8 @@ public class DataLogicSales extends BeanFactoryDataSingle {
                         ticket.getCustomer().updateCurDebt(-p.getTotal(), ticket.getDate());
 
                          // save customer fields...
-                        getDebtUpdate().exec(new DataParams() { public void writeValues() throws BasicException {
+                        getDebtUpdate().exec(new DataParams() {@Override
+ public void writeValues() throws BasicException {
                             setDouble(1, ticket.getCustomer().getCurdebt());
                             setTimestamp(2, ticket.getCustomer().getCurdate());
                             setString(3, ticket.getCustomer().getId());
@@ -550,6 +557,7 @@ public class DataLogicSales extends BeanFactoryDataSingle {
 // ADDED JG 20.12.10 ISKITCHEN - Kitchen Print + 25.06.2011 ISSERVICE - ISSERVICE***
     public final SentenceExec getProductCatInsert() {
 	return new SentenceExecTransaction(s) {
+            @Override
 		public int execInTransaction(Object params) throws BasicException {
 			Object[] values = (Object[]) params;
 			int i = new PreparedSentence(s
@@ -568,6 +576,7 @@ public class DataLogicSales extends BeanFactoryDataSingle {
 
     public final SentenceExec getProductCatUpdate() {
 	return new SentenceExecTransaction(s) {
+            @Override
 		public int execInTransaction(Object params) throws BasicException {
 			Object[] values = (Object[]) params;
 			int i = new PreparedSentence(s
@@ -595,6 +604,7 @@ public class DataLogicSales extends BeanFactoryDataSingle {
 
     public final SentenceExec getProductCatDelete() {
         return new SentenceExecTransaction(s) {
+            @Override
             public int execInTransaction(Object params) throws BasicException {
                 new PreparedSentence(s
                     , "DELETE FROM PRODUCTS_CAT WHERE PRODUCT = ?"
@@ -615,6 +625,7 @@ public class DataLogicSales extends BeanFactoryDataSingle {
 
     public final SentenceExec getStockDiaryInsert() {
         return new SentenceExecTransaction(s) {
+            @Override
             public int execInTransaction(Object params) throws BasicException {
                 int updateresult = ((Object[]) params)[5] == null // si ATTRIBUTESETINSTANCE_ID is null
                     ? new PreparedSentence(s
@@ -638,6 +649,7 @@ public class DataLogicSales extends BeanFactoryDataSingle {
 
     public final SentenceExec getStockDiaryDelete() {
         return new SentenceExecTransaction(s) {
+            @Override
             public int execInTransaction(Object params) throws BasicException {
                 int updateresult = ((Object[]) params)[5] == null // if ATTRIBUTESETINSTANCE_ID is null
                         ? new PreparedSentence(s
@@ -662,6 +674,7 @@ public class DataLogicSales extends BeanFactoryDataSingle {
     public final SentenceExec getPaymentMovementInsert() {
         return new SentenceExecTransaction(s) {
 // ADDED JG 03.07.11 Payment Notes
+            @Override
             public int execInTransaction(Object params) throws BasicException {
                 new PreparedSentence(s
                     , "INSERT INTO RECEIPTS (ID, MONEY, DATENEW) VALUES (?, ?, ?)"
@@ -676,6 +689,7 @@ public class DataLogicSales extends BeanFactoryDataSingle {
 
     public final SentenceExec getPaymentMovementDelete() {
         return new SentenceExecTransaction(s) {
+            @Override
             public int execInTransaction(Object params) throws BasicException {
                 new PreparedSentence(s
                     , "DELETE FROM PAYMENTS WHERE ID = ?"
@@ -710,6 +724,13 @@ public class DataLogicSales extends BeanFactoryDataSingle {
         return new StaticSentence(s
                 , "DELETE FROM PRODUCTS_CAT WHERE PRODUCT = ANY (SELECT ID FROM PRODUCTS WHERE CATEGORY = ?)"
                 , SerializerWriteString.INSTANCE);
+    }
+
+    public final CategoryInfo getCategoryInfo(String id) throws BasicException {
+        return (CategoryInfo) new PreparedSentence(s
+        , "SELECT ID, NAME, IMAGE FROM CATEGORIES ORDER BY NAME WHERE ID = ?"
+        , SerializerWriteString.INSTANCE
+        , CategoryInfo.getSerializerRead()).find(id);
     }
 
     public final TableDefinition getTableCategories() {
@@ -766,6 +787,7 @@ public class DataLogicSales extends BeanFactoryDataSingle {
     }
 
     protected static class CustomerExtRead implements SerializerRead {
+        @Override
         public Object readValues(DataRead dr) throws BasicException {
             CustomerInfoExt c = new CustomerInfoExt(dr.getString(1));
             c.setTaxid(dr.getString(2));

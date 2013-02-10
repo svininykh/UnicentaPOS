@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -20,8 +20,8 @@
 package com.openbravo.pos.payment;
 
 import com.openbravo.pos.customers.CustomerInfoExt;
-import java.awt.Component;
 import com.openbravo.pos.forms.AppLocal;
+import java.awt.Component;
 
 public class JPaymentRefund extends javax.swing.JPanel implements JPaymentInterface {
     
@@ -39,15 +39,18 @@ public class JPaymentRefund extends javax.swing.JPanel implements JPaymentInterf
         initComponents();
     }
     
+    @Override
     public void activate(CustomerInfoExt customerext, double dTotal, String transID) {
         m_dTotal = dTotal;
         
         m_notifier.setStatus(true, true);
     }
     
+    @Override
     public PaymentInfo executePayment() {
         return new PaymentInfoTicket(m_dTotal, m_sName);
     }
+    @Override
     public Component getComponent() {
         return this;
     } 

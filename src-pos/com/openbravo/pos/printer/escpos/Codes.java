@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -85,12 +85,14 @@ public abstract class Codes {
         int index = getImageHeader().length;
         
         // Dimension de la imagen
+        // JG note: nested ++'s not good construct need change later
         bData[index ++] = (byte) (iWidth % 256);
         bData[index ++] = (byte) (iWidth / 256);
         bData[index ++] = (byte) (iHeight % 256);
         bData[index ++] = (byte) (iHeight / 256);       
         
         // Raw data
+        // JG note: nested ++'s  and var assignments not good construct need change later
         int iRGB;
         int p;
         for (int i = 0; i < centeredimage.getHeight(); i++) {

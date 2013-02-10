@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -24,7 +24,6 @@ import java.io.*;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.StringTokenizer;
-import com.openbravo.pos.util.StringUtils;
 
 public class DeviceScannerComm implements DeviceScanner, SerialPortEventListener {
 

@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (C) 2008-2009 Openbravo, S.L.
+//    Copyright (C) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -20,17 +20,19 @@
 package com.openbravo.pos.forms;
 
 import com.openbravo.data.loader.LocalRes;
+import com.openbravo.pos.ticket.UserInfo;
+import com.openbravo.pos.util.Hashcypher;
 import java.io.IOException;
 import java.io.StringReader;
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.Icon;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
-import com.openbravo.pos.ticket.UserInfo;
-import com.openbravo.pos.util.Hashcypher;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -42,7 +44,7 @@ import org.xml.sax.helpers.DefaultHandler;
  */
 public class AppUser {
 
-    private static Logger logger = Logger.getLogger("com.openbravo.pos.forms.AppUser");
+    private static final Logger logger = Logger.getLogger("com.openbravo.pos.forms.AppUser");
 
     private static SAXParser m_sp = null;
     private static HashMap<String, String> m_oldclasses; // This is for backwards compatibility purposes
@@ -108,8 +110,8 @@ public class AppUser {
     
     public void fillPermissions(DataLogicSystem dlSystem) {
         
-        // inicializamos los permisos
-        m_apermissions = new HashSet<String>();
+        // JG 16 May use diamond inference
+        m_apermissions = new HashSet<>();
         // Y lo que todos tienen permisos
         m_apermissions.add("com.openbravo.pos.forms.JPanelMenu");
         m_apermissions.add("Menu.Exit");        
@@ -152,7 +154,8 @@ public class AppUser {
     }
     
     private static void initOldClasses() {
-        m_oldclasses = new HashMap<String, String>();
+        // JG 16 May use diamond inference       
+        m_oldclasses = new HashMap<>();
         
         // update permissions from 0.0.24 to 2.20    
         m_oldclasses.put("net.adrianromero.tpv.panelsales.JPanelTicketSales", "com.openbravo.pos.sales.JPanelTicketSales");

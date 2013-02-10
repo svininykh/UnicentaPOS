@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (C) 2008-2009 Openbravo, S.L.
+//    Copyright (C) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -19,12 +19,7 @@
 
 package com.openbravo.pos.forms;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.util.Locale;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -64,14 +59,17 @@ public class AppConfig implements AppProperties {
         return new File(new File(System.getProperty("user.home")), AppLocal.APP_ID + ".properties");
     }
     
+    @Override
     public String getProperty(String sKey) {
         return m_propsconfig.getProperty(sKey);
     }
     
+    @Override
     public String getHost() {
         return getProperty("machine.hostname");
     } 
     
+    @Override
     public File getConfigFile() {
         return configfile;
     }
@@ -138,7 +136,7 @@ public class AppConfig implements AppProperties {
 //        m_propsconfig.setProperty("db.driverlib", new File(new File(dirname), "lib/hsqldb.jar").getAbsolutePath());
 //        m_propsconfig.setProperty("db.driver", "org.hsqldb.jdbcDriver");
 //        m_propsconfig.setProperty("db.URL", "jdbc:hsqldb:file:" + new File(new File(System.getProperty("user.home")), AppLocal.APP_ID + "-db").getAbsolutePath() + ";shutdown=true");
-//        m_propsconfig.setProperty("db.user", "sa");
+//        m_propsconfig.setProperty("db.user", "SA");
 //        m_propsconfig.setProperty("db.password", "");
         
 //        m_propsconfig.setProperty("db.driver", "com.mysql.jdbc.Driver");
@@ -159,7 +157,6 @@ public class AppConfig implements AppProperties {
         m_propsconfig.setProperty("user.variant", l.getVariant());     
         
         m_propsconfig.setProperty("swing.defaultlaf", System.getProperty("swing.defaultlaf", "javax.swing.plaf.metal.MetalLookAndFeel"));
-        
         m_propsconfig.setProperty("machine.printer", "screen");
         m_propsconfig.setProperty("machine.printer.2", "Not defined");
         m_propsconfig.setProperty("machine.printer.3", "Not defined");

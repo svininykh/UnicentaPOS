@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -31,6 +31,7 @@ public class BeanFactoryData implements BeanFactoryApp {
     public BeanFactoryData() {
     }
     
+    @Override
     public void init(AppView app) throws BeanFactoryException {  
         
         try {
@@ -41,11 +42,13 @@ public class BeanFactoryData implements BeanFactoryApp {
             }
             bf = (BeanFactoryApp) Class.forName(sfactoryname + app.getSession().DB.getName()).newInstance();
             bf.init(app);                     
-        } catch (Exception ex) {
+// JG 16 May use multicatch
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | BeanFactoryException ex) {
             throw new BeanFactoryException(ex);
         }
     }   
     
+    @Override
     public Object getBean() {
         return bf.getBean();
     }         

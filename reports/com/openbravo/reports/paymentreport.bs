@@ -1,5 +1,5 @@
-//    uniCenta oPOS - touch friendly EPoS
-//    Copyright (c) 2009 uniCenta
+//    uniCenta oPOS - Touch Friendly Point Of Sale
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net
 //
 //    This file is part of uniCenta oPOS
@@ -25,11 +25,13 @@ report.setResourceBundle("com/openbravo/reports/paymentreport_messages");
 
 report.setSentence("SELECT RECEIPTS.DATENEW,PAYMENTS.PAYMENT, PAYMENTS.TOTAL "+
 "FROM PAYMENTS,RECEIPTS "+
-"WHERE PAYMENTS.RECEIPT = RECEIPTS.ID AND PAYMENTS.TOTAL <0 AND ?(QBF_FILTER)"+
-" ORDER BY RECEIPTS.DATENEW");
+"WHERE PAYMENTS.RECEIPT = RECEIPTS.ID AND ?(QBF_FILTER) "+
+"ORDER BY RECEIPTS.DATENEW");
+
 report.addParameter("RECEIPTS.DATENEW");
 report.addParameter("RECEIPTS.DATENEW");
 //report.addParameter("PAYMENTS.PAYMENT");
+
 paramdates = new com.openbravo.pos.reports.JParamsDatesInterval();
 paramdates.setEndDate(com.openbravo.beans.DateUtils.getToday());
 report.addQBFFilter(paramdates);

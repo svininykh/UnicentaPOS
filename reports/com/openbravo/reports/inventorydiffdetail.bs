@@ -1,5 +1,5 @@
-//    uniCenta oPOS - touch friendly EPoS
-//    Copyright (c) 2009 uniCenta
+//    uniCenta oPOS - Touch Friendly Point Of Sale
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net
 //
 //    This file is part of uniCenta oPOS
@@ -42,11 +42,18 @@ report.setSentence("SELECT " +
                 "WHERE ?(QBF_FILTER) " +
                 "GROUP BY LOCATIONS.ID, LOCATIONS.NAME, PRODUCTS.REFERENCE, PRODUCTS.NAME, PRODUCTS.CATEGORY, CATEGORIES.NAME, STOCKDIARY.ATTRIBUTESETINSTANCE_ID, ATTRIBUTESETINSTANCE.DESCRIPTION " +
                 "ORDER BY LOCATIONS.ID, CATEGORIES.NAME, PRODUCTS.NAME");
+
 report.addParameter("STOCKDIARY.DATENEW");
 report.addParameter("STOCKDIARY.DATENEW");
-report.addQBFFilter(new com.openbravo.pos.reports.JParamsDatesInterval());
+
+paramdates = new com.openbravo.pos.reports.JParamsDatesInterval();
+paramdates.setEndDate(com.openbravo.beans.DateUtils.getToday());
+
+report.addQBFFilter(paramdates);
+
 report.addParameter("LOCATIONS.ID");
 report.addQBFFilter(new com.openbravo.pos.reports.JParamsLocationWithFirst());
+
 report.addParameter("STOCKDIARY.REASON");
 report.addQBFFilter(new com.openbravo.pos.reports.JParamsReason());
 
@@ -66,4 +73,3 @@ report.addField("UNITSDIFF", com.openbravo.data.loader.Datas.DOUBLE);
 report.addField("TOTALDIFF", com.openbravo.data.loader.Datas.DOUBLE);
 
 report;
-

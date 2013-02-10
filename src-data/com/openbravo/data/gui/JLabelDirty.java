@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -19,9 +19,9 @@
 
 package com.openbravo.data.gui;
 
-import javax.swing.*;
-import com.openbravo.data.user.DirtyManager;
 import com.openbravo.data.user.DirtyListener;
+import com.openbravo.data.user.DirtyManager;
+import javax.swing.*;
 
 public class JLabelDirty extends JLabel {
     

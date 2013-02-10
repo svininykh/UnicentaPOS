@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -29,25 +29,29 @@ import java.util.List;
 
 public class JParamsComposed extends javax.swing.JPanel implements ReportEditorCreator {
     
-    private List<ReportEditorCreator> editors = new ArrayList<ReportEditorCreator>();
+// JG 16 May 12 use diamond inference
+    private List<ReportEditorCreator> editors = new ArrayList<>();
     
     /** Creates new form JParamsComposed */
     public JParamsComposed() {
         initComponents();   
     }
 
+    @Override
     public void init(AppView app) {
         for (ReportEditorCreator qbff : editors) {
             qbff.init(app);
         }
     }
 
+    @Override
     public void activate() throws BasicException {
         for (ReportEditorCreator qbff : editors) {
             qbff.activate();
         }
     }
 
+    @Override
     public SerializerWrite getSerializerWrite() {
         
         SerializerWriteComposed sw = new SerializerWriteComposed();
@@ -59,10 +63,12 @@ public class JParamsComposed extends javax.swing.JPanel implements ReportEditorC
         return sw;
     }
 
+    @Override
     public Component getComponent() {
         return this;
     }  
     
+    @Override
     public Object createValue() throws BasicException {
         
         Object[] value = new Object[editors.size()];

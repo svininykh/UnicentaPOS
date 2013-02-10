@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -18,21 +18,22 @@
 //    along with uniCenta oPOS.  If not, see <http://www.gnu.org/licenses/>.
 
 package com.openbravo.pos.payment;
-import java.awt.*;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import com.openbravo.data.gui.MessageInf;
-import com.openbravo.pos.forms.AppLocal;
 import com.openbravo.format.Formats;
 import com.openbravo.pos.customers.CustomerInfoExt;
+import com.openbravo.pos.forms.AppLocal;
 import com.openbravo.pos.forms.DataLogicSystem;
 import com.openbravo.pos.scripting.ScriptEngine;
 import com.openbravo.pos.scripting.ScriptException;
 import com.openbravo.pos.scripting.ScriptFactory;
 import com.openbravo.pos.util.RoundUtils;
 import com.openbravo.pos.util.ThumbNailBuilder;
+import java.awt.Component;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
@@ -72,6 +73,7 @@ public class JPaymentCashPos extends javax.swing.JPanel implements JPaymentInter
         
     }
     
+    @Override
     public void activate(CustomerInfoExt customerext, double dTotal, String transID) {
         
         m_dTotal = dTotal;
@@ -81,6 +83,7 @@ public class JPaymentCashPos extends javax.swing.JPanel implements JPaymentInter
         
         printState();        
     }
+    @Override
     public PaymentInfo executePayment() {
         if (m_dPaid - m_dTotal >= 0.0) {
             // pago completo
@@ -90,6 +93,7 @@ public class JPaymentCashPos extends javax.swing.JPanel implements JPaymentInter
             return new PaymentInfoCash(m_dPaid, m_dPaid);
         }        
     }
+    @Override
     public Component getComponent() {
         return this;
     }
@@ -114,6 +118,7 @@ public class JPaymentCashPos extends javax.swing.JPanel implements JPaymentInter
     }
     
     private class RecalculateState implements PropertyChangeListener {
+        @Override
         public void propertyChange(PropertyChangeEvent evt) {
             printState();
         }
@@ -148,6 +153,7 @@ public class JPaymentCashPos extends javax.swing.JPanel implements JPaymentInter
         public AddAmount(double amount) {
             this.amount = amount;
         }
+        @Override
         public void actionPerformed(ActionEvent e) {
             Double tendered = m_jTendered.getDoubleValue();
             if (tendered == null) {
@@ -188,7 +194,7 @@ public class JPaymentCashPos extends javax.swing.JPanel implements JPaymentInter
         jPanel4.setPreferredSize(new java.awt.Dimension(0, 100));
         jPanel4.setLayout(null);
 
-        m_jChangeEuros.setBackground(java.awt.Color.white);
+        m_jChangeEuros.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         m_jChangeEuros.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         m_jChangeEuros.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(javax.swing.UIManager.getDefaults().getColor("Button.darkShadow")), javax.swing.BorderFactory.createEmptyBorder(1, 4, 1, 4)));
         m_jChangeEuros.setOpaque(true);
@@ -196,15 +202,18 @@ public class JPaymentCashPos extends javax.swing.JPanel implements JPaymentInter
         jPanel4.add(m_jChangeEuros);
         m_jChangeEuros.setBounds(120, 50, 150, 25);
 
+        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel6.setText(AppLocal.getIntString("Label.ChangeCash")); // NOI18N
         jPanel4.add(jLabel6);
-        jLabel6.setBounds(20, 50, 100, 15);
+        jLabel6.setBounds(20, 50, 100, 25);
 
+        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel8.setText(AppLocal.getIntString("Label.InputCash")); // NOI18N
         jPanel4.add(jLabel8);
-        jLabel8.setBounds(20, 20, 100, 15);
+        jLabel8.setBounds(20, 20, 100, 25);
 
         m_jMoneyEuros.setBackground(new java.awt.Color(153, 153, 255));
+        m_jMoneyEuros.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         m_jMoneyEuros.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         m_jMoneyEuros.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(javax.swing.UIManager.getDefaults().getColor("Button.darkShadow")), javax.swing.BorderFactory.createEmptyBorder(1, 4, 1, 4)));
         m_jMoneyEuros.setOpaque(true);
@@ -226,6 +235,8 @@ public class JPaymentCashPos extends javax.swing.JPanel implements JPaymentInter
 
         jPanel3.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
         jPanel3.setLayout(new java.awt.BorderLayout());
+
+        m_jTendered.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jPanel3.add(m_jTendered, java.awt.BorderLayout.CENTER);
 
         jPanel1.add(jPanel3);

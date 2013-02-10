@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -37,12 +37,14 @@ public class CodeType implements IKeyed {
         m_sKey = key;
         m_sValue = value;
     }
+    @Override
     public Object getKey() {
         return m_sKey;
     }
     public String getValue() {
         return m_sValue;
     }
+    @Override
     public String toString() {
         return m_sValue;
     }   

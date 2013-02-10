@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (C) 2008-2011 uniCenta
+//    Copyright (C) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -19,36 +19,33 @@
 
 package com.openbravo.pos.forms;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.lang.reflect.Constructor;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
-import java.util.UUID;
-import javax.swing.*;
-
-import com.openbravo.pos.printer.*;
-
-import com.openbravo.beans.*;
-
 import com.openbravo.basic.BasicException;
-import com.openbravo.data.gui.MessageInf;
+import com.openbravo.beans.JFlowPanel;
+import com.openbravo.beans.JPasswordDialog;
 import com.openbravo.data.gui.JMessageDialog;
+import com.openbravo.data.gui.MessageInf;
 import com.openbravo.data.loader.BatchSentence;
 import com.openbravo.data.loader.BatchSentenceResource;
 import com.openbravo.data.loader.Session;
+import com.openbravo.format.Formats;
+import com.openbravo.pos.printer.DeviceTicket;
+import com.openbravo.pos.printer.TicketParser;
+import com.openbravo.pos.printer.TicketPrinterException;
 import com.openbravo.pos.scale.DeviceScale;
 import com.openbravo.pos.scanpal2.DeviceScanner;
 import com.openbravo.pos.scanpal2.DeviceScannerFactory;
+import java.awt.CardLayout;
+import java.awt.ComponentOrientation;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
-import java.util.Locale;
+import java.util.*;
 import java.util.regex.Matcher;
-
-//** Added by Jack **
-//import for clock
-import com.openbravo.format.Formats;
+import javax.swing.*;
 
 
 /**
@@ -69,7 +66,7 @@ public class JRootApp extends JPanel implements AppView {
     
     private String m_sInventoryLocation;
     
-    private StringBuffer inputtext;
+    private StringBuilder inputtext;
    
     private DeviceScale m_Scale;
     private DeviceScanner m_Scanner;
@@ -99,7 +96,7 @@ public class JRootApp extends JPanel implements AppView {
             m_date = getLineDate();
             m_jLblTitle.setText(m_dlSystem.getResourceAsText("Window.Title"));
             m_jLblTitle.repaint();
-            jLabel2.setText("  " + m_clock);
+            jLabel2.setText("  " + m_date + " " + m_clock);
         }
     }
 
@@ -114,11 +111,12 @@ public class JRootApp extends JPanel implements AppView {
     /** Creates new form JRootApp */
     public JRootApp() {    
 
-        m_aBeanFactories = new HashMap<String, BeanFactory>();
+// JG 16 May 2012 use multicatch
+        m_aBeanFactories = new HashMap<>();
         
         // Inicializo los componentes visuales
         initComponents ();            
-        jScrollPane1.getVerticalScrollBar().setPreferredSize(new Dimension(35, 35));
+        jScrollPane1.getVerticalScrollBar().setPreferredSize(new Dimension(30, 30));
     }
     
     public boolean initApp(AppProperties props) {
@@ -281,36 +279,46 @@ public class JRootApp extends JPanel implements AppView {
     }
     
     // Interfaz de aplicacion
+    @Override
     public DeviceTicket getDeviceTicket(){
         return m_TP;
     }
     
+    @Override
     public DeviceScale getDeviceScale() {
         return m_Scale;
     }
+    @Override
     public DeviceScanner getDeviceScanner() {
         return m_Scanner;
     }
     
+    @Override
     public Session getSession() {
         return session;
     } 
 
+    @Override
     public String getInventoryLocation() {
         return m_sInventoryLocation;
     }   
+    @Override
     public String getActiveCashIndex() {
         return m_sActiveCashIndex;
     }
+    @Override
     public int getActiveCashSequence() {
         return m_iActiveCashSequence;
     }
+    @Override
     public Date getActiveCashDateStart() {
         return m_dActiveCashDateStart;
     }
+    @Override
     public Date getActiveCashDateEnd(){
         return m_dActiveCashDateEnd;
     }
+    @Override
     public void setActiveCash(String sIndex, int iSeq, Date dStart, Date dEnd) {
         m_sActiveCashIndex = sIndex;
         m_iActiveCashSequence = iSeq;
@@ -321,10 +329,12 @@ public class JRootApp extends JPanel implements AppView {
         m_dlSystem.setResourceAsProperties(m_props.getHost() + "/properties", m_propsdb);
     }   
        
+    @Override
     public AppProperties getProperties() {
         return m_props;
     }
     
+    @Override
     public Object getBean(String beanfactory) throws BeanFactoryException {
         
         // For backwards compatibility
@@ -352,7 +362,8 @@ public class JRootApp extends JPanel implements AppView {
                         bf = new BeanFactoryObj(bean);
                     }
 
-                } catch (Exception e) {
+// JG 16 May 2012 use multicatch
+                } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException | SecurityException | IllegalArgumentException | InvocationTargetException e) {
                     // ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException
                     throw new BeanFactoryException(e);
                 }
@@ -377,7 +388,8 @@ public class JRootApp extends JPanel implements AppView {
     }
     
     private static void initOldClasses() {
-        m_oldclasses = new HashMap<String, String>();
+// JG 16 May 2012 use diamond inference
+        m_oldclasses = new HashMap<>();
         
         // update bean names from 2.00 to 2.20    
         m_oldclasses.put("com.openbravo.pos.reports.JReportCustomers", "/com/openbravo/reports/customers.bs");
@@ -400,14 +412,17 @@ public class JRootApp extends JPanel implements AppView {
        
     }
     
+    @Override
     public void waitCursorBegin() {
         setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
     }
     
+    @Override
     public void waitCursorEnd(){
         setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
     }
     
+    @Override
     public AppUserView getAppUserView() {
         return m_principalapp;
     }
@@ -426,7 +441,7 @@ public class JRootApp extends JPanel implements AppView {
             }
         }        
     }
-    
+// TODO - Button Layout stack    
     private void listPeople() {
         
         try {
@@ -448,16 +463,15 @@ public class JRootApp extends JPanel implements AppView {
                 btn.setFocusable(false);
                 btn.setRequestFocusEnabled(false);
                 btn.setHorizontalAlignment(SwingConstants.LEADING);
-                btn.setMaximumSize(new Dimension(150, 50));
-                btn.setPreferredSize(new Dimension(150, 50));
-                btn.setMinimumSize(new Dimension(150, 50));
+                btn.setMaximumSize(new Dimension(110, 50));
+                btn.setPreferredSize(new Dimension(110, 50));
+                btn.setMinimumSize(new Dimension(110, 50));
         
                 jPeople.add(btn);                    
             }
             jScrollPane1.getViewport().setView(jPeople);
             
         } catch (BasicException ee) {
-            ee.printStackTrace();
         }
     }
     // La accion del selector
@@ -475,6 +489,7 @@ public class JRootApp extends JPanel implements AppView {
             return m_actionuser;
         }
         
+        @Override
         public void actionPerformed(ActionEvent evt) {
             // String sPassword = m_actionuser.getPassword();
             if (m_actionuser.authenticate()) {
@@ -553,9 +568,10 @@ public class JRootApp extends JPanel implements AppView {
         printerStart();
  
         // keyboard listener activation
-        inputtext = new StringBuffer();
+        inputtext = new StringBuilder();
         m_txtKeys.setText(null);       
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 m_txtKeys.requestFocus();
             }
@@ -570,7 +586,6 @@ public class JRootApp extends JPanel implements AppView {
             try {
                 user = m_dlSystem.findPeopleByCard(inputtext.toString());
             } catch (BasicException e) {
-                e.printStackTrace();
             }
             
             if (user == null)  {
@@ -581,7 +596,7 @@ public class JRootApp extends JPanel implements AppView {
                 openAppView(user);   
             }
 
-            inputtext = new StringBuffer();
+            inputtext = new StringBuilder();
         } else {
             inputtext.append(c);
         }
@@ -606,12 +621,12 @@ public class JRootApp extends JPanel implements AppView {
         jLabel1 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         m_jLogonName = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
         jPanel2 = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
-        m_jClose = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
         m_txtKeys = new javax.swing.JTextField();
+        m_jClose = new javax.swing.JButton();
         m_jPanelDown = new javax.swing.JPanel();
         panelTask = new javax.swing.JPanel();
         m_jHost = new javax.swing.JLabel();
@@ -623,18 +638,22 @@ public class JRootApp extends JPanel implements AppView {
         m_jPanelTitle.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, javax.swing.UIManager.getDefaults().getColor("Button.darkShadow")));
         m_jPanelTitle.setLayout(new java.awt.BorderLayout());
 
-        m_jLblTitle.setFont(new java.awt.Font("Tahoma", 0, 12));
+        m_jLblTitle.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         m_jLblTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         m_jLblTitle.setText("Window.Title");
         m_jPanelTitle.add(m_jLblTitle, java.awt.BorderLayout.CENTER);
 
+        poweredby.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         poweredby.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/poweredby_uni.png"))); // NOI18N
         poweredby.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 5, 0, 5));
+        poweredby.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        poweredby.setMaximumSize(new java.awt.Dimension(180, 34));
+        poweredby.setPreferredSize(new java.awt.Dimension(180, 34));
         m_jPanelTitle.add(poweredby, java.awt.BorderLayout.LINE_END);
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14));
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel2.setPreferredSize(new java.awt.Dimension(142, 34));
+        jLabel2.setPreferredSize(new java.awt.Dimension(180, 34));
         m_jPanelTitle.add(jLabel2, java.awt.BorderLayout.LINE_START);
 
         add(m_jPanelTitle, java.awt.BorderLayout.NORTH);
@@ -648,7 +667,7 @@ public class JRootApp extends JPanel implements AppView {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/logo.png"))); // NOI18N
         jLabel1.setText("<html><center>uniCenta oPOS - Touch Friendly Point of Sale<br>" +
-            "Copyright \u00A9 2009-2011 uniCenta <br>" +
+            "Copyright \u00A9 2009-2012 uniCenta <br>" +
             "http://www.unicenta.net/<br>" +
             "<br>" +
             "uniCenta oPOS is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.<br>" +
@@ -665,17 +684,29 @@ public class JRootApp extends JPanel implements AppView {
 
         m_jPanelLogin.add(jPanel4, java.awt.BorderLayout.CENTER);
 
+        jPanel5.setPreferredSize(new java.awt.Dimension(250, 559));
+
         m_jLogonName.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
         m_jLogonName.setLayout(new java.awt.BorderLayout());
 
-        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        jScrollPane1.setPreferredSize(new java.awt.Dimension(510, 118));
-        m_jLogonName.add(jScrollPane1, java.awt.BorderLayout.CENTER);
-
         jPanel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 5, 0, 5));
+        jPanel2.setPreferredSize(new java.awt.Dimension(100, 100));
         jPanel2.setLayout(new java.awt.BorderLayout());
 
         jPanel8.setLayout(new java.awt.GridLayout(0, 1, 5, 5));
+        jPanel2.add(jPanel8, java.awt.BorderLayout.NORTH);
+
+        m_jLogonName.add(jPanel2, java.awt.BorderLayout.LINE_END);
+
+        jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
+        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+        m_txtKeys.setPreferredSize(new java.awt.Dimension(0, 0));
+        m_txtKeys.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                m_txtKeysKeyTyped(evt);
+            }
+        });
 
         m_jClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/exit.png"))); // NOI18N
         m_jClose.setText(AppLocal.getIntString("Button.Close")); // NOI18N
@@ -688,28 +719,59 @@ public class JRootApp extends JPanel implements AppView {
                 m_jCloseActionPerformed(evt);
             }
         });
-        jPanel8.add(m_jClose);
 
-        jPanel2.add(jPanel8, java.awt.BorderLayout.NORTH);
+        org.jdesktop.layout.GroupLayout jPanel1Layout = new org.jdesktop.layout.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(jPanel1Layout.createSequentialGroup()
+                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(jPanel1Layout.createSequentialGroup()
+                        .add(m_txtKeys, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(0, 0, Short.MAX_VALUE))
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .add(m_jClose, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(jPanel1Layout.createSequentialGroup()
+                .add(m_txtKeys, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(m_jClose, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+        );
 
-        jPanel1.setLayout(null);
+        org.jdesktop.layout.GroupLayout jPanel5Layout = new org.jdesktop.layout.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(jPanel5Layout.createSequentialGroup()
+                .add(jPanel5Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
+                    .add(jPanel5Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .add(jPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .add(jScrollPane1))
+                .add(28, 28, 28)
+                .add(m_jLogonName, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(0, 0, Short.MAX_VALUE))
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(jPanel5Layout.createSequentialGroup()
+                .add(15, 15, 15)
+                .add(jPanel5Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(jPanel5Layout.createSequentialGroup()
+                        .add(m_jLogonName, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(434, 434, 434))
+                    .add(jPanel5Layout.createSequentialGroup()
+                        .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 602, Short.MAX_VALUE)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(jPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
+        );
 
-        m_txtKeys.setPreferredSize(new java.awt.Dimension(0, 0));
-        m_txtKeys.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                m_txtKeysKeyTyped(evt);
-            }
-        });
-        jPanel1.add(m_txtKeys);
-        m_txtKeys.setBounds(0, 0, 0, 0);
-
-        jPanel2.add(jPanel1, java.awt.BorderLayout.CENTER);
-
-        m_jLogonName.add(jPanel2, java.awt.BorderLayout.LINE_END);
-
-        jPanel5.add(m_jLogonName);
-
-        m_jPanelLogin.add(jPanel5, java.awt.BorderLayout.SOUTH);
+        m_jPanelLogin.add(jPanel5, java.awt.BorderLayout.EAST);
 
         m_jPanelContainer.add(m_jPanelLogin, "login");
 
@@ -766,9 +828,4 @@ public class JRootApp extends JPanel implements AppView {
     private javax.swing.JPanel panelTask;
     private javax.swing.JLabel poweredby;
     // End of variables declaration//GEN-END:variables
-//** Added by Jack
-//   private TimeOfDay timeOfDay;
-//   private Timer clockTimer;
-//** to here
-
 }

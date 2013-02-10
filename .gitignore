@@ -3,3 +3,5 @@ build/*
 # O usar comodines
 *~
 *.swp
+/nbproject/private/
+/dist/

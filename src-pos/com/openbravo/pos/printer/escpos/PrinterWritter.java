@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -49,6 +49,7 @@ public abstract class PrinterWritter {
 
     public void write(final byte[] data) {
         exec.execute(new Runnable() {
+            @Override
             public void run() {
                 internalWrite(data);
             }
@@ -57,6 +58,7 @@ public abstract class PrinterWritter {
     
     public void flush() {
         exec.execute(new Runnable() {
+            @Override
             public void run() {
                 internalFlush();
             }
@@ -65,6 +67,7 @@ public abstract class PrinterWritter {
     
     public void close() {
         exec.execute(new Runnable() {
+            @Override
             public void run() {
                 internalClose();
             }

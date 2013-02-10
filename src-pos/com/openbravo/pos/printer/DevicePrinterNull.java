@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -37,32 +37,44 @@ public class DevicePrinterNull implements DevicePrinter {
         m_sDescription = desc;
     }
 
+    @Override
     public String getPrinterName() {
         return m_sName;
     }    
+    @Override
     public String getPrinterDescription() {
         return m_sDescription;
     }        
+    @Override
     public javax.swing.JComponent getPrinterComponent() {
         return null;
     }
+    @Override
     public void reset() {
     }
     
+    @Override
     public void beginReceipt() {
     }
+    @Override
     public void printBarCode(String type, String position, String code) {        
     }    
+    @Override
     public void printImage(java.awt.image.BufferedImage image) {
     }
+    @Override
     public void beginLine(int iTextSize) {
     }   
+    @Override
     public void printText(int iStyle, String sText) {
     }   
+    @Override
     public void endLine() {
     }
+    @Override
     public void endReceipt() {
     }
+    @Override
     public void openDrawer() {
     }
 }

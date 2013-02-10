@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -19,7 +19,6 @@
 
 package com.openbravo.pos.inventory;
 
-import javax.swing.ListCellRenderer;
 import com.openbravo.data.gui.ListCellRendererBasic;
 import com.openbravo.data.loader.ComparatorCreator;
 import com.openbravo.data.loader.TableDefinition;
@@ -31,6 +30,7 @@ import com.openbravo.data.user.SaveProvider;
 import com.openbravo.pos.forms.AppLocal;
 import com.openbravo.pos.forms.DataLogicSales;
 import com.openbravo.pos.panels.JPanelTable;
+import javax.swing.ListCellRenderer;
 
 /**
  *
@@ -45,16 +45,19 @@ public class LocationsPanel extends JPanelTable {
     public LocationsPanel() {
     }
     
+    @Override
     protected void init() {   
         DataLogicSales dlSales = (DataLogicSales) app.getBean("com.openbravo.pos.forms.DataLogicSales");          
         tlocations = dlSales.getTableLocations();
         jeditor = new LocationsView(dirty);
     }
     
+    @Override
     public ListProvider getListProvider() {
         return new ListProviderCreator(tlocations);
     }
     
+    @Override
     public SaveProvider getSaveProvider() {
         return new SaveProvider(tlocations);        
     }
@@ -74,10 +77,12 @@ public class LocationsPanel extends JPanelTable {
         return new ListCellRendererBasic(tlocations.getRenderStringBasic(new int[]{1}));
     }
     
+    @Override
     public EditorRecord getEditor() {
         return jeditor;
     }
     
+    @Override
     public String getTitle() {
         return AppLocal.getIntString("Menu.Locations");
     }      

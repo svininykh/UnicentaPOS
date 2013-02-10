@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -19,10 +19,13 @@
 
 package com.openbravo.pos.printer.screen;
 
-import java.awt.*;
-import javax.swing.*;
-import com.openbravo.pos.printer.*;
 import com.openbravo.pos.forms.AppLocal;
+import com.openbravo.pos.printer.DeviceDisplay;
+import com.openbravo.pos.printer.DeviceDisplayBase;
+import com.openbravo.pos.printer.DeviceDisplayImpl;
+import java.awt.*;
+import javax.swing.JComponent;
+import javax.swing.JPanel;
 
 /**
  *
@@ -49,30 +52,37 @@ public class DeviceDisplayPanel extends JPanel implements DeviceDisplay, DeviceD
         m_displaylines = new DeviceDisplayBase(this);
     }
     
+    @Override
     public String getDisplayName() {
         return m_sName;
     }    
+    @Override
     public String getDisplayDescription() {
         return null;
     }        
+    @Override
     public JComponent getDisplayComponent() {
         return this;
     }
     
+    @Override
     public void writeVisor(int animation, String sLine1, String sLine2) {
         
         m_displaylines.writeVisor(animation, sLine1, sLine2);
     }
     
+    @Override
     public void writeVisor(String sLine1, String sLine2) {
         
         m_displaylines.writeVisor(sLine1, sLine2);
     }
 
+    @Override
     public void clearVisor() {
         m_displaylines.clearVisor();
     }
     
+    @Override
     public void repaintLines() {
         jline1.setText(m_displaylines.getLine1());
         jline2.setText(m_displaylines.getLine2());
@@ -112,15 +122,18 @@ public class DeviceDisplayPanel extends JPanel implements DeviceDisplay, DeviceD
         setLayout(new java.awt.BorderLayout());
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(16, 16, 16, 16));
+        jPanel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jPanel1.setOpaque(false);
         jPanel1.setLayout(new java.awt.GridBagLayout());
 
+        jline1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jline1.setText("jline1");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         jPanel1.add(jline1, gridBagConstraints);
 
+        jline2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jline2.setText("jline2");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;

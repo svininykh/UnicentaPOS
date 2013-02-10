@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -19,27 +19,17 @@
 
 package com.openbravo.pos.panels;
 
-import java.awt.*;
-import javax.swing.*;
-import com.openbravo.pos.forms.JPanelView;
-import com.openbravo.pos.forms.AppView;
-import com.openbravo.pos.forms.AppLocal;
-import com.openbravo.data.loader.Vectorer;
 import com.openbravo.basic.BasicException;
-import com.openbravo.data.gui.JSaver;
-import com.openbravo.data.gui.MessageInf;
-import com.openbravo.data.gui.JCounter;
-import com.openbravo.data.gui.JLabelDirty;
-import com.openbravo.data.gui.JListNavigator;
-import com.openbravo.data.gui.JNavigator;
+import com.openbravo.data.gui.*;
 import com.openbravo.data.loader.ComparatorCreator;
-import com.openbravo.data.user.BrowsableEditableData;
-import com.openbravo.data.user.DirtyManager;
-import com.openbravo.data.user.EditorRecord;
-import com.openbravo.data.user.ListProvider;
-import com.openbravo.data.user.SaveProvider;
-import com.openbravo.pos.forms.BeanFactoryApp;
-import com.openbravo.pos.forms.BeanFactoryException;
+import com.openbravo.data.loader.Vectorer;
+import com.openbravo.data.user.*;
+import com.openbravo.pos.forms.*;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import javax.swing.JComponent;
+import javax.swing.JPanel;
+import javax.swing.ListCellRenderer;
 
 /**
  *
@@ -57,6 +47,7 @@ public abstract class JPanelTable extends JPanel implements JPanelView, BeanFact
         initComponents();
     }
     
+    @Override
     public void init(AppView app) throws BeanFactoryException {
         
         this.app = app;
@@ -66,6 +57,7 @@ public abstract class JPanelTable extends JPanel implements JPanelView, BeanFact
         init();
     }
 
+    @Override
     public Object getBean() {
         return this;
     }
@@ -151,15 +143,18 @@ public abstract class JPanelTable extends JPanel implements JPanelView, BeanFact
         return null;
     }
 
+    @Override
     public JComponent getComponent() {
         return this;
     }
 
+    @Override
     public void activate() throws BasicException {
         startNavigation();
         bd.actionLoad();
     }    
     
+    @Override
     public boolean deactivate() {
 
         try {
@@ -185,6 +180,7 @@ public abstract class JPanelTable extends JPanel implements JPanelView, BeanFact
         setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
         setLayout(new java.awt.BorderLayout());
 
+        container.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         container.setLayout(new java.awt.BorderLayout());
         container.add(toolbar, java.awt.BorderLayout.NORTH);
 

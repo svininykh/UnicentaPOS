@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -19,10 +19,10 @@
 
 package com.openbravo.data.user;
 
-import java.util.*;
-import com.openbravo.data.loader.TableDefinition;
 import com.openbravo.basic.BasicException;
 import com.openbravo.data.loader.SentenceList;
+import com.openbravo.data.loader.TableDefinition;
+import java.util.*;
 
 public class ListProviderCreator implements ListProvider {
     
@@ -75,11 +75,13 @@ public class ListProviderCreator implements ListProvider {
 //        sent.setSerializerWrite(sw);
 //    }
 
+    @Override
     public List loadData() throws BasicException {       
         params = (prov == null) ? null : prov.createValue();
         return refreshData();
     }
     
+    @Override
     public List refreshData() throws BasicException {
         return sent.list(params);
     }    

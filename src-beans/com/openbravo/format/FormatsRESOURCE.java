@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -33,6 +33,7 @@ public class FormatsRESOURCE extends Formats {
         m_rb = rb;
         m_sPrefix = sPrefix;
     }
+    @Override
     protected String formatValueInt(Object value) {
         try {
             return m_rb.getString(m_sPrefix + (String) value);
@@ -40,9 +41,11 @@ public class FormatsRESOURCE extends Formats {
             return (String) value;
         }
     }   
+    @Override
     protected Object parseValueInt(String value) throws ParseException {
         return value;
     }
+    @Override
     public int getAlignment() {
         return javax.swing.SwingConstants.LEFT;
     }    

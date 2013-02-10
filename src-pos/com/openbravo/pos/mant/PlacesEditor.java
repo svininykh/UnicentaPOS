@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -19,24 +19,23 @@
 
 package com.openbravo.pos.mant;
 
-import java.awt.Component;
-import java.util.UUID;
-import javax.swing.*;
-
-import com.openbravo.pos.forms.AppLocal;
-import com.openbravo.format.Formats;
 import com.openbravo.basic.BasicException;
 import com.openbravo.data.gui.ComboBoxValModel;
 import com.openbravo.data.loader.SentenceList;
-import com.openbravo.data.user.EditorRecord;
 import com.openbravo.data.user.DirtyManager;
+import com.openbravo.data.user.EditorRecord;
+import com.openbravo.format.Formats;
+import com.openbravo.pos.forms.AppLocal;
 import com.openbravo.pos.forms.DataLogicSales;
+import java.awt.Component;
+import java.util.UUID;
+import javax.swing.JPanel;
 
 /**
  *
  * @author adrianromero
  */
-public class PlacesEditor extends JPanel implements EditorRecord {
+public final class PlacesEditor extends JPanel implements EditorRecord {
     
     private SentenceList m_sentfloor;
     private ComboBoxValModel m_FloorModel;
@@ -64,9 +63,11 @@ public class PlacesEditor extends JPanel implements EditorRecord {
         m_jFloor.setModel(m_FloorModel);
     }
     
+    @Override
     public void refresh() {
     }   
     
+    @Override
     public void writeValueEOF() {
         
         m_sID = null;
@@ -80,6 +81,7 @@ public class PlacesEditor extends JPanel implements EditorRecord {
         m_jX.setEnabled(false);
         m_jY.setEnabled(false);
     }
+    @Override
     public void writeValueInsert() {
 
         m_sID = UUID.randomUUID().toString(); 
@@ -93,6 +95,7 @@ public class PlacesEditor extends JPanel implements EditorRecord {
         m_jX.setEnabled(true);
         m_jY.setEnabled(true);
     }
+    @Override
     public void writeValueDelete(Object value) {
         
         Object[] place = (Object[]) value;
@@ -107,6 +110,7 @@ public class PlacesEditor extends JPanel implements EditorRecord {
         m_jX.setEnabled(false);
         m_jY.setEnabled(false);
     }
+    @Override
     public void writeValueEdit(Object value) {
         
         Object[] place = (Object[]) value;
@@ -121,6 +125,7 @@ public class PlacesEditor extends JPanel implements EditorRecord {
         m_jX.setEnabled(true);
         m_jY.setEnabled(true);
     }
+    @Override
     public Object createValue() throws BasicException {
         Object[] place = new Object[5];
         place[0] = m_sID;
@@ -131,6 +136,7 @@ public class PlacesEditor extends JPanel implements EditorRecord {
         return place;
     }
     
+    @Override
     public Component getComponent() {
         return this;
     }
@@ -159,61 +165,78 @@ public class PlacesEditor extends JPanel implements EditorRecord {
 
         setLayout(null);
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel2.setText(AppLocal.getIntString("Label.Name")); // NOI18N
         add(jLabel2);
-        jLabel2.setBounds(20, 20, 90, 14);
-        add(m_jName);
-        m_jName.setBounds(110, 20, 200, 20);
+        jLabel2.setBounds(20, 20, 90, 25);
 
+        m_jName.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        add(m_jName);
+        m_jName.setBounds(110, 20, 200, 25);
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel3.setText("Down");
         add(jLabel3);
-        jLabel3.setBounds(220, 80, 40, 20);
-        add(m_jX);
-        m_jX.setBounds(150, 80, 50, 20);
-        add(m_jY);
-        m_jY.setBounds(260, 80, 50, 20);
+        jLabel3.setBounds(220, 90, 40, 25);
 
+        m_jX.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        add(m_jX);
+        m_jX.setBounds(160, 90, 50, 25);
+
+        m_jY.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        add(m_jY);
+        m_jY.setBounds(260, 90, 50, 25);
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel1.setText(AppLocal.getIntString("label.placefloor")); // NOI18N
         add(jLabel1);
-        jLabel1.setBounds(20, 50, 90, 14);
-        add(m_jFloor);
-        m_jFloor.setBounds(110, 50, 200, 20);
+        jLabel1.setBounds(20, 50, 90, 25);
 
+        m_jFloor.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        add(m_jFloor);
+        m_jFloor.setBounds(110, 50, 200, 25);
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel5.setText("Across");
         add(jLabel5);
-        jLabel5.setBounds(110, 80, 50, 20);
+        jLabel5.setBounds(110, 90, 50, 25);
 
+        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel6.setText(AppLocal.getIntString("label.placeposition")); // NOI18N
         add(jLabel6);
-        jLabel6.setBounds(20, 80, 60, 14);
+        jLabel6.setBounds(20, 90, 60, 25);
 
-        jLabel7.setText("<html>Position buttons in your Table plan graphic set in the Floor option <br>The values specify the Centre of the button <br> Start Position 0,0 is Top Left");
+        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel7.setText("<html>Position buttons in your Table plan graphic set in the Floor option <br><br>The values specify the Centre of the button <br> <br> Start Position 0, 0 is Top Left");
         jLabel7.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         jLabel7.setMinimumSize(new java.awt.Dimension(50, 40));
         jLabel7.setPreferredSize(new java.awt.Dimension(489, 40));
         add(jLabel7);
-        jLabel7.setBounds(10, 110, 470, 50);
+        jLabel7.setBounds(10, 140, 410, 90);
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 102, 255));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/restaurant_floor_sml.png"))); // NOI18N
         jLabel4.setText(" ");
         jLabel4.setBorder(new javax.swing.border.MatteBorder(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/restaurant_floor_sml.png")))); // NOI18N
         add(jLabel4);
-        jLabel4.setBounds(110, 190, 200, 140);
+        jLabel4.setBounds(110, 250, 200, 140);
 
-        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel8.setForeground(javax.swing.UIManager.getDefaults().getColor("textHighlight"));
+        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel8.setText("Down");
+        jLabel8.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         add(jLabel8);
-        jLabel8.setBounds(70, 240, 40, 30);
+        jLabel8.setBounds(30, 300, 70, 30);
 
-        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel9.setForeground(javax.swing.UIManager.getDefaults().getColor("ToolBar.dockingForeground"));
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel9.setText("Across");
         add(jLabel9);
-        jLabel9.setBounds(150, 170, 120, 20);
+        jLabel9.setBounds(110, 230, 200, 20);
     }// </editor-fold>//GEN-END:initComponents
     
     

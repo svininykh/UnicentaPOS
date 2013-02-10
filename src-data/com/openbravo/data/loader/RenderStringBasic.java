@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -41,7 +41,7 @@ public class RenderStringBasic implements IRenderString {
             return null; 
         } else {
             Object [] avalue = (Object[]) value;
-            StringBuffer sb = new StringBuffer();
+            StringBuilder sb = new StringBuilder();
 
             for (int i = 0; i < m_aiIndex.length; i++) {
                 if (i > 0) {

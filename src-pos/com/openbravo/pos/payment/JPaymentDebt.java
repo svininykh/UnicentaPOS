@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -19,8 +19,8 @@
 package com.openbravo.pos.payment;
 
 import com.openbravo.format.Formats;
-import com.openbravo.pos.forms.AppLocal;
 import com.openbravo.pos.customers.CustomerInfoExt;
+import com.openbravo.pos.forms.AppLocal;
 import com.openbravo.pos.util.RoundUtils;
 import java.awt.Component;
 import java.beans.PropertyChangeEvent;
@@ -49,6 +49,7 @@ public class JPaymentDebt extends javax.swing.JPanel implements JPaymentInterfac
 
     }
 
+    @Override
     public void activate(CustomerInfoExt customerext, double dTotal, String transID) {
 
         this.customerext = customerext;
@@ -89,10 +90,12 @@ public class JPaymentDebt extends javax.swing.JPanel implements JPaymentInterfac
 
     }
 
+    @Override
     public PaymentInfo executePayment() {
         return new PaymentInfoTicket(m_dPaid, "debt");
     }
 
+    @Override
     public Component getComponent() {
         return this;
     }
@@ -129,6 +132,7 @@ public class JPaymentDebt extends javax.swing.JPanel implements JPaymentInterfac
 
     private class RecalculateState implements PropertyChangeListener {
 
+        @Override
         public void propertyChange(PropertyChangeEvent evt) {
             printState();
         }
@@ -171,11 +175,13 @@ public class JPaymentDebt extends javax.swing.JPanel implements JPaymentInterfac
 
         jPanel4.setLayout(null);
 
+        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel8.setText(AppLocal.getIntString("label.debt")); // NOI18N
         jPanel4.add(jLabel8);
-        jLabel8.setBounds(20, 20, 100, 14);
+        jLabel8.setBounds(20, 20, 100, 25);
 
         m_jMoneyEuros.setBackground(new java.awt.Color(153, 153, 255));
+        m_jMoneyEuros.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         m_jMoneyEuros.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         m_jMoneyEuros.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(javax.swing.UIManager.getDefaults().getColor("Button.darkShadow")), javax.swing.BorderFactory.createEmptyBorder(1, 4, 1, 4)));
         m_jMoneyEuros.setOpaque(true);
@@ -183,48 +189,57 @@ public class JPaymentDebt extends javax.swing.JPanel implements JPaymentInterfac
         jPanel4.add(m_jMoneyEuros);
         m_jMoneyEuros.setBounds(120, 20, 150, 25);
 
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel3.setText(AppLocal.getIntString("label.name")); // NOI18N
         jPanel4.add(jLabel3);
-        jLabel3.setBounds(20, 70, 100, 14);
+        jLabel3.setBounds(20, 70, 100, 25);
 
         m_jName.setEditable(false);
+        m_jName.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jPanel4.add(m_jName);
-        m_jName.setBounds(120, 70, 200, 20);
+        m_jName.setBounds(120, 70, 200, 25);
 
+        jLabel12.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel12.setText(AppLocal.getIntString("label.notes")); // NOI18N
         jPanel4.add(jLabel12);
-        jLabel12.setBounds(20, 100, 100, 14);
+        jLabel12.setBounds(20, 100, 100, 25);
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel2.setText(AppLocal.getIntString("label.maxdebt")); // NOI18N
         jPanel4.add(jLabel2);
-        jLabel2.setBounds(20, 180, 100, 14);
+        jLabel2.setBounds(20, 180, 100, 25);
 
         txtMaxdebt.setEditable(false);
+        txtMaxdebt.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtMaxdebt.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jPanel4.add(txtMaxdebt);
-        txtMaxdebt.setBounds(120, 180, 130, 20);
+        txtMaxdebt.setBounds(120, 180, 130, 25);
 
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel4.setText(AppLocal.getIntString("label.curdebt")); // NOI18N
         jPanel4.add(jLabel4);
-        jLabel4.setBounds(20, 210, 100, 14);
+        jLabel4.setBounds(20, 210, 100, 25);
 
         txtCurdebt.setEditable(false);
+        txtCurdebt.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtCurdebt.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jPanel4.add(txtCurdebt);
-        txtCurdebt.setBounds(120, 210, 130, 20);
+        txtCurdebt.setBounds(120, 210, 130, 25);
 
+        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel6.setText(AppLocal.getIntString("label.curdate")); // NOI18N
         jPanel4.add(jLabel6);
-        jLabel6.setBounds(20, 240, 100, 14);
+        jLabel6.setBounds(20, 240, 100, 25);
 
         txtCurdate.setEditable(false);
+        txtCurdate.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtCurdate.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jPanel4.add(txtCurdate);
-        txtCurdate.setBounds(120, 240, 130, 20);
+        txtCurdate.setBounds(120, 240, 130, 25);
 
-        m_jNotes.setBackground(new java.awt.Color(240, 240, 240));
         m_jNotes.setEditable(false);
-        m_jNotes.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
+        m_jNotes.setBackground(new java.awt.Color(240, 240, 240));
+        m_jNotes.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         m_jNotes.setEnabled(false);
         jScrollPane1.setViewportView(m_jNotes);
 
@@ -233,9 +248,9 @@ public class JPaymentDebt extends javax.swing.JPanel implements JPaymentInterfac
 
         jPanel5.add(jPanel4, java.awt.BorderLayout.CENTER);
 
-        jlblMessage.setBackground(new java.awt.Color(240, 240, 240));
         jlblMessage.setEditable(false);
-        jlblMessage.setFont(new java.awt.Font("Arial", 3, 12));
+        jlblMessage.setBackground(new java.awt.Color(240, 240, 240));
+        jlblMessage.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jlblMessage.setLineWrap(true);
         jlblMessage.setWrapStyleWord(true);
         jlblMessage.setFocusable(false);
@@ -260,6 +275,8 @@ public class JPaymentDebt extends javax.swing.JPanel implements JPaymentInterfac
 
         jPanel3.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
         jPanel3.setLayout(new java.awt.BorderLayout());
+
+        m_jTendered.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jPanel3.add(m_jTendered, java.awt.BorderLayout.CENTER);
 
         jPanel1.add(jPanel3);

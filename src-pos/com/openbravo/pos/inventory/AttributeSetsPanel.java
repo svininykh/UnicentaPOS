@@ -20,11 +20,7 @@
 package com.openbravo.pos.inventory;
 
 import com.openbravo.data.loader.Datas;
-import com.openbravo.data.model.Column;
-import com.openbravo.data.model.Field;
-import com.openbravo.data.model.PrimaryKey;
-import com.openbravo.data.model.Row;
-import com.openbravo.data.model.Table;
+import com.openbravo.data.model.*;
 import com.openbravo.data.user.EditorRecord;
 import com.openbravo.format.Formats;
 import com.openbravo.pos.forms.AppLocal;
@@ -42,6 +38,7 @@ public class AttributeSetsPanel extends JPanelTable2 {
     public AttributeSetsPanel() {
     }
 
+    @Override
     protected void init() {
 
         row = new Row(
@@ -60,10 +57,12 @@ public class AttributeSetsPanel extends JPanelTable2 {
         editor = new AttributeSetsEditor(dirty);
     }
 
+    @Override
     public EditorRecord getEditor() {
         return editor;
     }
 
+    @Override
     public String getTitle() {
         return AppLocal.getIntString("Menu.AttributeSets");
     }

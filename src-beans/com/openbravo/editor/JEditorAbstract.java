@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -19,10 +19,10 @@
 
 package com.openbravo.editor;
 
+import com.openbravo.basic.BasicException;
 import java.awt.Color;
 import java.awt.Component;
 import javax.swing.border.Border;
-import com.openbravo.basic.BasicException;
 
 
 public abstract class JEditorAbstract extends javax.swing.JPanel implements EditorComponent {
@@ -133,6 +133,7 @@ public abstract class JEditorAbstract extends javax.swing.JPanel implements Edit
         panBackground.setLayout(new java.awt.BorderLayout());
 
         m_jText.setBackground(javax.swing.UIManager.getDefaults().getColor("TextField.background"));
+        m_jText.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         m_jText.setContentAreaFilled(false);
         m_jText.setFocusPainted(false);
         m_jText.setFocusable(false);

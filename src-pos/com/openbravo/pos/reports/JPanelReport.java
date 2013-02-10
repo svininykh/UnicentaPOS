@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -19,28 +19,27 @@
 
 package com.openbravo.pos.reports;
 
-import java.awt.*;
-import javax.swing.*;
-import java.util.*;
-import java.io.*;
-
-import com.openbravo.pos.forms.JPanelView;
-import com.openbravo.pos.forms.AppView;
-import com.openbravo.pos.forms.AppLocal;
-
-import net.sf.jasperreports.engine.*;
-import net.sf.jasperreports.engine.xml.JRXmlLoader;
-import net.sf.jasperreports.engine.design.*;
 import com.openbravo.basic.BasicException;
 import com.openbravo.data.gui.MessageInf;
 import com.openbravo.data.loader.BaseSentence;
 import com.openbravo.data.loader.SentenceList;
 import com.openbravo.data.user.EditorCreator;
-import com.openbravo.pos.forms.BeanFactoryApp;
-import com.openbravo.pos.forms.BeanFactoryException;
-import com.openbravo.pos.forms.DataLogicSales;
+import com.openbravo.pos.forms.*;
 import com.openbravo.pos.sales.TaxesLogic;
 import com.openbravo.pos.util.JRViewer300;
+import java.awt.BorderLayout;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.MissingResourceException;
+import java.util.ResourceBundle;
+import javax.swing.JComponent;
+import javax.swing.JPanel;
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
 
 public abstract class JPanelReport extends JPanel implements JPanelView, BeanFactoryApp   {
     
@@ -59,6 +58,7 @@ public abstract class JPanelReport extends JPanel implements JPanelView, BeanFac
         initComponents();      
     }
     
+    @Override
     public void init(AppView app) throws BeanFactoryException {   
         
         m_App = app;
@@ -82,18 +82,20 @@ public abstract class JPanelReport extends JPanel implements JPanelView, BeanFac
                 JasperDesign jd = JRXmlLoader.load(getClass().getResourceAsStream(getReport() + ".jrxml"));            
                 jr = JasperCompileManager.compileReport(jd);    
             } else {
-                // read the compiled report
-                ObjectInputStream oin = new ObjectInputStream(in);
-                jr = (JasperReport) oin.readObject();
-                oin.close();
+// JG 16 May 12 use try-with-resources
+                try (ObjectInputStream oin = new ObjectInputStream(in)) {
+                    jr = (JasperReport) oin.readObject();
+                }
             }
-        } catch (Exception e) {
+// JG 16 May 12 use multicatch
+        } catch (JRException | IOException | ClassNotFoundException e) {
             MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotloadreport"), e);
             msg.show(this);
             jr = null;
         }  
     }
     
+    @Override
     public Object getBean() {
         return this;
     }
@@ -106,16 +108,19 @@ public abstract class JPanelReport extends JPanel implements JPanelView, BeanFac
         return null;
     }
     
+    @Override
     public JComponent getComponent() {
         return this;
     }
     
+    @Override
     public void activate() throws BasicException {
 
         setVisibleFilter(true);
         taxeslogic = new TaxesLogic(taxsent.list()); 
     }    
     
+    @Override
     public boolean deactivate() {    
         
         reportviewer.loadJasperPrint(null);

@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -19,7 +19,7 @@
 
 package com.openbravo.pos.printer.escpos;
     
-import com.openbravo.pos.printer.*;
+import com.openbravo.pos.printer.DeviceTicket;
 
 public class DeviceDisplayESCPOS extends DeviceDisplaySerial {
        
@@ -50,6 +50,7 @@ public class DeviceDisplayESCPOS extends DeviceDisplaySerial {
 //        display.flush();
 //    }
 
+    @Override
     public void repaintLines() {
         
         display.write(ESCPOS.SELECT_DISPLAY);

@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -18,19 +18,19 @@
 //    along with uniCenta oPOS.  If not, see <http://www.gnu.org/licenses/>.
 package com.openbravo.pos.ticket;
 
-import java.util.*;
+import com.openbravo.basic.BasicException;
+import com.openbravo.data.loader.DataRead;
+import com.openbravo.data.loader.LocalRes;
+import com.openbravo.data.loader.SerializableRead;
+import com.openbravo.format.Formats;
+import com.openbravo.pos.customers.CustomerInfoExt;
+import com.openbravo.pos.payment.PaymentInfo;
+import com.openbravo.pos.payment.PaymentInfoMagcard;
+import com.openbravo.pos.util.StringUtils;
 import java.io.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import com.openbravo.pos.payment.PaymentInfo;
-import com.openbravo.data.loader.DataRead;
-import com.openbravo.data.loader.SerializableRead;
-import com.openbravo.format.Formats;
-import com.openbravo.basic.BasicException;
-import com.openbravo.data.loader.LocalRes;
-import com.openbravo.pos.customers.CustomerInfoExt;
-import com.openbravo.pos.payment.PaymentInfoMagcard;
-import com.openbravo.pos.util.StringUtils;
+import java.util.*;
 
 /**
  *
@@ -69,13 +69,14 @@ public class TicketInfo implements SerializableRead, Externalizable {
         m_User = null;
         m_Customer = null;
         m_sActiveCash = null;
-        m_aLines = new ArrayList<TicketLineInfo>(); // vacio de lineas
+        m_aLines = new ArrayList<>(); // JG June 2102 diamond inference
 
-        payments = new ArrayList<PaymentInfo>();
+        payments = new ArrayList<>(); // JG June 2102 diamond inference
         taxes = null;
         m_sResponse = null;
     }
 
+    @Override
     public void writeExternal(ObjectOutput out) throws IOException {
         // esto es solo para serializar tickets que no estan en la bolsa de tickets pendientes
         out.writeObject(m_sId);
@@ -87,6 +88,7 @@ public class TicketInfo implements SerializableRead, Externalizable {
         out.writeObject(m_aLines);
     }
 
+    @Override
     public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
         // esto es solo para serializar tickets que no estan en la bolsa de tickets pendientes
         m_sId = (String) in.readObject();
@@ -99,10 +101,11 @@ public class TicketInfo implements SerializableRead, Externalizable {
         m_User = null;
         m_sActiveCash = null;
 
-        payments = new ArrayList<PaymentInfo>();
+        payments = new ArrayList<>(); // JG June 2102 diamond inference
         taxes = null;
     }
 
+    @Override
     public void readValues(DataRead dr) throws BasicException {
         m_sId = dr.getString(1);
         tickettype = dr.getInt(2).intValue();
@@ -118,9 +121,9 @@ public class TicketInfo implements SerializableRead, Externalizable {
         }
         m_User = new UserInfo(dr.getString(7), dr.getString(8));
         m_Customer = new CustomerInfoExt(dr.getString(9));
-        m_aLines = new ArrayList<TicketLineInfo>();
+        m_aLines = new ArrayList<>(); // JG June 2102 diamond inference
 
-        payments = new ArrayList<PaymentInfo>();
+        payments = new ArrayList<>(); // JG June 2102 diamond inference
         taxes = null;
     }
 
@@ -135,13 +138,13 @@ public class TicketInfo implements SerializableRead, Externalizable {
         t.m_User = m_User;
         t.m_Customer = m_Customer;
 
-        t.m_aLines = new ArrayList<TicketLineInfo>();
+        t.m_aLines = new ArrayList<>(); // JG June 2102 diamond inference
         for (TicketLineInfo l : m_aLines) {
             t.m_aLines.add(l.copyTicketLine());
         }
         t.refreshLines();
 
-        t.payments = new LinkedList<PaymentInfo>();
+        t.payments = new LinkedList<>(); // JG June 2102 diamond inference
         for (PaymentInfo p : payments) {
             t.payments.add(p.copyPayment());
         }
@@ -183,7 +186,7 @@ public class TicketInfo implements SerializableRead, Externalizable {
 
         if (info == null) {
             if (m_iTicketId == 0) {
-                name.append("(" + m_dateformat.format(m_dDate) + " " + Long.toString(m_dDate.getTime() % 1000) + ")");
+                name.append("(").append(m_dateformat.format(m_dDate)).append(" ").append(Long.toString(m_dDate.getTime() % 1000)).append(")");
             } else {
                 name.append(Integer.toString(m_iTicketId));
             }
@@ -369,7 +372,7 @@ public class TicketInfo implements SerializableRead, Externalizable {
     }
 
     public void resetPayments() {
-        payments = new ArrayList<PaymentInfo>();
+        payments = new ArrayList<>(); // JG June 2102 diamond inference
     }
 
     public List<TicketTaxInfo> getTaxes() {
@@ -401,7 +404,7 @@ public class TicketInfo implements SerializableRead, Externalizable {
 
     public TicketTaxInfo[] getTaxLines() {
 
-        Map<String, TicketTaxInfo> m = new HashMap<String, TicketTaxInfo>();
+        Map<String, TicketTaxInfo> m = new HashMap<>(); // JG June 2102 diamond inference
 
         TicketLineInfo oLine;
         for (Iterator<TicketLineInfo> i = m_aLines.iterator(); i.hasNext();) {

@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -19,9 +19,9 @@
 
 package com.openbravo.pos.printer.screen;
 
-import javax.swing.JComponent;
 import com.openbravo.pos.forms.AppLocal;
 import com.openbravo.pos.printer.DeviceDisplay;
+import javax.swing.JComponent;
 
 /**
  *
@@ -44,24 +44,30 @@ public class DeviceDisplayWindow extends javax.swing.JFrame implements DeviceDis
         setVisible(true);
     }
     
+    @Override
     public String getDisplayName() {
         return m_sName;
     }    
+    @Override
     public String getDisplayDescription() {
         return null;
     }        
+    @Override
     public JComponent getDisplayComponent() {
         return null;
     }
     
+    @Override
     public void writeVisor(int animation, String sLine1, String sLine2) {
         m_display.writeVisor(animation, sLine1, sLine2);
     }    
     
+    @Override
     public void writeVisor(String sLine1, String sLine2) {
         m_display.writeVisor(sLine1, sLine2);
     }
 
+    @Override
     public void clearVisor() {
         m_display.clearVisor();
     }

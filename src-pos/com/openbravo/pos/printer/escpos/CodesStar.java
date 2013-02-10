@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -50,22 +50,36 @@ public class CodesStar extends Codes {
     public CodesStar() {
     }
 
+    @Override
     public byte[] getInitSequence() { return INITSEQUENCE; }
      
+    @Override
     public byte[] getSize0() { return CHAR_SIZE_0; }
+    @Override
     public byte[] getSize1() { return CHAR_SIZE_1; }
+    @Override
     public byte[] getSize2() { return CHAR_SIZE_2; }
+    @Override
     public byte[] getSize3() { return CHAR_SIZE_3; }
 
+    @Override
     public byte[] getBoldSet() { return BOLD_SET; }
+    @Override
     public byte[] getBoldReset() { return BOLD_RESET; }
+    @Override
     public byte[] getUnderlineSet() { return UNDERLINE_SET; }
+    @Override
     public byte[] getUnderlineReset() { return UNDERLINE_RESET; }
     
+    @Override
     public byte[] getOpenDrawer() { return OPEN_DRAWER; }    
+    @Override
     public byte[] getCutReceipt() { return PARTIAL_CUT; }   
+    @Override
     public byte[] getNewLine() { return NEW_LINE; } 
+    @Override
     public byte[] getImageHeader() { return IMAGE_HEADER; }     
+    @Override
     public int getImageWidth() { return 192; }
     
     @Override
@@ -95,7 +109,8 @@ public class CodesStar extends Codes {
             System.arraycopy(getImageHeader(), 0, bData, index, getImageHeader().length);
             index += getImageHeader().length;
             
-             // Line Dimension
+        // Line Dimension
+        // JG note: nested ++'s not good construct need change later            
             bData[index ++] = (byte) (iWidth % 256);
             bData[index ++] = (byte) (iWidth / 256);           
             

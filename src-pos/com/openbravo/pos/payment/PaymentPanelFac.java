@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -30,15 +30,17 @@ public class PaymentPanelFac {
     }
     
     public static PaymentPanel getPaymentPanel(String sReader, JPaymentNotifier notifier) {
-        
-        if ("Intelligent".equals(sReader)) {
-            return new PaymentPanelMagCard(new MagCardReaderIntelligent(), notifier);
-        } else if ("Generic".equals(sReader)) {
-            return new PaymentPanelMagCard(new MagCardReaderGeneric(), notifier);
-        } else if ("Keyboard".equals(sReader)) {
-            return new PaymentPanelType(notifier);
-        } else { // "Not defined
-            return new PaymentPanelBasic(notifier);
+// JG 16 May 12 use switch
+        switch (sReader) {
+            case "Intelligent":
+                return new PaymentPanelMagCard(new MagCardReaderIntelligent(), notifier);
+            case "Generic":
+                return new PaymentPanelMagCard(new MagCardReaderGeneric(), notifier);
+            case "Keyboard":
+                return new PaymentPanelType(notifier);
+            default:
+                // "Not defined
+           return new PaymentPanelBasic(notifier);
         }
     }      
 }

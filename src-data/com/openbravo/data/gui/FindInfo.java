@@ -1,5 +1,5 @@
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2011 uniCenta
+//    Copyright (c) 2009-2012 uniCenta
 //    http://www.unicenta.net/unicentaopos
 //
 //    This file is part of uniCenta oPOS
@@ -19,10 +19,10 @@
 
 package com.openbravo.data.gui;
 
-import java.util.regex.*;
-import com.openbravo.data.loader.Vectorer;
 import com.openbravo.basic.BasicException;
+import com.openbravo.data.loader.Vectorer;
 import com.openbravo.data.user.Finder;
+import java.util.regex.*;
 
 public class FindInfo implements Finder {
     

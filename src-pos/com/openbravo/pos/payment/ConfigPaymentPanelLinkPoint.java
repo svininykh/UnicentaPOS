@@ -81,6 +81,7 @@ public class ConfigPaymentPanelLinkPoint extends javax.swing.JPanel implements P
             this.extensions = extensions;            
         }
         
+        @Override
         public boolean accept(File f) {
             if (f.isDirectory()) {
                 return true;
@@ -99,6 +100,7 @@ public class ConfigPaymentPanelLinkPoint extends javax.swing.JPanel implements P
             }   
         }
         
+        @Override
         public String getDescription() {
             return message;
         }      
@@ -121,11 +123,20 @@ public class ConfigPaymentPanelLinkPoint extends javax.swing.JPanel implements P
         jtxtCertificatePath = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel1.setText(AppLocal.getIntString("label.storename")); // NOI18N
 
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel3.setText(AppLocal.getIntString("label.certificatepwd")); // NOI18N
 
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel4.setText(AppLocal.getIntString("label.certificatepath")); // NOI18N
+
+        jtxtStoreName.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+
+        jtxtCertificatePass.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+
+        jtxtCertificatePath.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/fileopen.png"))); // NOI18N
         jButton1.setToolTipText("Open Folder");
@@ -157,7 +168,7 @@ public class ConfigPaymentPanelLinkPoint extends javax.swing.JPanel implements P
                             .addComponent(jLabel1)
                             .addGap(71, 71, 71)
                             .addComponent(jtxtStoreName, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(76, Short.MAX_VALUE))
+                .addContainerGap(71, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -165,16 +176,16 @@ public class ConfigPaymentPanelLinkPoint extends javax.swing.JPanel implements P
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jtxtStoreName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1))
+                            .addComponent(jtxtStoreName, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(jtxtCertificatePass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jtxtCertificatePass, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jtxtCertificatePath, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4)))
+                            .addComponent(jtxtCertificatePath, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(52, 52, 52)
                         .addComponent(jButton1)))
