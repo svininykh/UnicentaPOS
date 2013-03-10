@@ -11,12 +11,12 @@
 	<parameter name="ARG" class="java.lang.Object" isForPrompting="false"/>
 	<queryString>
 		<![CDATA[SELECT
-			RECEIPTS.DATENEW,
-			PAYMENTS.PAYMENT,
-			SUM( PAYMENTS.TOTAL ) AS PAYMENT_TOTAL
-			FROM RECEIPTS
-			LEFT JOIN PAYMENTS ON RECEIPTS.ID = PAYMENTS.RECEIPT
-                        GROUP BY RECEIPTS.DATENEW, PAYMENTS.PAYMENT]]>
+		RECEIPTS.DATENEW,
+		PAYMENTS.PAYMENT,
+		SUM( PAYMENTS.TOTAL ) AS PAYMENT_TOTAL
+		FROM RECEIPTS
+		LEFT JOIN PAYMENTS ON RECEIPTS.ID = PAYMENTS.RECEIPT
+                     GROUP BY RECEIPTS.DATENEW, PAYMENTS.PAYMENT]]>
 	</queryString>
 	<field name="DATENEW" class="java.util.Date"/>
 	<field name="PAYMENT" class="java.lang.String"/>
@@ -278,7 +278,7 @@
 				<textElement textAlignment="Right">
 					<font fontName="Arial" size="11" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{PAYMENT_TOTAL}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[com.openbravo.format.Formats.CURRENCY.formatValue($V{PAYMENT_TOTAL})]]></textFieldExpression>
 			</textField>
 			<textField pattern="" isBlankWhenNull="false">
 				<reportElement key="textField-23" mode="Opaque" x="345" y="7" width="90" height="15" forecolor="#000000" backcolor="#FFFFFF"/>

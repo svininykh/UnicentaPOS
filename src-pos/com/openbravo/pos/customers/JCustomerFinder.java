@@ -27,6 +27,8 @@ import com.openbravo.pos.forms.AppLocal;
 import java.awt.*;
 import java.util.ArrayList;
 import javax.swing.JFrame;
+import javax.swing.*;
+import java.awt.event.*;
 
 /**
  *
@@ -215,21 +217,19 @@ public class JCustomerFinder extends javax.swing.JDialog implements EditorCreato
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTextField2 = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         m_jKeys = new com.openbravo.editor.JEditorKeys();
         jPanel3 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
-        jLblName = new javax.swing.JLabel();
-        m_jtxtName = new com.openbravo.editor.JEditorString();
-        jLblSearchKey = new javax.swing.JLabel();
-        m_jtxtSearchKey = new com.openbravo.editor.JEditorString();
         jLblTaxID = new javax.swing.JLabel();
         m_jtxtTaxID = new com.openbravo.editor.JEditorString();
-        m_jtxtPostal = new com.openbravo.editor.JEditorString();
+        jLblSearchKey = new javax.swing.JLabel();
+        m_jtxtSearchKey = new com.openbravo.editor.JEditorString();
         jLblPostal = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        m_jtxtPostal = new com.openbravo.editor.JEditorString();
+        jLblName = new javax.swing.JLabel();
+        m_jtxtName = new com.openbravo.editor.JEditorString();
         jPanel6 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
@@ -241,10 +241,9 @@ public class JCustomerFinder extends javax.swing.JDialog implements EditorCreato
         jcmdOK = new javax.swing.JButton();
         jcmdCancel = new javax.swing.JButton();
 
-        jTextField2.setText("jTextField2");
-
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle(AppLocal.getIntString("form.customertitle")); // NOI18N
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         jPanel2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jPanel2.setLayout(new java.awt.BorderLayout());
@@ -262,13 +261,13 @@ public class JCustomerFinder extends javax.swing.JDialog implements EditorCreato
 
         jPanel5.setLayout(new java.awt.BorderLayout());
 
-        jLblName.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLblName.setText(AppLocal.getIntString("label.prodname")); // NOI18N
-        jLblName.setMaximumSize(new java.awt.Dimension(60, 15));
-        jLblName.setMinimumSize(new java.awt.Dimension(60, 15));
-        jLblName.setPreferredSize(new java.awt.Dimension(60, 15));
+        jLblTaxID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLblTaxID.setText(AppLocal.getIntString("label.taxid")); // NOI18N
+        jLblTaxID.setMaximumSize(new java.awt.Dimension(60, 15));
+        jLblTaxID.setMinimumSize(new java.awt.Dimension(60, 15));
+        jLblTaxID.setPreferredSize(new java.awt.Dimension(60, 15));
 
-        m_jtxtName.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        m_jtxtTaxID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
         jLblSearchKey.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLblSearchKey.setText(AppLocal.getIntString("label.searchkey")); // NOI18N
@@ -278,26 +277,22 @@ public class JCustomerFinder extends javax.swing.JDialog implements EditorCreato
 
         m_jtxtSearchKey.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
-        jLblTaxID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLblTaxID.setText(AppLocal.getIntString("label.taxid")); // NOI18N
-        jLblTaxID.setMaximumSize(new java.awt.Dimension(60, 15));
-        jLblTaxID.setMinimumSize(new java.awt.Dimension(60, 15));
-        jLblTaxID.setPreferredSize(new java.awt.Dimension(60, 15));
-
-        m_jtxtTaxID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-
-        m_jtxtPostal.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-
         jLblPostal.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLblPostal.setLabelFor(m_jtxtPostal);
+        jLblPostal.setText("Postal");
         jLblPostal.setMaximumSize(new java.awt.Dimension(60, 15));
         jLblPostal.setMinimumSize(new java.awt.Dimension(60, 15));
         jLblPostal.setPreferredSize(new java.awt.Dimension(60, 15));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel1.setText("Postal");
-        jLabel1.setMaximumSize(new java.awt.Dimension(60, 15));
-        jLabel1.setMinimumSize(new java.awt.Dimension(60, 15));
-        jLabel1.setPreferredSize(new java.awt.Dimension(60, 15));
+        m_jtxtPostal.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+
+        jLblName.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLblName.setText(AppLocal.getIntString("label.prodname")); // NOI18N
+        jLblName.setMaximumSize(new java.awt.Dimension(60, 15));
+        jLblName.setMinimumSize(new java.awt.Dimension(60, 15));
+        jLblName.setPreferredSize(new java.awt.Dimension(60, 15));
+
+        m_jtxtName.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -313,7 +308,7 @@ public class JCustomerFinder extends javax.swing.JDialog implements EditorCreato
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLblSearchKey, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLblPostal, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel7Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -324,8 +319,7 @@ public class JCustomerFinder extends javax.swing.JDialog implements EditorCreato
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addComponent(jLblName, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(m_jtxtName, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLblPostal, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(m_jtxtName, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(37, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
@@ -340,7 +334,7 @@ public class JCustomerFinder extends javax.swing.JDialog implements EditorCreato
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addComponent(jLblSearchKey, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLblPostal, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addComponent(m_jtxtSearchKey, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -350,9 +344,7 @@ public class JCustomerFinder extends javax.swing.JDialog implements EditorCreato
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(m_jtxtName, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLblName, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLblPostal, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(51, Short.MAX_VALUE))
         );
 
         m_jtxtName.getAccessibleContext().setAccessibleName("");
@@ -498,7 +490,6 @@ private void m_jKeysActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLblName;
     private javax.swing.JLabel jLblPostal;
     private javax.swing.JLabel jLblSearchKey;
@@ -513,7 +504,6 @@ private void m_jKeysActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JButton jcmdCancel;
     private javax.swing.JButton jcmdOK;
     private com.openbravo.editor.JEditorKeys m_jKeys;

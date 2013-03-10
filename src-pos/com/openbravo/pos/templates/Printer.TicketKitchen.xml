@@ -60,13 +60,12 @@
         </line>
     #end
 
-    #if ($place != "")
-    #else
+       #if (${tickettext.place} != ${place})
         <line>
            <text align="left" length="15">Table:</text>
-           <text>${tickettext.place}</text>
+           <text>${place}</text>
         </line>
-   #end
+       #end
         
         <line></line>
         <line>

@@ -126,4 +126,3 @@ public class DevicePrinterPanel extends javax.swing.JPanel implements DevicePrin
     // End of variables declaration//GEN-END:variables
     
 }
-

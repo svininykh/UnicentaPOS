@@ -109,13 +109,13 @@
     <class name="com.openbravo.pos.config.JPanelConfiguration"/>
 
 <!-- Section for Additional button scripts -->
-    <class name="button.refundit"/>
+<!--    <class name="button.refundit"/> -->
     <class name="button.sendorder"/>
     <class name="button.print"/>
     <class name="button.opendrawer"/>
     <class name="button.linediscount"/>
 <!--    <class name="button.totaldiscount"/> -->
-<!--    <class name="button.scharge"/> -->
+    <class name="button.scharge"/>
     
 <!-- These reports will report an error with Derby DB's due to SQL limitations 
     Remove the comment at beginning and end of line

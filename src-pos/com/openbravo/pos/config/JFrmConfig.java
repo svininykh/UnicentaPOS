@@ -29,9 +29,11 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import javax.swing.LookAndFeel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-
+import org.pushingpixels.substance.api.SubstanceLookAndFeel;
+import org.pushingpixels.substance.api.SubstanceSkin;
 /**
  *
  * @author adrianromero
@@ -104,7 +106,13 @@ public class JFrmConfig extends javax.swing.JFrame {
 // Set the look and feel.
 // JG 6 May 2012 to Multicatch                
                 try {                    
-                    UIManager.setLookAndFeel(config.getProperty("swing.defaultlaf"));
+                    Object laf = Class.forName(config.getProperty("swing.defaultlaf")).newInstance();                    
+                    if (laf instanceof LookAndFeel){
+                        UIManager.setLookAndFeel((LookAndFeel) laf);
+                    } else if (laf instanceof SubstanceSkin) {                      
+                        SubstanceLookAndFeel.setSkin((SubstanceSkin) laf);                   
+                    }
+// JG 6 May 2012 to multicatch
                 } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
                 }
                 

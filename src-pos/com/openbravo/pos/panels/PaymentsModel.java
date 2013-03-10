@@ -45,6 +45,13 @@ public class PaymentsModel {
     private Double m_dPaymentsTotal;
     private java.util.List<PaymentsLine> m_lpayments;
     
+// JG 9 Nov 12 
+    private Integer m_iCategorySalesRows;
+    private Double m_dCategorySalesTotalUnits;
+    private Double m_dCategorySalesTotal;
+    private java.util.List<CategorySalesLine> m_lcategorysales;
+// end     
+    
     private final static String[] PAYMENTHEADERS = {"Label.Payment", "label.totalcash"};
     
     private Integer m_iSales;
@@ -65,12 +72,20 @@ public class PaymentsModel {
         p.m_dPaymentsTotal = new Double(0.0);
 // JG 16 May 2012 use diamond inference
         p.m_lpayments = new ArrayList<>();
-        
+
+// JG 9 Nov 12
+        p.m_iCategorySalesRows = new Integer(0);
+        p.m_dCategorySalesTotalUnits = new Double(0.0);
+        p.m_dCategorySalesTotal = new Double(0.0);
+        p.m_lcategorysales = new ArrayList<CategorySalesLine>();        
+// end
         p.m_iSales = null;
         p.m_dSalesBase = null;
         p.m_dSalesTaxes = null;
 // JG 16 May 2012 use diamond inference
         p.m_lsales = new ArrayList<>();
+
+      
         
         return p;
     }
@@ -85,6 +100,47 @@ public class PaymentsModel {
         p.m_dDateStart = app.getActiveCashDateStart();
         p.m_dDateEnd = null;
         
+
+// JG 9 Nov 12
+        // Product category Sales
+        Object[] valcategorysales = (Object []) new StaticSentence(app.getSession()
+            , "SELECT COUNT(*), SUM(TICKETLINES.UNITS), SUM((TICKETLINES.PRICE + TICKETLINES.PRICE * TAXES.RATE ) * TICKETLINES.UNITS) " +
+              "FROM TICKETLINES, TICKETS, RECEIPTS, TAXES " +
+              "WHERE TICKETLINES.TICKET = TICKETS.ID AND TICKETS.ID = RECEIPTS.ID AND TICKETLINES.TAXID = TAXES.ID AND TICKETLINES.PRODUCT IS NOT NULL AND RECEIPTS.MONEY = ? " +
+              "GROUP BY RECEIPTS.MONEY"
+            , SerializerWriteString.INSTANCE
+            , new SerializerReadBasic(new Datas[] {Datas.INT, Datas.DOUBLE, Datas.DOUBLE}))
+            .find(app.getActiveCashIndex());
+
+        if (valcategorysales == null) {
+            p.m_iCategorySalesRows = new Integer(0);
+            p.m_dCategorySalesTotalUnits = new Double(0.0);
+            p.m_dCategorySalesTotal = new Double(0.0);
+        } else {
+            p.m_iCategorySalesRows = (Integer) valcategorysales[0];
+            p.m_dCategorySalesTotalUnits = (Double) valcategorysales[1];
+            p.m_dCategorySalesTotal= (Double) valcategorysales[2];
+        }
+
+        List categorys = new StaticSentence(app.getSession()
+            , "SELECT a.NAME, sum(c.UNITS), sum(c.UNITS * (c.PRICE + (c.PRICE * d.RATE))) " +
+              "FROM CATEGORIES as a " +
+              "LEFT JOIN PRODUCTS as b on a.id = b.CATEGORY " +
+              "LEFT JOIN TICKETLINES as c on b.id = c.PRODUCT " +
+              "LEFT JOIN TAXES as d on c.TAXID = d.ID " +
+              "LEFT JOIN RECEIPTS as e on c.TICKET = e.ID " +
+              "WHERE e.MONEY = ? " +
+              "GROUP BY a.NAME"
+            , SerializerWriteString.INSTANCE
+            , new SerializerReadClass(PaymentsModel.CategorySalesLine.class)) //new SerializerReadBasic(new Datas[] {Datas.STRING, Datas.DOUBLE}))
+            .list(app.getActiveCashIndex());
+
+        if (categorys == null) {
+            p.m_lcategorysales = new ArrayList();
+        } else {
+            p.m_lcategorysales = categorys;
+        }        
+// end
         
         // Pagos
         Object[] valtickets = (Object []) new StaticSentence(app.getSession()
@@ -232,6 +288,36 @@ public class PaymentsModel {
     public List<SalesLine> getSaleLines() {
         return m_lsales;
     }
+
+// JG 9 Nov 12
+    public double getCategorySalesRows() {
+        return m_iCategorySalesRows.intValue();
+    }
+
+    public String printCategorySalesRows() {
+        return Formats.INT.formatValue(m_iCategorySalesRows);
+    }
+
+    public double getCategorySalesTotalUnits() {
+        return m_dCategorySalesTotalUnits.doubleValue();
+    }
+
+    public String printCategorySalesTotalUnits() {
+        return Formats.DOUBLE.formatValue(m_dCategorySalesTotalUnits);
+    }
+
+    public double getCategorySalesTotal() {
+        return m_dCategorySalesTotal.doubleValue();
+    }
+
+    public String printCategorySalesTotal() {
+        return Formats.CURRENCY.formatValue(m_dCategorySalesTotal);
+    }
+
+    public List<CategorySalesLine> getCategorySalesLines() {
+        return m_lcategorysales;
+    }    
+// end
     
     public AbstractTableModel getPaymentsModel() {
         return new AbstractTableModel() {
@@ -258,6 +344,42 @@ public class PaymentsModel {
             }  
         };
     }
+    
+// JG 9 Nov 12
+    // Products category sales class
+    public static class CategorySalesLine implements SerializableRead {
+
+        private String m_CategoryName;
+        private Double m_CategoryUnits;
+        private Double m_CategorySum;
+
+        public void readValues(DataRead dr) throws BasicException {
+            m_CategoryName = dr.getString(1);
+            m_CategoryUnits = dr.getDouble(2);
+            m_CategorySum = dr.getDouble(3);
+        }
+
+        public String printCategoryName() {
+            return m_CategoryName;
+        }
+
+        public String printCategoryUnits() {
+            return Formats.DOUBLE.formatValue(m_CategoryUnits);
+        }
+
+        public Double getCategoryUnits() {
+            return m_CategoryUnits;
+        }
+
+        public String printCategorySum() {
+            return Formats.CURRENCY.formatValue(m_CategorySum);
+        }
+
+        public Double getCategorySum() {
+            return m_CategorySum;
+        }
+    }    
+// end
     
     public static class SalesLine implements SerializableRead {
         

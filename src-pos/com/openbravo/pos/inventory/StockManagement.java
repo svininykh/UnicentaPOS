@@ -430,6 +430,8 @@ public class StockManagement extends JPanel implements JPanelView {
 
         jPanel2.setLayout(new javax.swing.BoxLayout(jPanel2, javax.swing.BoxLayout.Y_AXIS));
 
+        jNumberKeys.setMinimumSize(new java.awt.Dimension(150, 150));
+        jNumberKeys.setPreferredSize(new java.awt.Dimension(220, 220));
         jNumberKeys.addJNumberEventListener(new com.openbravo.beans.JNumberEventListener() {
             public void keyPerformed(com.openbravo.beans.JNumberEvent evt) {
                 jNumberKeysKeyPerformed(evt);
@@ -497,16 +499,14 @@ public class StockManagement extends JPanel implements JPanelView {
 
         add(jPanel1, java.awt.BorderLayout.EAST);
 
-        jPanel3.setLayout(null);
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel1.setText(AppLocal.getIntString("label.stockdate")); // NOI18N
-        jPanel3.add(jLabel1);
-        jLabel1.setBounds(10, 10, 80, 25);
+        jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 80, 25));
 
         m_jdate.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jPanel3.add(m_jdate);
-        m_jdate.setBounds(100, 10, 200, 25);
+        jPanel3.add(m_jdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 30, 200, 25));
 
         m_jbtndate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/date.png"))); // NOI18N
         m_jbtndate.setToolTipText("Open Calendar");
@@ -515,13 +515,11 @@ public class StockManagement extends JPanel implements JPanelView {
                 m_jbtndateActionPerformed(evt);
             }
         });
-        jPanel3.add(m_jbtndate);
-        m_jbtndate.setBounds(310, 5, 40, 30);
+        jPanel3.add(m_jbtndate, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 25, 40, 30));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel2.setText(AppLocal.getIntString("label.stockreason")); // NOI18N
-        jPanel3.add(jLabel2);
-        jLabel2.setBounds(10, 50, 80, 25);
+        jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 80, 25));
 
         m_jreason.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         m_jreason.addActionListener(new java.awt.event.ActionListener() {
@@ -529,20 +527,17 @@ public class StockManagement extends JPanel implements JPanelView {
                 m_jreasonActionPerformed(evt);
             }
         });
-        jPanel3.add(m_jreason);
-        m_jreason.setBounds(100, 50, 200, 25);
+        jPanel3.add(m_jreason, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 70, 200, 25));
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel8.setText(AppLocal.getIntString("label.warehouse")); // NOI18N
         jLabel8.setMaximumSize(new java.awt.Dimension(40, 20));
         jLabel8.setMinimumSize(new java.awt.Dimension(40, 20));
         jLabel8.setPreferredSize(new java.awt.Dimension(40, 20));
-        jPanel3.add(jLabel8);
-        jLabel8.setBounds(10, 90, 80, 25);
+        jPanel3.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 80, 25));
 
         m_jLocation.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jPanel3.add(m_jLocation);
-        m_jLocation.setBounds(100, 90, 200, 25);
+        jPanel3.add(m_jLocation, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 110, 200, 25));
 
         m_jDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/editdelete.png"))); // NOI18N
         m_jDelete.setToolTipText("Remove Line");
@@ -555,8 +550,7 @@ public class StockManagement extends JPanel implements JPanelView {
                 m_jDeleteActionPerformed(evt);
             }
         });
-        jPanel3.add(m_jDelete);
-        m_jDelete.setBounds(430, 180, 56, 44);
+        jPanel3.add(m_jDelete, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 200, -1, -1));
 
         m_jUp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/1uparrow.png"))); // NOI18N
         m_jUp.setToolTipText("Scroll Up a Line");
@@ -569,8 +563,7 @@ public class StockManagement extends JPanel implements JPanelView {
                 m_jUpActionPerformed(evt);
             }
         });
-        jPanel3.add(m_jUp);
-        m_jUp.setBounds(430, 130, 56, 44);
+        jPanel3.add(m_jUp, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 150, -1, -1));
 
         m_jDown.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/1downarrow.png"))); // NOI18N
         m_jDown.setToolTipText("Scroll Down a Line");
@@ -580,16 +573,13 @@ public class StockManagement extends JPanel implements JPanelView {
                 m_jDownActionPerformed(evt);
             }
         });
-        jPanel3.add(m_jDown);
-        m_jDown.setBounds(490, 130, 57, 45);
+        jPanel3.add(m_jDown, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 150, -1, -1));
 
         jPanel5.setLayout(new java.awt.BorderLayout());
-        jPanel3.add(jPanel5);
-        jPanel5.setBounds(10, 130, 410, 150);
+        jPanel3.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, 410, 140));
 
         m_jLocationDes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jPanel3.add(m_jLocationDes);
-        m_jLocationDes.setBounds(310, 90, 200, 25);
+        jPanel3.add(m_jLocationDes, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 110, 200, 25));
 
         jEditAttributes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/attributes.png"))); // NOI18N
         jEditAttributes.setToolTipText("Attrubutes");
@@ -604,8 +594,7 @@ public class StockManagement extends JPanel implements JPanelView {
                 jEditAttributesActionPerformed(evt);
             }
         });
-        jPanel3.add(jEditAttributes);
-        jEditAttributes.setBounds(490, 180, 56, 44);
+        jPanel3.add(jEditAttributes, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 200, -1, -1));
 
         btnDownloadProducts.setText("ScanPal");
         btnDownloadProducts.setToolTipText("Download from Mobile Device");
@@ -615,17 +604,16 @@ public class StockManagement extends JPanel implements JPanelView {
                 btnDownloadProductsActionPerformed(evt);
             }
         });
-        jPanel3.add(btnDownloadProducts);
-        btnDownloadProducts.setBounds(450, 233, 69, 40);
+        jPanel3.add(btnDownloadProducts, new org.netbeans.lib.awtextra.AbsoluteConstraints(452, 250, -1, 40));
 
         add(jPanel3, java.awt.BorderLayout.CENTER);
 
         catcontainer.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
         catcontainer.setMinimumSize(new java.awt.Dimension(100, 100));
-        catcontainer.setPreferredSize(new java.awt.Dimension(470, 165));
+        catcontainer.setPreferredSize(new java.awt.Dimension(470, 170));
         catcontainer.setRequestFocusEnabled(false);
         catcontainer.setLayout(new java.awt.BorderLayout());
-        add(catcontainer, java.awt.BorderLayout.SOUTH);
+        add(catcontainer, java.awt.BorderLayout.PAGE_END);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnDownloadProductsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDownloadProductsActionPerformed

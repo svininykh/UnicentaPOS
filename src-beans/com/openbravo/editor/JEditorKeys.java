@@ -1,21 +1,21 @@
-//    uniCenta oPOS  - Touch Friendly Point Of Sale
-//    Copyright (c) 2009-2012 uniCenta
-//    http://www.unicenta.net/unicentaopos
+//    Openbravo POS is a point of sales application designed for touch screens.
+//    Copyright (C) 2007-2009 Openbravo, S.L.
+//    http://www.openbravo.com/product/pos
 //
-//    This file is part of uniCenta oPOS
+//    This file is part of Openbravo POS.
 //
-//    uniCenta oPOS is free software: you can redistribute it and/or modify
+//    Openbravo POS is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
 //    (at your option) any later version.
 //
-//   uniCenta oPOS is distributed in the hope that it will be useful,
+//    Openbravo POS is distributed in the hope that it will be useful,
 //    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //    GNU General Public License for more details.
 //
 //    You should have received a copy of the GNU General Public License
-//    along with uniCenta oPOS.  If not, see <http://www.gnu.org/licenses/>.
+//    along with Openbravo POS.  If not, see <http://www.gnu.org/licenses/>.
 
 package com.openbravo.editor;
 
@@ -142,7 +142,6 @@ public class JEditorKeys extends javax.swing.JPanel implements EditorKeys {
         public MyKeyNumberListener(char cCad){
             m_cCad = cCad;
         }
-        @Override
         public void actionPerformed(java.awt.event.ActionEvent evt) {
                      
             // como contenedor de editores
@@ -152,7 +151,6 @@ public class JEditorKeys extends javax.swing.JPanel implements EditorKeys {
         }
     }  
     
-    @Override
     public void setActive(EditorComponent e, int iMode) {
        
         if (editorcurrent != null) {
@@ -165,14 +163,12 @@ public class JEditorKeys extends javax.swing.JPanel implements EditorKeys {
         // keyboard listener activation
         m_txtKeys.setText(null);       
         java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
             public void run() {
                 m_txtKeys.requestFocus();
             }
         });          
     }
     
-    @Override
     public void setInactive(EditorComponent e) {
         
         if (e == editorcurrent && editorcurrent != null) { // e != null
@@ -192,212 +188,28 @@ public class JEditorKeys extends javax.swing.JPanel implements EditorKeys {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
+        m_jKey0 = new javax.swing.JButton();
+        m_jKey1 = new javax.swing.JButton();
+        m_jKey4 = new javax.swing.JButton();
+        m_jKey7 = new javax.swing.JButton();
         m_jCE = new javax.swing.JButton();
         m_jMinus = new javax.swing.JButton();
-        m_jKey1 = new javax.swing.JButton();
-        m_jKey2 = new javax.swing.JButton();
-        m_jKey3 = new javax.swing.JButton();
-        m_jKey4 = new javax.swing.JButton();
+        m_jKey9 = new javax.swing.JButton();
+        m_jKey8 = new javax.swing.JButton();
         m_jKey5 = new javax.swing.JButton();
         m_jKey6 = new javax.swing.JButton();
-        m_jKey7 = new javax.swing.JButton();
-        m_jKey8 = new javax.swing.JButton();
-        m_jKey9 = new javax.swing.JButton();
-        m_jKey0 = new javax.swing.JButton();
+        m_jKey3 = new javax.swing.JButton();
+        m_jKey2 = new javax.swing.JButton();
         m_jKeyDot = new javax.swing.JButton();
         m_txtKeys = new javax.swing.JTextField();
 
         setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
-        setMinimumSize(new java.awt.Dimension(200, 200));
-        setPreferredSize(new java.awt.Dimension(194, 200));
         setLayout(new java.awt.GridBagLayout());
-
-        m_jCE.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/btnce.png"))); // NOI18N
-        m_jCE.setFocusPainted(false);
-        m_jCE.setFocusable(false);
-        m_jCE.setMargin(new java.awt.Insets(8, 16, 8, 16));
-        m_jCE.setMaximumSize(new java.awt.Dimension(42, 36));
-        m_jCE.setMinimumSize(new java.awt.Dimension(42, 36));
-        m_jCE.setPreferredSize(new java.awt.Dimension(42, 36));
-        m_jCE.setRequestFocusEnabled(false);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 0);
-        add(m_jCE, gridBagConstraints);
-
-        m_jMinus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/btnminus.png"))); // NOI18N
-        m_jMinus.setFocusPainted(false);
-        m_jMinus.setFocusable(false);
-        m_jMinus.setMargin(new java.awt.Insets(4, 8, 4, 8));
-        m_jMinus.setMaximumSize(new java.awt.Dimension(42, 36));
-        m_jMinus.setMinimumSize(new java.awt.Dimension(42, 36));
-        m_jMinus.setPreferredSize(new java.awt.Dimension(42, 36));
-        m_jMinus.setRequestFocusEnabled(false);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 0);
-        add(m_jMinus, gridBagConstraints);
-
-        m_jKey1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/btn1.png"))); // NOI18N
-        m_jKey1.setFocusPainted(false);
-        m_jKey1.setFocusable(false);
-        m_jKey1.setMargin(new java.awt.Insets(8, 16, 8, 16));
-        m_jKey1.setMaximumSize(new java.awt.Dimension(42, 36));
-        m_jKey1.setMinimumSize(new java.awt.Dimension(42, 36));
-        m_jKey1.setPreferredSize(new java.awt.Dimension(42, 36));
-        m_jKey1.setRequestFocusEnabled(false);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 1.0;
-        add(m_jKey1, gridBagConstraints);
-
-        m_jKey2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/btn2a.png"))); // NOI18N
-        m_jKey2.setFocusPainted(false);
-        m_jKey2.setFocusable(false);
-        m_jKey2.setMargin(new java.awt.Insets(8, 16, 8, 16));
-        m_jKey2.setMaximumSize(new java.awt.Dimension(42, 36));
-        m_jKey2.setMinimumSize(new java.awt.Dimension(42, 36));
-        m_jKey2.setPreferredSize(new java.awt.Dimension(42, 36));
-        m_jKey2.setRequestFocusEnabled(false);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 1.0;
-        add(m_jKey2, gridBagConstraints);
-
-        m_jKey3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/btn3a.png"))); // NOI18N
-        m_jKey3.setFocusPainted(false);
-        m_jKey3.setFocusable(false);
-        m_jKey3.setMargin(new java.awt.Insets(8, 16, 8, 16));
-        m_jKey3.setMaximumSize(new java.awt.Dimension(42, 36));
-        m_jKey3.setMinimumSize(new java.awt.Dimension(42, 36));
-        m_jKey3.setPreferredSize(new java.awt.Dimension(42, 36));
-        m_jKey3.setRequestFocusEnabled(false);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 1.0;
-        add(m_jKey3, gridBagConstraints);
-
-        m_jKey4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/btn4a.png"))); // NOI18N
-        m_jKey4.setFocusPainted(false);
-        m_jKey4.setFocusable(false);
-        m_jKey4.setMargin(new java.awt.Insets(8, 16, 8, 16));
-        m_jKey4.setMaximumSize(new java.awt.Dimension(42, 36));
-        m_jKey4.setMinimumSize(new java.awt.Dimension(42, 36));
-        m_jKey4.setPreferredSize(new java.awt.Dimension(42, 36));
-        m_jKey4.setRequestFocusEnabled(false);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 1.0;
-        add(m_jKey4, gridBagConstraints);
-
-        m_jKey5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/btn5a.png"))); // NOI18N
-        m_jKey5.setFocusPainted(false);
-        m_jKey5.setFocusable(false);
-        m_jKey5.setMargin(new java.awt.Insets(8, 16, 8, 16));
-        m_jKey5.setMaximumSize(new java.awt.Dimension(42, 36));
-        m_jKey5.setMinimumSize(new java.awt.Dimension(42, 36));
-        m_jKey5.setPreferredSize(new java.awt.Dimension(42, 36));
-        m_jKey5.setRequestFocusEnabled(false);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 1.0;
-        add(m_jKey5, gridBagConstraints);
-
-        m_jKey6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/btn6a.png"))); // NOI18N
-        m_jKey6.setFocusPainted(false);
-        m_jKey6.setFocusable(false);
-        m_jKey6.setMargin(new java.awt.Insets(8, 16, 8, 16));
-        m_jKey6.setMaximumSize(new java.awt.Dimension(42, 36));
-        m_jKey6.setMinimumSize(new java.awt.Dimension(42, 36));
-        m_jKey6.setPreferredSize(new java.awt.Dimension(42, 36));
-        m_jKey6.setRequestFocusEnabled(false);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 1.0;
-        add(m_jKey6, gridBagConstraints);
-
-        m_jKey7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/btn7a.png"))); // NOI18N
-        m_jKey7.setFocusPainted(false);
-        m_jKey7.setFocusable(false);
-        m_jKey7.setMargin(new java.awt.Insets(8, 16, 8, 16));
-        m_jKey7.setMaximumSize(new java.awt.Dimension(42, 36));
-        m_jKey7.setMinimumSize(new java.awt.Dimension(42, 36));
-        m_jKey7.setPreferredSize(new java.awt.Dimension(42, 36));
-        m_jKey7.setRequestFocusEnabled(false);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 1.0;
-        add(m_jKey7, gridBagConstraints);
-
-        m_jKey8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/btn8a.png"))); // NOI18N
-        m_jKey8.setFocusPainted(false);
-        m_jKey8.setFocusable(false);
-        m_jKey8.setMargin(new java.awt.Insets(8, 16, 8, 16));
-        m_jKey8.setMaximumSize(new java.awt.Dimension(42, 36));
-        m_jKey8.setMinimumSize(new java.awt.Dimension(42, 36));
-        m_jKey8.setPreferredSize(new java.awt.Dimension(42, 36));
-        m_jKey8.setRequestFocusEnabled(false);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 1.0;
-        add(m_jKey8, gridBagConstraints);
-
-        m_jKey9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/btn9a.png"))); // NOI18N
-        m_jKey9.setFocusPainted(false);
-        m_jKey9.setFocusable(false);
-        m_jKey9.setMargin(new java.awt.Insets(8, 16, 8, 16));
-        m_jKey9.setMaximumSize(new java.awt.Dimension(42, 36));
-        m_jKey9.setMinimumSize(new java.awt.Dimension(42, 36));
-        m_jKey9.setPreferredSize(new java.awt.Dimension(42, 36));
-        m_jKey9.setRequestFocusEnabled(false);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 1.0;
-        add(m_jKey9, gridBagConstraints);
 
         m_jKey0.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/btn0.png"))); // NOI18N
         m_jKey0.setFocusPainted(false);
         m_jKey0.setFocusable(false);
         m_jKey0.setMargin(new java.awt.Insets(8, 16, 8, 16));
-        m_jKey0.setMaximumSize(new java.awt.Dimension(42, 36));
-        m_jKey0.setMinimumSize(new java.awt.Dimension(42, 36));
-        m_jKey0.setPreferredSize(new java.awt.Dimension(42, 36));
         m_jKey0.setRequestFocusEnabled(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -409,13 +221,164 @@ public class JEditorKeys extends javax.swing.JPanel implements EditorKeys {
         gridBagConstraints.insets = new java.awt.Insets(5, 0, 0, 0);
         add(m_jKey0, gridBagConstraints);
 
+        m_jKey1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/btn1.png"))); // NOI18N
+        m_jKey1.setFocusPainted(false);
+        m_jKey1.setFocusable(false);
+        m_jKey1.setMargin(new java.awt.Insets(8, 16, 8, 16));
+        m_jKey1.setRequestFocusEnabled(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(5, 0, 0, 0);
+        add(m_jKey1, gridBagConstraints);
+
+        m_jKey4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/btn4a.png"))); // NOI18N
+        m_jKey4.setFocusPainted(false);
+        m_jKey4.setFocusable(false);
+        m_jKey4.setMargin(new java.awt.Insets(8, 16, 8, 16));
+        m_jKey4.setRequestFocusEnabled(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(5, 0, 0, 0);
+        add(m_jKey4, gridBagConstraints);
+
+        m_jKey7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/btn7a.png"))); // NOI18N
+        m_jKey7.setFocusPainted(false);
+        m_jKey7.setFocusable(false);
+        m_jKey7.setMargin(new java.awt.Insets(8, 16, 8, 16));
+        m_jKey7.setRequestFocusEnabled(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(5, 0, 0, 0);
+        add(m_jKey7, gridBagConstraints);
+
+        m_jCE.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/btnce.png"))); // NOI18N
+        m_jCE.setFocusPainted(false);
+        m_jCE.setFocusable(false);
+        m_jCE.setMargin(new java.awt.Insets(8, 16, 8, 16));
+        m_jCE.setRequestFocusEnabled(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        add(m_jCE, gridBagConstraints);
+
+        m_jMinus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/btnminus.png"))); // NOI18N
+        m_jMinus.setFocusPainted(false);
+        m_jMinus.setFocusable(false);
+        m_jMinus.setMargin(new java.awt.Insets(8, 16, 8, 16));
+        m_jMinus.setRequestFocusEnabled(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
+        add(m_jMinus, gridBagConstraints);
+
+        m_jKey9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/btn9a.png"))); // NOI18N
+        m_jKey9.setFocusPainted(false);
+        m_jKey9.setFocusable(false);
+        m_jKey9.setMargin(new java.awt.Insets(8, 16, 8, 16));
+        m_jKey9.setRequestFocusEnabled(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
+        add(m_jKey9, gridBagConstraints);
+
+        m_jKey8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/btn8a.png"))); // NOI18N
+        m_jKey8.setFocusPainted(false);
+        m_jKey8.setFocusable(false);
+        m_jKey8.setMargin(new java.awt.Insets(8, 16, 8, 16));
+        m_jKey8.setRequestFocusEnabled(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
+        add(m_jKey8, gridBagConstraints);
+
+        m_jKey5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/btn5a.png"))); // NOI18N
+        m_jKey5.setFocusPainted(false);
+        m_jKey5.setFocusable(false);
+        m_jKey5.setMargin(new java.awt.Insets(8, 16, 8, 16));
+        m_jKey5.setRequestFocusEnabled(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
+        add(m_jKey5, gridBagConstraints);
+
+        m_jKey6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/btn6a.png"))); // NOI18N
+        m_jKey6.setFocusPainted(false);
+        m_jKey6.setFocusable(false);
+        m_jKey6.setMargin(new java.awt.Insets(8, 16, 8, 16));
+        m_jKey6.setRequestFocusEnabled(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
+        add(m_jKey6, gridBagConstraints);
+
+        m_jKey3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/btn3a.png"))); // NOI18N
+        m_jKey3.setFocusPainted(false);
+        m_jKey3.setFocusable(false);
+        m_jKey3.setMargin(new java.awt.Insets(8, 16, 8, 16));
+        m_jKey3.setRequestFocusEnabled(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
+        add(m_jKey3, gridBagConstraints);
+
+        m_jKey2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/btn2a.png"))); // NOI18N
+        m_jKey2.setFocusPainted(false);
+        m_jKey2.setFocusable(false);
+        m_jKey2.setMargin(new java.awt.Insets(8, 16, 8, 16));
+        m_jKey2.setRequestFocusEnabled(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
+        add(m_jKey2, gridBagConstraints);
+
         m_jKeyDot.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/btndot.png"))); // NOI18N
         m_jKeyDot.setFocusPainted(false);
         m_jKeyDot.setFocusable(false);
         m_jKeyDot.setMargin(new java.awt.Insets(8, 16, 8, 16));
-        m_jKeyDot.setMaximumSize(new java.awt.Dimension(42, 36));
-        m_jKeyDot.setMinimumSize(new java.awt.Dimension(42, 36));
-        m_jKeyDot.setPreferredSize(new java.awt.Dimension(42, 36));
         m_jKeyDot.setRequestFocusEnabled(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
@@ -423,19 +386,10 @@ public class JEditorKeys extends javax.swing.JPanel implements EditorKeys {
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(5, 0, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
         add(m_jKeyDot, gridBagConstraints);
 
-        m_txtKeys.setEditable(false);
-        m_txtKeys.setAutoscrolls(false);
-        m_txtKeys.setBorder(null);
-        m_txtKeys.setEnabled(false);
         m_txtKeys.setPreferredSize(new java.awt.Dimension(0, 0));
-        m_txtKeys.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                m_txtKeysActionPerformed(evt);
-            }
-        });
         m_txtKeys.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 m_txtKeysFocusLost(evt);
@@ -481,10 +435,6 @@ public class JEditorKeys extends javax.swing.JPanel implements EditorKeys {
         setInactive(editorcurrent); 
 
     }//GEN-LAST:event_m_txtKeysFocusLost
-
-    private void m_txtKeysActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_m_txtKeysActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_m_txtKeysActionPerformed
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

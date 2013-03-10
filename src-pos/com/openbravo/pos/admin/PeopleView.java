@@ -19,18 +19,18 @@
 
 package com.openbravo.pos.admin;
 
-import java.awt.Component;
-import javax.swing.*;
-import com.openbravo.pos.forms.AppLocal;
-import com.openbravo.pos.util.Hashcypher;
-import java.awt.image.BufferedImage;
-import java.util.UUID;
 import com.openbravo.basic.BasicException;
 import com.openbravo.data.gui.ComboBoxValModel;
 import com.openbravo.data.loader.SentenceList;
 import com.openbravo.data.user.*;
 import com.openbravo.format.Formats;
+import com.openbravo.pos.forms.AppLocal;
+import com.openbravo.pos.util.Hashcypher;
 import com.openbravo.pos.util.StringUtils;
+import java.awt.Component;
+import java.awt.image.BufferedImage;
+import java.util.UUID;
+import javax.swing.*;
 
 /**
  *
@@ -64,6 +64,7 @@ public class PeopleView extends JPanel implements EditorRecord {
         writeValueEOF();
     }
 
+    @Override
     public void writeValueEOF() {
         m_oId = null;
         m_jName.setText(null);
@@ -82,6 +83,7 @@ public class PeopleView extends JPanel implements EditorRecord {
         jButton3.setEnabled(false);
     }
     
+    @Override
     public void writeValueInsert() {
         m_oId = null;
         m_jName.setText(null);
@@ -100,6 +102,7 @@ public class PeopleView extends JPanel implements EditorRecord {
         jButton3.setEnabled(true);
     }
     
+    @Override
     public void writeValueDelete(Object value) {
         Object[] people = (Object[]) value;
         m_oId = people[0];
@@ -119,6 +122,7 @@ public class PeopleView extends JPanel implements EditorRecord {
         jButton3.setEnabled(false);
     }    
     
+    @Override
     public void writeValueEdit(Object value) {
         Object[] people = (Object[]) value;
         m_oId = people[0];
@@ -138,6 +142,7 @@ public class PeopleView extends JPanel implements EditorRecord {
         jButton3.setEnabled(true);
     }
     
+    @Override
     public Object createValue() throws BasicException {
         Object[] people = new Object[7];
         people[0] = m_oId == null ? UUID.randomUUID().toString() : m_oId;
@@ -150,6 +155,7 @@ public class PeopleView extends JPanel implements EditorRecord {
         return people;
     }    
     
+    @Override
     public Component getComponent() {
         return this;
     }    
@@ -160,6 +166,10 @@ public class PeopleView extends JPanel implements EditorRecord {
         m_jRole.setModel(m_RoleModel);
     }
     
+    /**
+     *
+     */
+    @Override
     public void refresh() {
     }
      

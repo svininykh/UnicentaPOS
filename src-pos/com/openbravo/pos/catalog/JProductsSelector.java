@@ -46,11 +46,13 @@ public class JProductsSelector extends javax.swing.JPanel {
         add(flowpanel, BorderLayout.CENTER);
     }
     
-    public void addProduct(Image img, String name, ActionListener al) {
-        
+    //public void addProduct(Image img, String name, ActionListener al) {
+    public void addProduct(Image img, String display, ActionListener al) {        
         JButton btn = new JButton();
         btn.applyComponentOrientation(getComponentOrientation());
-        btn.setText(name);
+// Added JG 13 Nov 12 - Render Display text
+        btn.setText(display);
+//        btn.setText(name);
         btn.setIcon(new ImageIcon(img));
         btn.setFocusPainted(false);
         btn.setFocusable(false);

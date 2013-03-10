@@ -19,8 +19,8 @@
 
 package com.openbravo.pos.config;
 
-import java.awt.Component;
 import com.openbravo.pos.forms.AppConfig;
+import java.awt.Component;
 
 /**
  *

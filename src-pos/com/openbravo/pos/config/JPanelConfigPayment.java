@@ -20,7 +20,6 @@
 package com.openbravo.pos.config;
 
 import com.openbravo.data.user.DirtyManager;
-import java.awt.Component;
 import com.openbravo.pos.forms.AppConfig;
 import com.openbravo.pos.forms.AppLocal;
 import com.openbravo.pos.payment.ConfigPaymentPanelCaixa;
@@ -28,6 +27,7 @@ import com.openbravo.pos.payment.ConfigPaymentPanelEmpty;
 import com.openbravo.pos.payment.ConfigPaymentPanelGeneric;
 import com.openbravo.pos.payment.ConfigPaymentPanelLinkPoint;
 import com.openbravo.pos.payment.PaymentConfiguration;
+import java.awt.Component;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -39,7 +39,8 @@ import java.util.Map;
 public class JPanelConfigPayment extends javax.swing.JPanel implements PanelConfig {
 
     private DirtyManager dirty = new DirtyManager();
-    private Map<String, PaymentConfiguration> paymentsName = new HashMap<String, PaymentConfiguration>();
+//    private Map<String, PaymentConfiguration> paymentsName = new HashMap<String, PaymentConfiguration>();
+    private Map<String, PaymentConfiguration> paymentsName = new HashMap<>();
     private PaymentConfiguration pc;
     
     /** Creates new form JPanelConfigPayment */
@@ -58,7 +59,7 @@ public class JPanelConfigPayment extends javax.swing.JPanel implements PanelConf
         initPayments("PayPoint / SecPay", new ConfigPaymentPanelGeneric());
         initPayments("AuthorizeNet", new ConfigPaymentPanelGeneric());
         initPayments("Planetauthorize", new ConfigPaymentPanelGeneric());
-        initPayments("Firs Data / LinkPoint / YourPay", new ConfigPaymentPanelLinkPoint());
+        initPayments("First Data / LinkPoint / YourPay", new ConfigPaymentPanelLinkPoint());
         initPayments("PaymentsGateway.net", new ConfigPaymentPanelGeneric());
         initPayments("La Caixa (Spain)", new ConfigPaymentPanelCaixa());
         

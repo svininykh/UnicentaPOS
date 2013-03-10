@@ -95,7 +95,7 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
     private int m_iNumberStatus;
     private int m_iNumberStatusInput;
     private int m_iNumberStatusPor;
-    private StringBuilder m_sBarcode;
+    private StringBuffer m_sBarcode;
             
     private JTicketsBag m_ticketsbag;
     
@@ -126,7 +126,6 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
         initComponents ();
     }
    
-    @Override
     public void init(AppView app) throws BeanFactoryException {
         
         m_App = app;
@@ -169,17 +168,15 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
         m_oTicketExt = null;      
     }
     
-    @Override
     public Object getBean() {
         return this;
     }
     
-    @Override
     public JComponent getComponent() {
         return this;
     }
 
-    @Override
+
     public void activate() throws BasicException {
 
         paymentdialogreceipt = JPaymentSelectReceipt.getDialog(this);
@@ -190,11 +187,11 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
         // impuestos incluidos seleccionado ?
         m_jaddtax.setSelected("true".equals(m_jbtnconfig.getProperty("taxesincluded")));
 
-        // JG May 2012 use Diamond inference
+// JG May 2012 use Diamond inference
         java.util.List<TaxInfo> taxlist = senttax.list();
-        taxcollection = new ListKeyed<>(taxlist);
+        taxcollection = new ListKeyed<TaxInfo>(taxlist);
         java.util.List<TaxCategoryInfo> taxcategorieslist = senttaxcategories.list();
-        taxcategoriescollection = new ListKeyed<>(taxcategorieslist);
+        taxcategoriescollection = new ListKeyed<TaxCategoryInfo>(taxcategorieslist);
         
         taxcategoriesmodel = new ComboBoxValModel(taxcategorieslist);
         m_jTax.setModel(taxcategoriesmodel);
@@ -229,7 +226,6 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
         m_ticketsbag.activate();        
     }
     
-    @Override
     public boolean deactivate() {
 
         return m_ticketsbag.deactivate();
@@ -239,7 +235,7 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
     protected abstract Component getSouthComponent();
     protected abstract void resetSouthComponent();
      
-    @Override
+
     public void setActiveTicket(TicketInfo oTicket, Object oTicketExt) {
        
         m_oTicket = oTicket;
@@ -257,7 +253,6 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
         refreshTicket();               
     }
     
-    @Override
     public TicketInfo getActiveTicket() {
         return m_oTicket;
     }
@@ -275,6 +270,7 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
             m_jTotalEuros.setText(null); 
         
             stateToZero();
+            repaint();
             
             // Muestro el panel de nulos.
             cl.show(this, "null");  
@@ -311,7 +307,6 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
             // activo el tecleador...
             m_jKeyFactory.setText(null);       
             java.awt.EventQueue.invokeLater(new Runnable() {
-                @Override
                 public void run() {
                     m_jKeyFactory.requestFocus();
                 }
@@ -325,6 +320,7 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
             m_jSubtotalEuros.setText(null);
             m_jTaxesEuros.setText(null);
             m_jTotalEuros.setText(null);
+            repaint();
         } else {
             m_jSubtotalEuros.setText(m_oTicket.printSubTotal());
             m_jTaxesEuros.setText(m_oTicket.printTax());
@@ -410,7 +406,7 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
                 // Y todos lo auxiliaries que hubiera debajo.
                 while(i < m_oTicket.getLinesCount() && m_oTicket.getLine(i).isProductCom()) {
                     m_oTicket.removeLine(i);
-                    m_ticketlines.removeTicketLine(i); 
+                    m_ticketlines.removeTicketLine(i);
                 }
             }
 
@@ -465,11 +461,12 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
     private void stateToZero(){
         m_jPor.setText("");
         m_jPrice.setText("");
-        m_sBarcode = new StringBuilder();
-
+        m_sBarcode = new StringBuffer();
+            
         m_iNumberStatus = NUMBER_INPUTZERO;
         m_iNumberStatusInput = NUMBERZERO;
         m_iNumberStatusPor = NUMBERZERO;
+        repaint();
     }
     
     private void incProductByCode(String sCode) {
@@ -961,11 +958,11 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
                 JasperDesign jd = JRXmlLoader.load(getClass().getResourceAsStream(resourcefile + ".jrxml"));            
                 jr = JasperCompileManager.compileReport(jd);    
             } else {
-// JG May 2012 replaced with try-to-resources
-                try (ObjectInputStream oin = new ObjectInputStream(in)) {
+                // read the compiled reporte
+                ObjectInputStream oin = new ObjectInputStream(in);
                     jr = (JasperReport) oin.readObject();
+                oin.close();
                 }
-            }
            
             // Construyo el mapa de los parametros.
             Map reportparams = new HashMap();
@@ -1137,9 +1134,10 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
         }              
         
         public Object evalScript(String code, ScriptArg... args) throws ScriptException {
+            
         ScriptEngine script = ScriptFactory.getScriptEngine(ScriptFactory.BEANSHELL);            
 
-// Mod JG Sept 2011 - Stock Checking
+// Mod JG Sept 2011 - Used inside scripts i.e.: Stock Checking
         String sDBUser = m_App.getProperties().getProperty("db.user");
         String sDBPassword = m_App.getProperties().getProperty("db.password");
         
@@ -1627,7 +1625,6 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
     private void m_jNumberKeysKeyPerformed(com.openbravo.beans.JNumberEvent evt) {//GEN-FIRST:event_m_jNumberKeysKeyPerformed
 
         stateTransition(evt.getKey());
-
     }//GEN-LAST:event_m_jNumberKeysKeyPerformed
 
     private void m_jKeyFactoryKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_m_jKeyFactoryKeyTyped

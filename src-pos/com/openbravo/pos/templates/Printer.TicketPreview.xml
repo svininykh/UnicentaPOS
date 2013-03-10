@@ -71,12 +71,11 @@
             <text>${ticket.getCustomer().printTaxid()}</text>
         </line>
         #end
-        #if ($place != "")
-	#else
-          <line>
-            <text align="left" length="15">Table:</text>
-            <text>${tickettext.place}</text>
-          </line>
+        #if (${tickettext.place} != ${place})
+        <line>
+           <text align="left" length="15">Table:</text>
+           <text>${place}</text>
+        </line>
         #end
         <line></line>
         <line>
@@ -101,7 +100,7 @@
         </line>
         #if ($ticketline.productAttSetInstId)
         <line>
-	        <text align ="left" length="42">    ${ticketline.productAttSetInstDesc}</text>
+	        <text align ="left" length="42">${ticketline.productAttSetInstDesc}</text>
         </line>
         #end
         #end

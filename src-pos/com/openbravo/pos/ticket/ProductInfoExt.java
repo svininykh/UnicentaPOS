@@ -19,12 +19,12 @@
 
 package com.openbravo.pos.ticket;
 
-import java.awt.image.BufferedImage;
-import com.openbravo.data.loader.DataRead;
 import com.openbravo.basic.BasicException;
+import com.openbravo.data.loader.DataRead;
 import com.openbravo.data.loader.ImageUtils;
 import com.openbravo.data.loader.SerializerRead;
 import com.openbravo.format.Formats;
+import java.awt.image.BufferedImage;
 import java.util.Properties;
 
 /**
@@ -56,6 +56,9 @@ public class ProductInfoExt {
 // **
     protected Properties attributes;
 
+// ADDED JG 13 Nov 12 - Display    
+    protected String m_sDisplay;    
+
     
     /** Creates new ProductInfo */
     public ProductInfoExt() {
@@ -77,6 +80,9 @@ public class ProductInfoExt {
 // ADDED JG 25.06.11 - Is Service
         m_bService=false;
 // **
+// ADDED JG 13 Nov 12 - Display  
+        m_sDisplay=null;
+        
         attributes = new Properties();
     }
 
@@ -111,6 +117,16 @@ public class ProductInfoExt {
     public final void setName(String sName) {
         m_sName = sName;
     }
+
+// ADDED JG 13 Nov 12 - Display
+    public final String getDisplay() {
+        return m_sDisplay;
+    }
+   
+    public final void setDisplay(String sDisplay) {
+        m_sDisplay = sDisplay;
+    }
+//**   
 
     public final boolean isCom() {
         return m_bCom;
@@ -237,6 +253,8 @@ public class ProductInfoExt {
             product.attributes = ImageUtils.readProperties(dr.getBytes(13));
             product.m_bKitchen = dr.getBoolean(14).booleanValue();
             product.m_bService=dr.getBoolean(15).booleanValue();
+// ADDED JG 13 Nov 12 - Display
+            product.m_sDisplay = dr.getString(16);            
 
             return product;
         }};

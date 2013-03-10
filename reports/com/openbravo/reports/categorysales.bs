@@ -23,21 +23,15 @@ report.setTitleKey("Menu.CategorySales");
 report.setReport("/com/openbravo/reports/categorysales");
 report.setResourceBundle("com/openbravo/reports/categorysales_messages");
 
-report.setSentence(
-            "SELECT " +
-		"CATEGORIES.NAME, " +
-                "((SELECT SUM(TICKETLINES.UNITS) FROM TICKETLINES WHERE TICKETLINES.PRODUCT IS NOT NULL)) AS QTY, " +
-                "((SELECT SUM(TICKETLINES.PRICE * TICKETLINES.UNITS) FROM TICKETLINES WHERE TICKETLINES.PRODUCT IS NULL)) AS DISC, " +             
-		"SUM(TICKETLINES.PRICE * TICKETLINES.UNITS) AS CATPRICE, " +
-		"SUM((TICKETLINES.PRICE * TAXES.RATE ) * TICKETLINES.UNITS) AS CATTAX, "+
-		"SUM((TICKETLINES.PRICE + TICKETLINES.PRICE * TAXES.RATE ) * TICKETLINES.UNITS) AS CATTOTAL " +
-            "FROM TICKETLINES, TICKETS, RECEIPTS, TAXES, PRODUCTS, CATEGORIES " +
-            "WHERE TICKETLINES.TICKET = TICKETS.ID " +
-		"AND TICKETS.ID = RECEIPTS.ID " +
-		"AND TICKETLINES.TAXID = TAXES.ID " +
-		"AND ?(QBF_FILTER) " +
-          "GROUP BY CATEGORIES.NAME " +
-          "ORDER BY CATEGORIES.NAME");
+report.setSentence("SELECT categories.NAME, " +
+"Sum(ticketlines.UNITS) AS QTY, " +
+"Sum(ticketlines.PRICE * ticketlines.UNITS) AS CATPRICE, " +
+"Sum((products.PRICESELL * ticketlines.UNITS)-(ticketlines.PRICE * ticketlines.UNITS)) AS DISC, " +
+"Sum((ticketlines.PRICE * taxes.RATE)* ticketlines.UNITS) AS CATTAX, " +
+"Sum((ticketlines.PRICE * ticketlines.UNITS)- ((products.PRICESELL * ticketlines.UNITS)-(ticketlines.PRICE * ticketlines.UNITS)) + ((ticketlines.PRICE * taxes.RATE)* ticketlines.UNITS)) AS CATTOTAL " +
+"FROM (tickets INNER JOIN receipts ON tickets.ID = receipts.ID) INNER JOIN ((categories INNER JOIN products ON categories.ID = products.CATEGORY) INNER JOIN (taxes INNER JOIN ticketlines ON taxes.ID = ticketlines.TAXID) ON products.ID = ticketlines.PRODUCT) ON tickets.ID = ticketlines.TICKET " +
+"WHERE ?(QBF_FILTER) " +
+"GROUP BY categories.NAME");
 
 report.addParameter("RECEIPTS.DATENEW");
 report.addParameter("RECEIPTS.DATENEW");
@@ -49,8 +43,8 @@ report.addQBFFilter(paramdates);
 
 report.addField("NAME", com.openbravo.data.loader.Datas.STRING);
 report.addField("QTY", com.openbravo.data.loader.Datas.STRING);
-report.addField("DISC", com.openbravo.data.loader.Datas.DOUBLE);
 report.addField("CATPRICE", com.openbravo.data.loader.Datas.DOUBLE);
+report.addField("DISC", com.openbravo.data.loader.Datas.DOUBLE);
 report.addField("CATTAX", com.openbravo.data.loader.Datas.DOUBLE);
 report.addField("CATTOTAL", com.openbravo.data.loader.Datas.DOUBLE);
 

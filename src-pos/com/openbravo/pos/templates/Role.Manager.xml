@@ -105,7 +105,7 @@
     <class name="com.openbravo.pos.config.JPanelConfiguration"/>
 
 <!-- Section for Additional button scripts -->    
-    <class name="button.refundit"/>
+<!--    <class name="button.refundit"/> -->
     <class name="button.sendorder"/>
     <class name="button.print"/>
     <class name="button.opendrawer"/>

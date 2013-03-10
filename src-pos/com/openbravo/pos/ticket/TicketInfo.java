@@ -183,7 +183,7 @@ public class TicketInfo implements SerializableRead, Externalizable {
             name.append(m_Customer.toString());
             name.append(" - ");
         }
-
+        
         if (info == null) {
             if (m_iTicketId == 0) {
                 name.append("(").append(m_dateformat.format(m_dDate)).append(" ").append(Long.toString(m_dDate.getTime() % 1000)).append(")");

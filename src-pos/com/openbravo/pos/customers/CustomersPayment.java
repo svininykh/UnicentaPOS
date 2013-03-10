@@ -140,6 +140,7 @@ public class CustomersPayment extends javax.swing.JPanel implements JPanelView, 
         btnPay.setEnabled(true);
         
         btnPay.setEnabled(customer.getCurdebt() != null && customer.getCurdebt().doubleValue() > 0.0);
+        
     }
 
     private void resetCustomer() {

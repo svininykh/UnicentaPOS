@@ -1,13 +1,3 @@
-/*
- * To change this template, choose Tools | Templates and open the template in
- * the editor.
- */
-package com.openbravo.pos.ticket;
-
-/**
- *
- * @author thold
- */
 //    uniCenta oPOS  - Touch Friendly Point Of Sale
 //    Copyright (c) 2009-2010 uniCenta
 //    http://www.unicenta.net/unicentaopos
@@ -26,6 +16,10 @@ package com.openbravo.pos.ticket;
 //
 //    You should have received a copy of the GNU General Public License
 //    along with uniCenta oPOS.  If not, see <http://www.gnu.org/licenses/>.
+//*****************************************************************************
+
+package com.openbravo.pos.ticket;
+
 import com.openbravo.basic.BasicException;
 import com.openbravo.data.loader.DataRead;
 import com.openbravo.data.loader.IKeyed;

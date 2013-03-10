@@ -42,7 +42,7 @@ public class PaymentGatewayFac {
                 return new PaymentGatewayCaixa(props);
             case "Planetauthorize":
                 return new PaymentGatewayPlanetauthorize(props);
-            case "Firs Data / LinkPoint / YourPay":
+            case "First Data / LinkPoint / YourPay":
                 return new PaymentGatewayLinkPoint(props);
             case "PaymentsGateway.net":
                 return new PaymentGatewayPGNET(props);

@@ -19,11 +19,10 @@
 
 package com.openbravo.pos.ticket;
 
-import javax.swing.*;
-import java.awt.*;
-
-import com.openbravo.pos.util.ThumbNailBuilder;
 import com.openbravo.format.Formats;
+import com.openbravo.pos.util.ThumbNailBuilder;
+import java.awt.*;
+import javax.swing.*;
 
 /**
  *

@@ -228,10 +228,11 @@ public class JCatalog extends JPanel implements ListSelectionListener, CatalogSe
                 TaxInfo tax = taxeslogic.getTaxInfo(product.getTaxCategoryID());
                 return "<html><center>" + product.getName() + "<br>" + product.printPriceSellTax(tax);
             } else {
-                return "<html><center>" + product.getName() + "<br>" + product.printPriceSell();
+//                return "<html><center>" + product.getName() + "<br>" + product.printPriceSell();
+                return "<html><center>" + product.getDisplay() + "<br>" + product.printPriceSell();                
             }
         } else {
-            return product.getName();
+            return product.getDisplay();
         }
     }
     
@@ -308,10 +309,12 @@ public class JCatalog extends JPanel implements ListSelectionListener, CatalogSe
 
                         // Add products
                         for (ProductInfoExt prod : products) {
-                            jcurrTab.addButton(new ImageIcon(tnbbutton.getThumbNailText(prod.getImage(), getProductLabel(prod))), new SelectedAction(prod));
+//                            jcurrTab.addButton(new ImageIcon(tnbbutton.getThumbNailText(prod.getImage(), getProductLabel(prod))), new SelectedAction(prod));
+                            jcurrTab.addButton(new ImageIcon(tnbbutton.getThumbNailText(prod.getImage(), getProductLabel(prod))), new SelectedAction(prod));                            
                         }                       
 
-                        selectIndicatorPanel(new ImageIcon(tnbbutton.getThumbNail(product.getImage())), product.getName());
+//                        selectIndicatorPanel(new ImageIcon(tnbbutton.getThumbNail(product.getImage())), product.getName());
+                        selectIndicatorPanel(new ImageIcon(tnbbutton.getThumbNail(product.getImage())), product.getDisplay());                        
 
                         CardLayout cl = (CardLayout)(m_jProducts.getLayout());
                         cl.show(m_jProducts, "PRODUCT." + id); 
@@ -327,7 +330,8 @@ public class JCatalog extends JPanel implements ListSelectionListener, CatalogSe
             }
         } else {
             // already exists
-            selectIndicatorPanel(new ImageIcon(tnbbutton.getThumbNail(product.getImage())), product.getName());
+            //selectIndicatorPanel(new ImageIcon(tnbbutton.getThumbNail(product.getImage())), product.getName());
+            selectIndicatorPanel(new ImageIcon(tnbbutton.getThumbNail(product.getImage())), product.getDisplay());            
 
             CardLayout cl = (CardLayout)(m_jProducts.getLayout());
             cl.show(m_jProducts, "PRODUCT." + id); 

@@ -68,7 +68,7 @@ public class JPanelButtons extends javax.swing.JPanel {
         this.panelticket = panelticket;
         
         props = new Properties();
-        events = new HashMap<String, String>();
+        events = new HashMap<>();
         
         String sConfigRes = panelticket.getResourceAsXML(sConfigKey);
         
@@ -121,8 +121,7 @@ public class JPanelButtons extends javax.swing.JPanel {
         public void endDocument() throws SAXException {}    
         @Override
         public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException{
-            if ("button".equals(qName)){
-                
+            if ("button".equals(qName)){             
                 
                 // The button title text
                 String titlekey = attributes.getValue("titlekey");

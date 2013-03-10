@@ -240,7 +240,8 @@ ORDER BY TICKETS.TICKETID]]>
 				<textElement textAlignment="Right">
 					<font fontName="Arial"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{MONEY} == null ?  Double.valueOf(0) : $F{MONEY}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{MONEY} == null ?  Double.valueOf(0) : 
+com.openbravo.format.Formats.CURRENCY.formatValue($F{MONEY})]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement key="textField" x="190" y="0" width="145" height="15"/>
@@ -327,7 +328,7 @@ ORDER BY TICKETS.TICKETID]]>
 				<textElement textAlignment="Right">
 					<font fontName="Arial" size="11" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{MONEYGTOTAL}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[com.openbravo.format.Formats.CURRENCY.formatValue($V{MONEYGTOTAL})]]></textFieldExpression>
 			</textField>
 			<textField pattern="" isBlankWhenNull="false">
 				<reportElement key="textField-23" mode="Opaque" x="342" y="7" width="90" height="15" forecolor="#000000" backcolor="#FFFFFF"/>

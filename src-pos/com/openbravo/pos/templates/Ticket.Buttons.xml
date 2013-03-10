@@ -28,7 +28,7 @@
 	<!-- SET Sales Ticket Refund Item (Default=DISABLED) -->
 	<!-- <button key="button.refundit" image="img.refundit" code="script.Refundit"/> -->
 
-	<!-- SET Sales Ticket ServiceCharge (Default=ENABLED) -->
+	<!-- SET Sales Ticket ServiceCharge (Default=DISABLED) -->
 	<!-- <button key="button.scharge" image="img.heart" code="script.ServiceCharge"/> -->
                 
 	<!-- SET Line or Total Discount (Default=TotalDiscount= ENABLED) -->
@@ -66,7 +66,7 @@
 	<!--  <cat-height value="155" /> -->
 
 	<!-- Maximum Category height for 1024x768 in Full Screen mode (Default=ENABLED) -->
-	<cat-height value="330" />
+	<cat-height value="320" />
 
 	<!-- Maximum Category height for 1280x1024 in Full Screen mode -->
 	<!--  <cat-height value="640" /> -->
@@ -86,6 +86,9 @@
 	<!-- <img-height value="96"/> -->
 <!-- END Product Button Size -->
 
+<!-- Print Receipt (Default=ENABLED) -->
+        <printselected value="true"/>
+
 <!-- ADDITIONAL FEATURES ************************************************* -->
 	<!-- SET Show Change in Cash Sale (Default=ENABLED -->
 	<event key="ticket.close" code="Ticket.Close"/>
@@ -97,16 +100,15 @@
 	<!-- <event key="ticket.addline" code="script.StockCurrentAdd"/> -->
 	<!-- <event key="ticket.setline" code="script.StockCurrentSet"/> -->
 
-	<!-- <event key="ticket.change" code="event.change"/> -->
-	<!-- <event key="ticket.addline" code="event.addline"/> -->
-	<!-- <event key="ticket.removeline" code="event.removeline"/> -->
-	<!-- <event key="ticket.setline" code="event.setline"/> -->
+    <event key="ticket.change" code="event.change"/>
+    <event key="ticket.addline" code="event.addline"/>
+    <event key="ticket.removeline" code="event.removeline"/>
+    <event key="ticket.setline" code="event.setline"/>
 	<!-- <event key="ticket.show" code="event.show"/> -->
 	<!-- <event key="ticket.total" code="script.Event.Total"/> -->
 
-	<taxesincluded value="true"/>
-	<!-- <printselected value="true"/> -->    
-	<!-- <taxcategoryid value="001"/> -->
-	<!-- <pricevisible value="true" /> -->
+            <!-- <taxesincluded value="true"/> -->
+            <!-- <taxcategoryid value="001"/> -->
+            <!-- <pricevisible value="true" /> -->
 
 </configuration>

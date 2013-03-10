@@ -19,8 +19,8 @@
 
 package com.openbravo.pos.ticket;
 
-import java.io.Serializable;
 import com.openbravo.data.loader.IKeyed;
+import java.io.Serializable;
 
 /**
  *

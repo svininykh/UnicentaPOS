@@ -197,7 +197,8 @@ LIMIT 0, 10]]>
 				<textElement textAlignment="Right">
 					<font fontName="Arial"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{GROSSTOTAL}== null ? Double.valueOf(0) : $F{GROSSTOTAL}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{GROSSTOTAL}== null ? Double.valueOf(0) : 
+com.openbravo.format.Formats.CURRENCY.formatValue($F{GROSSTOTAL})]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0" isBlankWhenNull="false">
 				<reportElement key="textField" x="329" y="0" width="100" height="15"/>

@@ -62,7 +62,7 @@ public class JRootKiosk extends javax.swing.JFrame implements AppMessage {
                 // Register the running application
                 try {
                     m_instmanager = new InstanceManager(this);
-// JG 16 May use multicatch
+// JG 16 May 12 use multicatch
                 } catch (RemoteException | AlreadyBoundException e) {
                 }
             }
