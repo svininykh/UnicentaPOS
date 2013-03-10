@@ -29,7 +29,9 @@ CP=$CP:$DIRNAME/lib/commons-digester-2.1.jar
 CP=$CP:$DIRNAME/lib/iText-2.1.7.jar
 CP=$CP:$DIRNAME/lib/poi-3.8-20120326.jar
 CP=$CP:$DIRNAME/lib/barcode4j-2.0.jar
-CP=$CP:$DIRNAME/lib/commons-codec-1.4.jar
+
+CP=$CP:$DIRNAME/lib/commons-codec-1.7.jar
+
 CP=$CP:$DIRNAME/lib/velocity-1.7-dep.jar
 CP=$CP:$DIRNAME/lib/oro-2.0.8.jar
 CP=$CP:$DIRNAME/lib/commons-collections-3.2.1.jar
