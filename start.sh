@@ -1,4 +1,5 @@
 #!/bin/sh
+
 #    uniCenta oPOS Touch Friendly Point of Sale designed for Touch Screen
 #    Copyright (C) 2009-2012 uniCenta
 #    http://sourceforge.net/projects/unicentaopos
@@ -36,7 +37,7 @@ CP=$CP:$DIRNAME/lib/velocity-1.7-dep.jar
 CP=$CP:$DIRNAME/lib/oro-2.0.8.jar
 CP=$CP:$DIRNAME/lib/commons-collections-3.2.1.jar
 CP=$CP:$DIRNAME/lib/commons-lang-2.4.jar
-CP=$CP:$DIRNAME/lib/bsh-core-2.0b4.jar
+CP=$CP:$DIRNAME/lib/bsh-2.1b5.jar
 CP=$CP:$DIRNAME/lib/RXTXcomm.jar
 CP=$CP:$DIRNAME/lib/jpos1121.jar
 CP=$CP:$DIRNAME/lib/swingx-all-1.6.4.jar
@@ -50,6 +51,7 @@ CP=$CP:$DIRNAME/lib/saaj.jar
 CP=$CP:$DIRNAME/lib/wsdl4j-1.5.1.jar
 CP=$CP:$DIRNAME/lib/commons-discovery-0.4.jar
 CP=$CP:$DIRNAME/lib/commons-logging-1.1.jar
+
 CP=$CP:$DIRNAME/locales/
 CP=$CP:$DIRNAME/reports/
 

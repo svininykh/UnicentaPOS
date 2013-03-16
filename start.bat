@@ -21,7 +21,6 @@ REM    along with uniCenta oPOS.  If not, see http://www.gnu.org/licenses/>
 REM
 
 set DIRNAME=%~dp0
-
 set CP="%DIRNAME%unicentaopos.jar"
 set CP=%CP%;"%DIRNAME%lib/jasperreports-4.5.1.jar"
 set CP=%CP%;"%DIRNAME%lib/jcommon-1.0.15.jar"
@@ -39,7 +38,7 @@ set CP=%CP%;"%DIRNAME%lib/velocity-1.7-dep.jar"
 set CP=%CP%;"%DIRNAME%lib/oro-2.0.8.jar"
 set CP=%CP%;"%DIRNAME%lib/commons-collections-3.2.1.jar"
 set CP=%CP%;"%DIRNAME%lib/commons-lang-2.4.jar"
-set CP=%CP%;"%DIRNAME%lib/bsh-core-2.0b4.jar"
+set CP=%CP%;"%DIRNAME%lib/bsh-2.1b5.jar"
 set CP=%CP%;"%DIRNAME%lib/RXTXcomm.jar"
 set CP=%CP%;"%DIRNAME%lib/jpos1121.jar"
 set CP=%CP%;"%DIRNAME%lib/swingx-all-1.6.4.jar"
@@ -53,6 +52,7 @@ set CP=%CP%;"%DIRNAME%lib/saaj.jar"
 set CP=%CP%;"%DIRNAME%lib/wsdl4j-1.5.1.jar"
 set CP=%CP%;"%DIRNAME%lib/commons-discovery-0.4.jar"
 set CP=%CP%;"%DIRNAME%lib/commons-logging-1.1.jar"
+
 set CP=%CP%;"%DIRNAME%locales/"
 set CP=%CP%;"%DIRNAME%reports/"
 

@@ -22,5 +22,4 @@ set DIRNAME=%~dp0
 set CP="%DIRNAME%unicentaopos.jar"
 set CP=%CP%;"%DIRNAME%locales/"
 set CP=%CP%;"%DIRNAME%lib/substance.jar"
-
 start /B javaw -cp %CP% com.openbravo.pos.config.JFrmConfig

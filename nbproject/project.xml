@@ -3,11 +3,8 @@
     <type>org.netbeans.modules.java.j2seproject</type>
     <configuration>
         <data xmlns="http://www.netbeans.org/ns/j2se-project/3">
-            <name>UnicentaPOS</name>
-            <explicit-platform explicit-source-supported="true"/>
+            <name>unicentaopos</name>
             <source-roots>
-                <root id="src.locales.dir"/>
-                <root id="src.reports.dir"/>
                 <root id="src.src-beans.dir"/>
                 <root id="src.src-data.dir"/>
                 <root id="src.src-pos.dir"/>
